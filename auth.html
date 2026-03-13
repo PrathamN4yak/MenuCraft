@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login / Register — MenuCraft</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="static/css/style.css" />
+  <style>
+
+    /* ══════════════════════════════════════
+       FULL PAGE SPLIT LAYOUT
+    ══════════════════════════════════════ */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      font-family: 'Nunito', sans-serif;
+      background: var(--cream);
+    }
+
+    /* ══ LEFT PANEL — Decorative ══ */
+    .left-panel {
+      background: linear-gradient(160deg, #1A0F05 0%, #3D2B1A 50%, #5C3D20 100%);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 48px;
+      min-height: 100vh;
+    }
+
+    /* Decorative radial glows */
+    .left-panel::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(232,113,42,0.28) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(212,175,55,0.15) 0%, transparent 45%);
+      pointer-events: none;
+    }
+
+    /* Floating food circles */
+    .food-orb {
+      position: absolute;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem;
+      animation: floatOrb 6s ease-in-out infinite;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .food-orb:nth-child(1) { width:80px;height:80px; top:12%;  right:15%; animation-delay:0s;    font-size:2.2rem; }
+    .food-orb:nth-child(2) { width:60px;height:60px; top:35%;  right:30%; animation-delay:1.2s;  font-size:1.6rem; }
+    .food-orb:nth-child(3) { width:70px;height:70px; bottom:30%;right:10%; animation-delay:2.4s; font-size:1.9rem; }
+    .food-orb:nth-child(4) { width:50px;height:50px; bottom:15%;right:35%; animation-delay:0.8s; font-size:1.4rem; }
+    .food-orb:nth-child(5) { width:90px;height:90px; top:55%;  right:22%; animation-delay:1.8s; font-size:2.4rem; }
+
+    @keyframes floatOrb {
+      0%,100% { transform: translateY(0) rotate(0deg); }
+      33%      { transform: translateY(-14px) rotate(4deg); }
+      66%      { transform: translateY(8px) rotate(-3deg); }
+    }
+
+    /* Left panel content */
+    .left-brand {
+      position: relative; z-index: 2;
+    }
+    .left-brand .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; font-weight: 700; color: #fff;
+      text-decoration: none;
+      display: inline-block; margin-bottom: 8px;
+    }
+    .left-brand .logo span { color: var(--primary-light); }
+    .left-brand .tagline {
+      font-size: 0.82rem; color: rgba(255,255,255,0.45);
+      font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+    }
+
+    .left-hero { position: relative; z-index: 2; }
+    .left-hero h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 700; color: #fff;
+      line-height: 1.25; margin-bottom: 16px;
+    }
+    .left-hero h2 em {
+      font-style: italic; color: var(--primary-light);
+    }
+    .left-hero p {
+      font-size: 0.95rem; color: rgba(255,255,255,0.58);
+      line-height: 1.7; max-width: 340px;
+    }
+
+    .left-features { position: relative; z-index: 2; }
+    .feature-item {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 14px;
+    }
+    .feature-item .fi-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: rgba(232,113,42,0.18);
+      border: 1px solid rgba(232,113,42,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0;
+    }
+    .feature-item .fi-text {
+      font-size: 0.85rem; color: rgba(255,255,255,0.72); font-weight: 500;
+    }
+    .feature-item .fi-text strong { color: #fff; font-weight: 700; }
+
+    /* ══ RIGHT PANEL — Form ══ */
+    .right-panel {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 40px;
+      background: var(--cream);
+      position: relative;
+    }
+
+    .auth-box {
+      width: 100%; max-width: 420px;
+    }
+
+    /* ── Tab Switcher ── */
+    .auth-tabs {
+      display: flex;
+      background: #fff;
+      border: 2px solid #EDE5DA;
+      border-radius: 14px;
+      padding: 5px;
+      margin-bottom: 32px;
+      gap: 4px;
+    }
+    .auth-tab {
+      flex: 1; padding: 11px;
+      border-radius: 10px; border: none;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.9rem; font-weight: 700;
+      cursor: pointer; transition: all 0.25s;
+      color: var(--text-light); background: transparent;
+    }
+    .auth-tab.active {
+      background: var(--primary); color: #fff;
+      box-shadow: 0 4px 14px rgba(232,113,42,0.3);
+    }
+
+    /* ── Form Panels ── */
+    .auth-panel { display: none; animation: fadeUp 0.35s ease; }
+    .auth-panel.active { display: block; }
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(12px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    .auth-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.7rem; font-weight: 700;
+      color: var(--dark); margin-bottom: 6px;
+    }
+    .auth-subtitle {
+      font-size: 0.88rem; color: var(--text-light);
+      margin-bottom: 28px; line-height: 1.6;
+    }
+
+    /* ── Form Fields ── */
+    .field-group {
+      margin-bottom: 18px;
+    }
+    .field-label {
+      display: block; font-size: 0.8rem; font-weight: 700;
+      color: var(--text); margin-bottom: 7px; letter-spacing: 0.2px;
+    }
+    .field-label .req { color: var(--primary); margin-left: 2px; }
+
+    .field-wrap {
+      position: relative;
+    }
+    .field-icon {
+      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+      font-size: 1rem; color: var(--text-light); pointer-events: none;
+      transition: color 0.25s;
+    }
+    .field-input {
+      width: 100%; padding: 12px 16px 12px 42px;
+      border: 2px solid #EDE5DA;
+      border-radius: 11px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.92rem; color: var(--text);
+      background: #fff; outline: none;
+      transition: all 0.25s ease;
+    }
+    .field-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(232,113,42,0.1);
+    }
+    .field-input:focus + .field-icon,
+    .field-wrap:focus-within .field-icon { color: var(--primary); }
+    .field-input.error { border-color: #EF4444; }
+
+    .field-wrap .toggle-pass {
+      position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+      background: none; border: none; cursor: pointer;
+      font-size: 1rem; color: var(--text-light);
+      transition: color 0.2s; padding: 0;
+    }
+    .field-wrap .toggle-pass:hover { color: var(--primary); }
+
+    .field-error {
+      font-size: 0.75rem; color: #EF4444;
+      margin-top: 5px; display: none;
+    }
+    .field-error.show { display: block; }
+
+    /* Row: two fields side by side */
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+    /* ── Password Strength ── */
+    .strength-bar-wrap {
+      margin-top: 8px; display: none;
+    }
+    .strength-bar-wrap.show { display: block; }
+    .strength-bars {
+      display: flex; gap: 4px; margin-bottom: 5px;
+    }
+    .sbar {
+      flex: 1; height: 4px; border-radius: 2px;
+      background: #EDE5DA; transition: background 0.3s;
+    }
+    .sbar.weak   { background: #EF4444; }
+    .sbar.medium { background: #F59E0B; }
+    .sbar.strong { background: #22C55E; }
+    .strength-label { font-size: 0.72rem; font-weight: 700; color: var(--text-light); }
+    .strength-label.weak   { color: #EF4444; }
+    .strength-label.medium { color: #F59E0B; }
+    .strength-label.strong { color: #22C55E; }
+
+    /* ── Checkbox ── */
+    .check-row {
+      display: flex; align-items: flex-start; gap: 10px;
+      margin-bottom: 20px;
+    }
+    .check-row input[type="checkbox"] {
+      width: 18px; height: 18px; margin-top: 1px;
+      accent-color: var(--primary); cursor: pointer; flex-shrink: 0;
+    }
+    .check-row label {
+      font-size: 0.82rem; color: var(--text-light); line-height: 1.5; cursor: pointer;
+    }
+    .check-row label a { color: var(--primary); font-weight: 600; }
+
+    /* ── Forgot Password ── */
+    .forgot-row {
+      display: flex; justify-content: flex-end; margin-top: -10px; margin-bottom: 18px;
+    }
+    .forgot-link {
+      font-size: 0.8rem; color: var(--primary); font-weight: 700;
+      text-decoration: none;
+    }
+    .forgot-link:hover { color: var(--primary-dark); }
+
+    /* ── Submit Button ── */
+    .btn-auth {
+      width: 100%; padding: 14px;
+      background: var(--primary); color: #fff;
+      border: none; border-radius: 50px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1rem; font-weight: 700;
+      cursor: pointer; transition: all 0.25s;
+      box-shadow: 0 4px 20px rgba(232,113,42,0.32);
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .btn-auth:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(232,113,42,0.4); }
+    .btn-auth:disabled { background: #D0C4BB; box-shadow: none; cursor: not-allowed; transform: none; }
+
+    /* ── Divider ── */
+    .auth-divider {
+      display: flex; align-items: center; gap: 12px;
+      margin: 22px 0; color: var(--text-light); font-size: 0.8rem;
+    }
+    .auth-divider::before, .auth-divider::after {
+      content: ''; flex: 1; height: 1px; background: #EDE5DA;
+    }
+
+    /* ── Social Buttons ── */
+    .social-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .btn-social {
+      padding: 11px 14px;
+      border: 2px solid #EDE5DA; border-radius: 11px;
+      background: #fff; color: var(--text);
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.85rem; font-weight: 700;
+      cursor: pointer; transition: all 0.25s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .btn-social:hover { border-color: var(--primary); color: var(--primary); background: rgba(232,113,42,0.04); transform: translateY(-1px); }
+
+    /* ── Switch link ── */
+    .switch-msg {
+      text-align: center; margin-top: 24px;
+      font-size: 0.85rem; color: var(--text-light);
+    }
+    .switch-msg a {
+      color: var(--primary); font-weight: 700; cursor: pointer;
+      text-decoration: none;
+    }
+    .switch-msg a:hover { color: var(--primary-dark); }
+
+    /* ── Success toast ── */
+    .toast-wrap {
+      position: fixed; top: 24px; right: 24px; z-index: 9999;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .toast {
+      background: #fff; border-radius: 14px;
+      padding: 14px 20px; box-shadow: 0 8px 32px rgba(26,15,5,0.15);
+      display: flex; align-items: center; gap: 12px;
+      min-width: 280px; border-left: 4px solid var(--primary);
+      animation: slideInToast 0.35s ease;
+      font-size: 0.88rem; font-weight: 600; color: var(--text);
+    }
+    .toast.success { border-left-color: #22C55E; }
+    .toast.error   { border-left-color: #EF4444; }
+    @keyframes slideInToast {
+      from { opacity:0; transform:translateX(20px); }
+      to   { opacity:1; transform:translateX(0); }
+    }
+
+    /* ── Veg badge on right panel ── */
+    .veg-badge-small {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3);
+      color: #16a34a; border-radius: 50px; padding: 4px 12px;
+      font-size: 0.73rem; font-weight: 700; margin-bottom: 28px;
+    }
+    .veg-badge-small .dot { width:7px;height:7px;background:#22c55e;border-radius:50%; }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      body { grid-template-columns: 1fr; }
+      .left-panel { display: none; }
+      .right-panel { padding: 40px 24px; min-height: 100vh; align-items: flex-start; padding-top: 80px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ LEFT PANEL ══ -->
+  <div class="left-panel">
+    <!-- Floating food orbs -->
+    <div class="food-orb">🍛</div>
+    <div class="food-orb">🍃</div>
+    <div class="food-orb">🎂</div>
+    <div class="food-orb">🥗</div>
+    <div class="food-orb">🍱</div>
+
+    <!-- Brand -->
+    <div class="left-brand">
+      <a href="index.html" class="logo">Menu<span>Craft</span></a>
+      <div class="tagline">✦ Premium Catering Services</div>
+    </div>
+
+    <!-- Hero copy -->
+    <div class="left-hero">
+      <h2>Your next great<br/>feast starts <em>here.</em></h2>
+      <p>Create an account to track your bookings, save custom menus, and get exclusive deals — all in one place.</p>
+    </div>
+
+    <!-- Features -->
+    <div class="left-features">
+      <div class="feature-item">
+        <div class="fi-icon">📋</div>
+        <div class="fi-text"><strong>Track your bookings</strong> — see status updates in real time</div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-icon">💾</div>
+        <div class="fi-text"><strong>Save custom menus</strong> — come back and book anytime</div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-icon">🔔</div>
+        <div class="fi-text"><strong>Get notified</strong> — confirmations sent straight to your inbox</div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-icon">🌿</div>
+        <div class="fi-text"><strong>100% Pure Veg</strong> — every dish, every time</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ RIGHT PANEL ══ -->
+  <div class="right-panel">
+    <div class="auth-box">
+
+      <!-- Veg badge -->
+      <div class="veg-badge-small"><span class="dot"></span> 100% Pure Vegetarian</div>
+
+      <!-- Tab switcher -->
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tab-login" onclick="switchTab('login')">🔐 Login</button>
+        <button class="auth-tab"        id="tab-reg"   onclick="switchTab('register')">✨ Register</button>
+      </div>
+
+      <!-- ─ LOGIN PANEL ─ -->
+      <div class="auth-panel active" id="panel-login">
+        <h2 class="auth-title">Welcome back!</h2>
+        <p class="auth-subtitle">Login to manage your bookings and saved menus.</p>
+
+        <div class="field-group">
+          <label class="field-label">Email Address <span class="req">*</span></label>
+          <div class="field-wrap">
+            <input type="email" class="field-input" id="login-email" placeholder="you@example.com" />
+            <span class="field-icon">📧</span>
+          </div>
+          <div class="field-error" id="err-login-email">Please enter a valid email.</div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">Password <span class="req">*</span></label>
+          <div class="field-wrap">
+            <input type="password" class="field-input" id="login-pass" placeholder="Enter your password" />
+            <span class="field-icon">🔑</span>
+            <button class="toggle-pass" type="button" onclick="togglePass('login-pass', this)">👁️</button>
+          </div>
+          <div class="field-error" id="err-login-pass">Please enter your password.</div>
+        </div>
+
+        <div class="forgot-row">
+          <a href="#" class="forgot-link" onclick="showForgot()">Forgot password?</a>
+        </div>
+
+        <div class="check-row">
+          <input type="checkbox" id="rememberMe" />
+          <label for="rememberMe">Remember me on this device</label>
+        </div>
+
+        <button class="btn-auth" id="loginBtn" onclick="submitLogin()">
+          🔐 Login to MenuCraft
+        </button>
+
+        <div class="auth-divider">or continue with</div>
+
+        <div class="social-btns">
+          <button class="btn-social" onclick="socialAuth('Google')">🌐 Google</button>
+          <button class="btn-social" onclick="socialAuth('Phone')">📱 Phone OTP</button>
+        </div>
+
+        <p class="switch-msg">
+          Don't have an account? <a onclick="switchTab('register')">Register for free →</a>
+        </p>
+      </div>
+
+      <!-- ─ REGISTER PANEL ─ -->
+      <div class="auth-panel" id="panel-register">
+        <h2 class="auth-title">Create account</h2>
+        <p class="auth-subtitle">Join MenuCraft and start booking your perfect catering experience.</p>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label class="field-label">First Name <span class="req">*</span></label>
+            <div class="field-wrap">
+              <input type="text" class="field-input" id="reg-fname" placeholder="Ravi" />
+              <span class="field-icon">👤</span>
+            </div>
+            <div class="field-error" id="err-reg-fname">Required.</div>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Last Name <span class="req">*</span></label>
+            <div class="field-wrap">
+              <input type="text" class="field-input" id="reg-lname" placeholder="Kumar" />
+              <span class="field-icon">👤</span>
+            </div>
+            <div class="field-error" id="err-reg-lname">Required.</div>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">Email Address <span class="req">*</span></label>
+          <div class="field-wrap">
+            <input type="email" class="field-input" id="reg-email" placeholder="you@example.com" />
+            <span class="field-icon">📧</span>
+          </div>
+          <div class="field-error" id="err-reg-email">Please enter a valid email.</div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">Phone Number <span class="req">*</span></label>
+          <div class="field-wrap">
+            <input type="tel" class="field-input" id="reg-phone" placeholder="+91 98765 43210" />
+            <span class="field-icon">📱</span>
+          </div>
+          <div class="field-error" id="err-reg-phone">Please enter a valid phone number.</div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">Password <span class="req">*</span></label>
+          <div class="field-wrap">
+            <input type="password" class="field-input" id="reg-pass"
+              placeholder="Min. 8 characters"
+              oninput="checkStrength(this.value)" />
+            <span class="field-icon">🔑</span>
+            <button class="toggle-pass" type="button" onclick="togglePass('reg-pass', this)">👁️</button>
+          </div>
+          <div class="field-error" id="err-reg-pass">Password must be at least 8 characters.</div>
+          <!-- Password strength indicator -->
+          <div class="strength-bar-wrap" id="strengthWrap">
+            <div class="strength-bars">
+              <div class="sbar" id="sb1"></div>
+              <div class="sbar" id="sb2"></div>
+              <div class="sbar" id="sb3"></div>
+              <div class="sbar" id="sb4"></div>
+            </div>
+            <div class="strength-label" id="strengthLabel">Enter a password</div>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">Confirm Password <span class="req">*</span></label>
+          <div class="field-wrap">
+            <input type="password" class="field-input" id="reg-cpass" placeholder="Repeat your password" />
+            <span class="field-icon">🔒</span>
+            <button class="toggle-pass" type="button" onclick="togglePass('reg-cpass', this)">👁️</button>
+          </div>
+          <div class="field-error" id="err-reg-cpass">Passwords do not match.</div>
+        </div>
+
+        <div class="check-row">
+          <input type="checkbox" id="agreeTerms" />
+          <label for="agreeTerms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+        </div>
+
+        <button class="btn-auth" id="registerBtn" onclick="submitRegister()">
+          ✨ Create My Account
+        </button>
+
+        <div class="auth-divider">or sign up with</div>
+
+        <div class="social-btns">
+          <button class="btn-social" onclick="socialAuth('Google')">🌐 Google</button>
+          <button class="btn-social" onclick="socialAuth('Phone')">📱 Phone OTP</button>
+        </div>
+
+        <p class="switch-msg">
+          Already have an account? <a onclick="switchTab('login')">Login →</a>
+        </p>
+      </div>
+
+    </div><!-- end auth-box -->
+  </div><!-- end right-panel -->
+
+  <!-- ══ TOAST CONTAINER ══ -->
+  <div class="toast-wrap" id="toastWrap"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+
+  // ══════════════════════════════════════
+  // TAB SWITCHER
+  // ══════════════════════════════════════
+  function switchTab(tab) {
+    document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.auth-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('tab-' + (tab === 'login' ? 'login' : 'reg')).classList.add('active');
+    document.getElementById('panel-' + tab).classList.add('active');
+    clearAllErrors();
+  }
+
+  // ══════════════════════════════════════
+  // SHOW / HIDE PASSWORD
+  // ══════════════════════════════════════
+  function togglePass(inputId, btn) {
+    const input = document.getElementById(inputId);
+    const isHidden = input.type === 'password';
+    input.type = isHidden ? 'text' : 'password';
+    btn.textContent = isHidden ? '🙈' : '👁️';
+  }
+
+  // ══════════════════════════════════════
+  // PASSWORD STRENGTH
+  // ══════════════════════════════════════
+  function checkStrength(val) {
+    const wrap  = document.getElementById('strengthWrap');
+    const label = document.getElementById('strengthLabel');
+    const bars  = [document.getElementById('sb1'), document.getElementById('sb2'),
+                   document.getElementById('sb3'), document.getElementById('sb4')];
+
+    if (!val) { wrap.classList.remove('show'); return; }
+    wrap.classList.add('show');
+
+    let score = 0;
+    if (val.length >= 8)              score++;
+    if (/[A-Z]/.test(val))            score++;
+    if (/[0-9]/.test(val))            score++;
+    if (/[^A-Za-z0-9]/.test(val))     score++;
+
+    const levels = ['', 'weak', 'medium', 'medium', 'strong'];
+    const labels = ['', 'Weak', 'Fair', 'Good', 'Strong 💪'];
+    bars.forEach((b, i) => {
+      b.className = 'sbar';
+      if (i < score) b.classList.add(levels[score]);
+    });
+    label.className = 'strength-label ' + (levels[score] || '');
+    label.textContent = labels[score] || '';
+  }
+
+  // ══════════════════════════════════════
+  // VALIDATION HELPERS
+  // ══════════════════════════════════════
+  function showErr(id, inputId) {
+    document.getElementById(id)?.classList.add('show');
+    if (inputId) document.getElementById(inputId)?.classList.add('error');
+  }
+  function clearErr(id, inputId) {
+    document.getElementById(id)?.classList.remove('show');
+    if (inputId) document.getElementById(inputId)?.classList.remove('error');
+  }
+  function clearAllErrors() {
+    document.querySelectorAll('.field-error').forEach(e => e.classList.remove('show'));
+    document.querySelectorAll('.field-input').forEach(i => i.classList.remove('error'));
+  }
+
+  // ══════════════════════════════════════
+  // LOGIN SUBMIT
+  // ══════════════════════════════════════
+  async function submitLogin() {
+    clearAllErrors();
+    const email = document.getElementById('login-email').value.trim();
+    const pass  = document.getElementById('login-pass').value;
+    let ok = true;
+
+    if (!email || !email.includes('@')) { showErr('err-login-email','login-email'); ok=false; }
+    if (!pass)                           { showErr('err-login-pass','login-pass');  ok=false; }
+    if (!ok) return;
+
+    const btn = document.getElementById('loginBtn');
+    btn.disabled = true;
+    btn.innerHTML = '⏳ Logging in...';
+
+    // ── Flask API call (activate when backend is ready) ──
+    // try {
+    //   const res = await fetch('/api/login', {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify({ email, password: pass,
+    //       remember: document.getElementById('rememberMe').checked })
+    //   });
+    //   const data = await res.json();
+    //   if (!data.success) {
+    //     showToast(data.message || 'Invalid email or password.', 'error');
+    //     btn.disabled = false; btn.innerHTML = '🔐 Login to MenuCraft'; return;
+    //   }
+    //   showToast('Welcome back! Redirecting...', 'success');
+    //   setTimeout(() => window.location.href = 'dashboard.html', 1200);
+    // } catch(e) {
+    //   showToast('Something went wrong. Please try again.', 'error');
+    //   btn.disabled = false; btn.innerHTML = '🔐 Login to MenuCraft';
+    // }
+
+    // Simulate login for now
+    await delay(1400);
+    showToast('Welcome back! Redirecting to your dashboard...', 'success');
+    btn.innerHTML = '✅ Logged In!';
+    setTimeout(() => window.location.href = 'dashboard.html', 1600);
+  }
+
+  // ══════════════════════════════════════
+  // REGISTER SUBMIT
+  // ══════════════════════════════════════
+  async function submitRegister() {
+    clearAllErrors();
+    const fname  = document.getElementById('reg-fname').value.trim();
+    const lname  = document.getElementById('reg-lname').value.trim();
+    const email  = document.getElementById('reg-email').value.trim();
+    const phone  = document.getElementById('reg-phone').value.trim();
+    const pass   = document.getElementById('reg-pass').value;
+    const cpass  = document.getElementById('reg-cpass').value;
+    const agreed = document.getElementById('agreeTerms').checked;
+    let ok = true;
+
+    if (!fname)                  { showErr('err-reg-fname','reg-fname');  ok=false; }
+    if (!lname)                  { showErr('err-reg-lname','reg-lname');  ok=false; }
+    if (!email||!email.includes('@')) { showErr('err-reg-email','reg-email'); ok=false; }
+    if (!phone||phone.length<8)  { showErr('err-reg-phone','reg-phone');  ok=false; }
+    if (!pass||pass.length<8)    { showErr('err-reg-pass','reg-pass');    ok=false; }
+    if (pass !== cpass)          { showErr('err-reg-cpass','reg-cpass');  ok=false; }
+    if (!agreed) { showToast('Please agree to the Terms of Service to continue.', 'error'); ok=false; }
+    if (!ok) return;
+
+    const btn = document.getElementById('registerBtn');
+    btn.disabled = true;
+    btn.innerHTML = '⏳ Creating your account...';
+
+    // ── Flask API call (activate when backend is ready) ──
+    // try {
+    //   const res = await fetch('/api/register', {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify({ name: fname+' '+lname, email, phone, password: pass })
+    //   });
+    //   const data = await res.json();
+    //   if (!data.success) {
+    //     showToast(data.message || 'Registration failed.', 'error');
+    //     btn.disabled=false; btn.innerHTML='✨ Create My Account'; return;
+    //   }
+    //   showToast('Account created! Welcome to MenuCraft 🎉', 'success');
+    //   setTimeout(() => window.location.href = 'dashboard.html', 1600);
+    // } catch(e) {
+    //   showToast('Something went wrong. Please try again.', 'error');
+    //   btn.disabled=false; btn.innerHTML='✨ Create My Account';
+    // }
+
+    // Simulate registration for now
+    await delay(1600);
+    showToast('Account created! Welcome to MenuCraft 🎉', 'success');
+    btn.innerHTML = '✅ Account Created!';
+    setTimeout(() => window.location.href = 'dashboard.html', 1800);
+  }
+
+  // ══════════════════════════════════════
+  // FORGOT PASSWORD
+  // ══════════════════════════════════════
+  function showForgot() {
+    const email = document.getElementById('login-email').value.trim();
+    if (!email || !email.includes('@')) {
+      showToast('Enter your email address first, then click Forgot Password.', 'error');
+      document.getElementById('login-email').focus();
+      return;
+    }
+    showToast(`Password reset link sent to ${email}`, 'success');
+    // Flask: POST /api/forgot-password { email }
+  }
+
+  // ══════════════════════════════════════
+  // SOCIAL AUTH PLACEHOLDER
+  // ══════════════════════════════════════
+  function socialAuth(provider) {
+    showToast(`${provider} login coming soon!`, 'success');
+    // Flask: GET /api/auth/google  or  /api/auth/phone
+  }
+
+  // ══════════════════════════════════════
+  // TOAST NOTIFICATION
+  // ══════════════════════════════════════
+  function showToast(msg, type = 'success') {
+    const wrap = document.getElementById('toastWrap');
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    toast.innerHTML = `<span>${type==='success'?'✅':'❌'}</span> ${msg}`;
+    wrap.appendChild(toast);
+    setTimeout(() => toast.remove(), 3800);
+  }
+
+  // ══════════════════════════════════════
+  // UTILS
+  // ══════════════════════════════════════
+  function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+  // Auto-switch to register tab if URL has ?register
+  if (new URLSearchParams(location.search).get('tab') === 'register') {
+    switchTab('register');
+  }
+  </script>
+</body>
+</html>

@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Dashboard — MenuCraft</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="static/css/style.css" />
+  <style>
+    body { background: #F5EDE4; min-height: 100vh; }
+    .dash-layout { display: grid; grid-template-columns: 260px 1fr; min-height: 100vh; }
+
+    /* SIDEBAR */
+    .dash-sidebar {
+      background: linear-gradient(180deg, #1A0F05 0%, #3D2B1A 100%);
+      position: sticky; top: 0; height: 100vh;
+      display: flex; flex-direction: column; overflow: hidden; z-index: 200;
+    }
+    .sidebar-brand { padding: 28px 24px 24px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .sidebar-brand .logo { font-family:'Playfair Display',serif; font-size:1.5rem; font-weight:700; color:#fff; text-decoration:none; display:block; margin-bottom:4px; }
+    .sidebar-brand .logo span { color: var(--primary-light); }
+    .sidebar-brand .tagline { font-size:0.7rem; color:rgba(255,255,255,0.35); text-transform:uppercase; letter-spacing:1.5px; font-weight:600; }
+    .sidebar-user { padding:20px 24px; border-bottom:1px solid rgba(255,255,255,0.07); display:flex; align-items:center; gap:12px; }
+    .user-avatar { width:42px; height:42px; border-radius:12px; background:linear-gradient(135deg,var(--primary),var(--primary-dark)); display:flex; align-items:center; justify-content:center; font-size:1.1rem; font-weight:700; color:#fff; flex-shrink:0; font-family:'Playfair Display',serif; }
+    .user-info .user-name { font-size:0.88rem; font-weight:700; color:#fff; }
+    .user-info .user-email { font-size:0.72rem; color:rgba(255,255,255,0.42); margin-top:1px; }
+    .sidebar-nav { flex:1; padding:16px 12px; overflow-y:auto; }
+    .nav-section-label { font-size:0.65rem; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.28); padding:10px 12px 6px; margin-top:8px; }
+    .nav-item { display:flex; align-items:center; gap:10px; padding:11px 14px; border-radius:10px; cursor:pointer; transition:all 0.2s; color:rgba(255,255,255,0.58); font-size:0.88rem; font-weight:600; margin-bottom:2px; text-decoration:none; }
+    .nav-item:hover { background:rgba(255,255,255,0.07); color:rgba(255,255,255,0.9); }
+    .nav-item.active { background:rgba(232,113,42,0.18); color:var(--primary-light); border:1px solid rgba(232,113,42,0.25); }
+    .nav-item .ni-icon { font-size:1rem; width:20px; text-align:center; }
+    .nav-badge { margin-left:auto; background:var(--primary); color:#fff; font-size:0.65rem; font-weight:800; padding:2px 7px; border-radius:50px; }
+    .sidebar-footer { padding:16px 12px; border-top:1px solid rgba(255,255,255,0.07); }
+    .btn-logout { display:flex; align-items:center; gap:10px; padding:11px 14px; border-radius:10px; color:rgba(255,255,255,0.45); font-size:0.88rem; font-weight:600; cursor:pointer; transition:all 0.2s; width:100%; border:none; background:transparent; font-family:'Nunito',sans-serif; }
+    .btn-logout:hover { background:rgba(239,68,68,0.15); color:#FCA5A5; }
+
+    /* MAIN */
+    .dash-main { overflow-y:auto; }
+    .dash-topbar { background:#fff; padding:16px 32px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid #EDE5DA; position:sticky; top:0; z-index:100; box-shadow:0 2px 12px rgba(26,15,5,0.06); }
+    .topbar-title { font-family:'Playfair Display',serif; font-size:1.3rem; font-weight:700; color:var(--dark); }
+    .topbar-actions { display:flex; align-items:center; gap:12px; }
+    .topbar-btn { padding:9px 20px; border-radius:50px; font-size:0.85rem; font-weight:700; font-family:'Nunito',sans-serif; cursor:pointer; transition:all 0.25s; border:2px solid var(--primary); color:var(--primary); background:transparent; text-decoration:none; }
+    .topbar-btn:hover { background:var(--primary); color:#fff; }
+    .topbar-btn.primary { background:var(--primary); color:#fff; }
+    .topbar-btn.primary:hover { background:var(--primary-dark); border-color:var(--primary-dark); }
+    .notif-btn { width:38px; height:38px; border-radius:10px; background:var(--cream); border:1px solid #EDE5DA; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:1.1rem; position:relative; transition:all 0.2s; }
+    .notif-btn:hover { background:rgba(232,113,42,0.08); border-color:var(--primary); }
+    .notif-dot { position:absolute; top:6px; right:6px; width:8px; height:8px; background:var(--primary); border-radius:50%; border:2px solid #fff; }
+
+    .dash-content { padding:28px 32px 64px; }
+    .dash-section { display:none; animation:fadeUp 0.3s ease; }
+    .dash-section.active { display:block; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(10px);} to{opacity:1;transform:translateY(0);} }
+
+    /* STAT CARDS */
+    .stat-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-bottom:28px; }
+    .stat-card { background:#fff; border-radius:16px; padding:22px 24px; box-shadow:0 2px 14px rgba(26,15,5,0.07); border-left:4px solid transparent; transition:transform 0.25s; }
+    .stat-card:hover { transform:translateY(-3px); }
+    .stat-card.orange { border-left-color:var(--primary); }
+    .stat-card.green  { border-left-color:#22C55E; }
+    .stat-card.gold   { border-left-color:#D4AF37; }
+    .stat-card .sc-label { font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--text-light); margin-bottom:8px; }
+    .stat-card .sc-value { font-family:'Playfair Display',serif; font-size:2rem; font-weight:700; color:var(--dark); line-height:1; margin-bottom:4px; }
+    .stat-card .sc-sub   { font-size:0.78rem; color:var(--text-light); }
+
+    /* BOOKING CARDS */
+    .booking-card { background:#fff; border-radius:16px; padding:20px 24px; margin-bottom:14px; box-shadow:0 2px 12px rgba(26,15,5,0.06); display:flex; align-items:center; gap:18px; transition:all 0.25s; cursor:pointer; }
+    .booking-card:hover { transform:translateX(4px); box-shadow:0 4px 20px rgba(26,15,5,0.1); }
+    .bc-icon { width:52px; height:52px; border-radius:14px; background:var(--cream); display:flex; align-items:center; justify-content:center; font-size:1.6rem; flex-shrink:0; }
+    .bc-info { flex:1; min-width:0; }
+    .bc-name { font-weight:700; font-size:0.95rem; color:var(--dark); margin-bottom:4px; }
+    .bc-meta { font-size:0.8rem; color:var(--text-light); display:flex; gap:14px; flex-wrap:wrap; }
+    .bc-right { text-align:right; flex-shrink:0; }
+    .bc-price { font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:700; color:var(--primary); margin-bottom:6px; }
+    .bc-ref   { font-size:0.72rem; color:var(--text-light); font-weight:600; }
+    .status-badge { display:inline-block; padding:4px 12px; border-radius:50px; font-size:0.72rem; font-weight:800; text-transform:uppercase; letter-spacing:0.5px; }
+    .status-badge.pending     { background:rgba(251,191,36,0.15); color:#D97706; }
+    .status-badge.confirmed   { background:rgba(34,197,94,0.12);  color:#16A34A; }
+    .status-badge.preparation { background:rgba(232,113,42,0.15); color:var(--primary); }
+    .status-badge.delivered   { background:rgba(96,165,250,0.15); color:#2563EB; }
+    .status-badge.cancelled   { background:rgba(239,68,68,0.12);  color:#DC2626; }
+
+    /* SECTION HEADER */
+    .section-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+    .section-header h3 { font-family:'Playfair Display',serif; font-size:1.15rem; color:var(--dark); }
+    .section-header a  { font-size:0.82rem; font-weight:700; color:var(--primary); text-decoration:none; cursor:pointer; }
+
+    /* EMPTY STATE */
+    .empty-state { text-align:center; padding:52px 24px; background:#fff; border-radius:16px; box-shadow:0 2px 12px rgba(26,15,5,0.06); }
+    .empty-state .es-emoji { font-size:3rem; margin-bottom:14px; }
+    .empty-state h3 { font-family:'Playfair Display',serif; font-size:1.2rem; color:var(--dark); margin-bottom:8px; }
+    .empty-state p  { color:var(--text-light); font-size:0.9rem; margin-bottom:20px; }
+
+    /* PROFILE */
+    .profile-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+    .profile-card { background:#fff; border-radius:16px; padding:28px; box-shadow:0 2px 12px rgba(26,15,5,0.06); }
+    .profile-card h4 { font-family:'Playfair Display',serif; font-size:1.05rem; color:var(--dark); margin-bottom:20px; padding-bottom:12px; border-bottom:1px solid #EDE5DA; }
+    .profile-avatar-big { width:80px; height:80px; border-radius:20px; background:linear-gradient(135deg,var(--primary),var(--primary-dark)); display:flex; align-items:center; justify-content:center; font-size:2rem; font-weight:700; color:#fff; font-family:'Playfair Display',serif; margin-bottom:16px; }
+    .profile-field { margin-bottom:16px; }
+    .profile-field label { display:block; font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--text-light); margin-bottom:6px; }
+    .profile-field input { width:100%; padding:11px 14px; border:2px solid #EDE5DA; border-radius:10px; font-family:'Nunito',sans-serif; font-size:0.9rem; color:var(--text); background:var(--cream); outline:none; transition:all 0.25s; }
+    .profile-field input:focus { border-color:var(--primary); background:#fff; box-shadow:0 0 0 3px rgba(232,113,42,0.1); }
+    .btn-save { padding:11px 28px; border-radius:50px; background:var(--primary); color:#fff; border:none; font-family:'Nunito',sans-serif; font-size:0.9rem; font-weight:700; cursor:pointer; transition:all 0.25s; box-shadow:0 4px 14px rgba(232,113,42,0.28); }
+    .btn-save:hover { background:var(--primary-dark); transform:translateY(-1px); }
+
+    /* FILTER PILLS */
+    .filter-pill { padding:7px 16px; border-radius:50px; border:2px solid #EDE5DA; background:var(--cream); color:var(--text-light); font-size:0.82rem; font-weight:700; cursor:pointer; font-family:'Nunito',sans-serif; transition:all 0.2s; }
+    .filter-pill:hover { border-color:var(--primary); color:var(--primary); }
+    .filter-pill.active { background:var(--primary); color:#fff; border-color:var(--primary); }
+
+    /* MODAL */
+    .modal-overlay { position:fixed; inset:0; background:rgba(26,15,5,0.6); backdrop-filter:blur(4px); z-index:9999; display:none; align-items:center; justify-content:center; padding:20px; }
+    .modal-overlay.show { display:flex; }
+    .modal-box { background:#fff; border-radius:24px; width:100%; max-width:560px; max-height:90vh; overflow-y:auto; animation:popIn 0.35s cubic-bezier(0.34,1.56,0.64,1); box-shadow:0 24px 80px rgba(26,15,5,0.2); }
+    @keyframes popIn { from{opacity:0;transform:scale(0.88);} to{opacity:1;transform:scale(1);} }
+    .modal-head { padding:24px 28px; border-bottom:1px solid #EDE5DA; display:flex; align-items:flex-start; justify-content:space-between; }
+    .modal-close { width:30px; height:30px; border-radius:50%; background:var(--cream); border:none; cursor:pointer; font-size:0.9rem; color:var(--text-light); display:flex; align-items:center; justify-content:center; }
+    .modal-close:hover { background:var(--primary); color:#fff; }
+    .modal-body { padding:24px 28px; }
+    .modal-row { display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid #F5EDE4; font-size:0.88rem; }
+    .modal-row:last-child { border-bottom:none; }
+    .modal-row .mr-label { color:var(--text-light); font-weight:500; }
+    .modal-row .mr-value { font-weight:700; color:var(--dark); }
+
+    /* TIMELINE */
+    .timeline { padding:8px 0; }
+    .tl-item { display:flex; gap:14px; padding-bottom:20px; position:relative; }
+    .tl-item:not(:last-child)::before { content:''; position:absolute; left:15px; top:32px; bottom:0; width:2px; background:#EDE5DA; }
+    .tl-item.done::before { background:#22C55E; }
+    .tl-dot { width:32px; height:32px; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:0.85rem; background:#EDE5DA; color:var(--text-light); border:2px solid #EDE5DA; z-index:1; }
+    .tl-item.done .tl-dot    { background:#22C55E; color:#fff; border-color:#22C55E; }
+    .tl-item.current .tl-dot { background:var(--primary); color:#fff; border-color:var(--primary); box-shadow:0 0 0 4px rgba(232,113,42,0.2); }
+    .tl-text .tl-title { font-size:0.88rem; font-weight:700; color:var(--dark); }
+    .tl-text .tl-sub   { font-size:0.78rem; color:var(--text-light); margin-top:2px; }
+
+    /* QUICK ACTION CARD */
+    .quick-card { background:#fff; border-radius:14px; padding:20px; cursor:pointer; box-shadow:0 2px 12px rgba(26,15,5,0.06); transition:all 0.25s; border:2px solid transparent; }
+    .quick-card:hover { border-color:var(--primary); transform:translateY(-3px); }
+    .quick-card .qc-emoji { font-size:1.8rem; margin-bottom:10px; }
+    .quick-card .qc-title { font-weight:700; color:var(--dark); font-size:0.9rem; }
+    .quick-card .qc-sub   { font-size:0.78rem; color:var(--text-light); margin-top:3px; }
+
+    /* MOBILE */
+    .sidebar-toggle { display:none; position:fixed; bottom:24px; right:24px; width:52px; height:52px; border-radius:50%; background:var(--primary); color:#fff; border:none; font-size:1.3rem; cursor:pointer; box-shadow:0 4px 20px rgba(232,113,42,0.4); z-index:300; }
+    @media (max-width: 900px) {
+      .dash-layout { grid-template-columns:1fr; }
+      .dash-sidebar { position:fixed; left:-260px; top:0; transition:left 0.3s ease; z-index:500; }
+      .dash-sidebar.open { left:0; }
+      .sidebar-toggle { display:flex; align-items:center; justify-content:center; }
+      .stat-cards { grid-template-columns:1fr; }
+      .profile-grid { grid-template-columns:1fr; }
+      .dash-content { padding:20px 16px 80px; }
+      .dash-topbar  { padding:14px 16px; }
+    }
+  </style>
+</head>
+<body>
+<div class="dash-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="dash-sidebar" id="dashSidebar">
+    <div class="sidebar-brand">
+      <a href="index.html" class="logo">Menu<span>Craft</span></a>
+      <div class="tagline">✦ My Dashboard</div>
+    </div>
+    <div class="sidebar-user">
+      <div class="user-avatar" id="sidebarAvatar">R</div>
+      <div class="user-info">
+        <div class="user-name" id="sidebarName">Ravi Kumar</div>
+        <div class="user-email" id="sidebarEmail">ravi@gmail.com</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Main</div>
+      <a class="nav-item active" onclick="showSection('overview',this)"><span class="ni-icon">🏠</span> Overview</a>
+      <a class="nav-item" onclick="showSection('bookings',this)"><span class="ni-icon">📋</span> My Bookings <span class="nav-badge" id="bookingsBadge">3</span></a>
+      <a class="nav-item" onclick="showSection('saved',this)"><span class="ni-icon">💾</span> Saved Menus</a>
+      <div class="nav-section-label">Account</div>
+      <a class="nav-item" onclick="showSection('profile',this)"><span class="ni-icon">👤</span> My Profile</a>
+      <a class="nav-item" onclick="showSection('notifications',this)"><span class="ni-icon">🔔</span> Notifications <span class="nav-badge">1</span></a>
+      <a class="nav-item" href="book.html"><span class="ni-icon">➕</span> New Booking</a>
+    </nav>
+    <div class="sidebar-footer">
+      <a class="nav-item" href="menu.html" style="margin-bottom:6px;"><span class="ni-icon">🍽️</span> Browse Menus</a>
+      <button class="btn-logout" onclick="logout()"><span>🚪</span> Logout</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="dash-main">
+    <div class="dash-topbar">
+      <div class="topbar-title" id="topbarTitle">Overview</div>
+      <div class="topbar-actions">
+        <div class="notif-btn" onclick="showSection('notifications',null)">🔔<div class="notif-dot"></div></div>
+        <a href="menu.html" class="topbar-btn">Browse Menus</a>
+        <a href="book.html" class="topbar-btn primary">+ New Booking</a>
+      </div>
+    </div>
+
+    <div class="dash-content">
+
+      <!-- OVERVIEW -->
+      <div class="dash-section active" id="sec-overview">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:12px;">
+          <div>
+            <h2 style="font-family:'Playfair Display',serif;font-size:1.7rem;color:var(--dark);margin-bottom:4px;">Good day, <span id="greetName">Ravi</span>! 👋</h2>
+            <p style="color:var(--text-light);font-size:0.9rem;">Here's a summary of your catering activity.</p>
+          </div>
+          <a href="book.html" class="topbar-btn primary" style="white-space:nowrap;">+ Book Now</a>
+        </div>
+        <div class="stat-cards">
+          <div class="stat-card orange"><div class="sc-label">Total Bookings</div><div class="sc-value">3</div><div class="sc-sub">All time</div></div>
+          <div class="stat-card green"><div class="sc-label">Upcoming Events</div><div class="sc-value">1</div><div class="sc-sub">Confirmed</div></div>
+          <div class="stat-card gold"><div class="sc-label">Total Spent</div><div class="sc-value">₹2.9L</div><div class="sc-sub">Across all bookings</div></div>
+        </div>
+        <div class="section-header"><h3>Recent Bookings</h3><a onclick="showSection('bookings',null)">View all →</a></div>
+        <div id="overviewBookings"></div>
+        <div class="section-header" style="margin-top:32px;"><h3>💡 Quick Actions</h3></div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;">
+          <div class="quick-card" onclick="window.location.href='book.html'"><div class="qc-emoji">📅</div><div class="qc-title">Book Catering</div><div class="qc-sub">Start a new order</div></div>
+          <div class="quick-card" onclick="window.location.href='custom-menu.html'"><div class="qc-emoji">🧩</div><div class="qc-title">Custom Menu</div><div class="qc-sub">Build your own combo</div></div>
+          <div class="quick-card" onclick="window.location.href='menu.html'"><div class="qc-emoji">🍽️</div><div class="qc-title">Browse Menus</div><div class="qc-sub">Explore combo packages</div></div>
+          <div class="quick-card" onclick="showSection('profile',null)"><div class="qc-emoji">👤</div><div class="qc-title">Edit Profile</div><div class="qc-sub">Update your details</div></div>
+        </div>
+      </div>
+
+      <!-- BOOKINGS -->
+      <div class="dash-section" id="sec-bookings">
+        <div style="margin-bottom:24px;">
+          <h2 style="font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--dark);">My Bookings</h2>
+          <p style="color:var(--text-light);font-size:0.88rem;">All your catering orders in one place.</p>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;">
+          <button class="filter-pill active" onclick="filterBookings('all',this)">All</button>
+          <button class="filter-pill" onclick="filterBookings('pending',this)">⏳ Pending</button>
+          <button class="filter-pill" onclick="filterBookings('confirmed',this)">✅ Confirmed</button>
+          <button class="filter-pill" onclick="filterBookings('preparation',this)">👨‍🍳 In Preparation</button>
+          <button class="filter-pill" onclick="filterBookings('delivered',this)">🎉 Delivered</button>
+        </div>
+        <div id="allBookingsList"></div>
+      </div>
+
+      <!-- SAVED MENUS -->
+      <div class="dash-section" id="sec-saved">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;">
+          <div><h2 style="font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--dark);">Saved Menus</h2><p style="color:var(--text-light);font-size:0.88rem;">Custom menus you've saved for later.</p></div>
+          <a href="custom-menu.html" class="topbar-btn primary">+ Build New Menu</a>
+        </div>
+        <div class="empty-state"><div class="es-emoji">💾</div><h3>No saved menus yet</h3><p>Build a custom menu and save it — you can come back and book it anytime.</p><a href="custom-menu.html" class="btn-save" style="text-decoration:none;display:inline-block;">🧩 Build Custom Menu</a></div>
+      </div>
+
+      <!-- NOTIFICATIONS -->
+      <div class="dash-section" id="sec-notifications">
+        <div style="margin-bottom:24px;"><h2 style="font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--dark);">Notifications</h2><p style="color:var(--text-light);font-size:0.88rem;">Updates about your bookings.</p></div>
+        <div id="notifList" style="display:flex;flex-direction:column;gap:12px;"></div>
+      </div>
+
+      <!-- PROFILE -->
+      <div class="dash-section" id="sec-profile">
+        <div style="margin-bottom:24px;"><h2 style="font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--dark);">My Profile</h2><p style="color:var(--text-light);font-size:0.88rem;">Manage your personal details.</p></div>
+        <div class="profile-grid">
+          <div class="profile-card">
+            <h4>👤 Personal Details</h4>
+            <div class="profile-avatar-big" id="profileAvatar">R</div>
+            <div class="profile-field"><label>Full Name</label><input type="text" id="pf-name" value="Ravi Kumar" /></div>
+            <div class="profile-field"><label>Email Address</label><input type="email" id="pf-email" value="ravi@gmail.com" /></div>
+            <div class="profile-field"><label>Phone Number</label><input type="tel" id="pf-phone" value="+91 98765 43210" /></div>
+            <button class="btn-save" onclick="saveProfile()">💾 Save Changes</button>
+          </div>
+          <div class="profile-card">
+            <h4>🔑 Change Password</h4>
+            <div class="profile-field"><label>Current Password</label><input type="password" id="pf-oldpass" placeholder="••••••••" /></div>
+            <div class="profile-field"><label>New Password</label><input type="password" id="pf-newpass" placeholder="Min. 8 characters" /></div>
+            <div class="profile-field"><label>Confirm New Password</label><input type="password" id="pf-cpass" placeholder="Repeat new password" /></div>
+            <button class="btn-save" onclick="changePassword()">🔐 Update Password</button>
+            <div style="margin-top:28px;padding-top:20px;border-top:1px solid #EDE5DA;">
+              <div style="font-family:'Playfair Display',serif;font-size:0.95rem;color:var(--dark);margin-bottom:14px;">🔔 Notifications</div>
+              <label style="display:flex;align-items:center;gap:10px;font-size:0.85rem;color:var(--text);margin-bottom:10px;cursor:pointer;"><input type="checkbox" checked style="accent-color:var(--primary);width:16px;height:16px;" />Email me when booking is confirmed</label>
+              <label style="display:flex;align-items:center;gap:10px;font-size:0.85rem;color:var(--text);cursor:pointer;"><input type="checkbox" checked style="accent-color:var(--primary);width:16px;height:16px;" />SMS alerts for status updates</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ORDER MODAL -->
+<div class="modal-overlay" id="orderModal" onclick="closeModal(event)">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div>
+        <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);margin-bottom:6px;">Booking Details</div>
+        <div style="font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--dark);" id="modalComboName">—</div>
+        <div id="modalStatusBadge" style="margin-top:6px;"></div>
+      </div>
+      <button class="modal-close" onclick="closeOrderModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-row"><span class="mr-label">Booking Ref</span><span class="mr-value" id="mdRef">—</span></div>
+      <div class="modal-row"><span class="mr-label">Event Type</span><span class="mr-value" id="mdEvent">—</span></div>
+      <div class="modal-row"><span class="mr-label">Date</span><span class="mr-value" id="mdDate">—</span></div>
+      <div class="modal-row"><span class="mr-label">Guests</span><span class="mr-value" id="mdGuests">—</span></div>
+      <div class="modal-row"><span class="mr-label">Serving Style</span><span class="mr-value" id="mdServing">—</span></div>
+      <div class="modal-row"><span class="mr-label">Venue</span><span class="mr-value" id="mdVenue">—</span></div>
+      <div class="modal-row"><span class="mr-label">Total Amount</span><span class="mr-value" style="color:var(--primary);font-size:1.05rem;" id="mdTotal">—</span></div>
+      <div style="margin-top:20px;">
+        <div style="font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-light);margin-bottom:16px;">Order Progress</div>
+        <div class="timeline" id="mdTimeline"></div>
+      </div>
+      <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;">
+        <a href="book.html" class="btn-save" style="text-decoration:none;font-size:0.85rem;padding:10px 20px;">Book Again</a>
+        <button onclick="closeOrderModal()" style="padding:10px 20px;border-radius:50px;border:2px solid #EDE5DA;background:#fff;font-family:'Nunito',sans-serif;font-size:0.85rem;font-weight:700;cursor:pointer;color:var(--text);">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+<div id="toastWrap" style="position:fixed;top:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:8px;"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// Mock data — In production fetched from Flask API:
+// GET /api/my-bookings  → list of user's orders
+// GET /api/my-profile   → user details
+const MOCK_USER = { name:'Ravi Kumar', email:'ravi@gmail.com', phone:'+91 98765 43210' };
+const MOCK_BOOKINGS = [
+  { id:1, ref:'MC-847291', combo:'Grand South Indian Feast', emoji:'🎊', event:'Wedding', date:'2026-04-15', guests:350, serving:'Banana Leaf', venue:'Sri Devi Kalyana Mandapam, Mysuru', total:'₹2,27,500', status:'confirmed',   timeline_step:1 },
+  { id:2, ref:'MC-391045', combo:'Evening Snack Package',    emoji:'☕', event:'Corporate',date:'2026-03-20', guests:80,  serving:'Buffet',      venue:'Infosys Campus, Bangalore',         total:'₹14,400',  status:'pending',     timeline_step:0 },
+  { id:3, ref:'MC-112873', combo:'North Indian Lunch Thali', emoji:'🫓', event:'Birthday', date:'2025-12-10', guests:120, serving:'Buffet',      venue:'Celebrations Hall, Mysuru',         total:'₹57,600',  status:'delivered',   timeline_step:3 }
+];
+const MOCK_NOTIFS = [
+  { icon:'✅', title:'Booking Confirmed!',       body:'Your Grand South Indian Feast (MC-847291) for 15 Apr has been confirmed by our team.',  time:'2 hours ago',  unread:true  },
+  { icon:'📅', title:'Upcoming Event Reminder',  body:'Your wedding catering on 15 Apr is 33 days away. Contact us for any changes.',          time:'1 day ago',    unread:false },
+  { icon:'🎉', title:'Order Delivered',           body:'Your North Indian Lunch Thali (MC-112873) was delivered successfully. Thank you!',      time:'3 months ago', unread:false }
+];
+const TIMELINE_STEPS = [
+  { label:'Order Placed',   sub:'We received your booking request' },
+  { label:'Confirmed',      sub:'Our team confirmed your order' },
+  { label:'In Preparation', sub:'Our chefs are preparing your menu' },
+  { label:'Delivered',      sub:'Food delivered successfully' }
+];
+
+window.addEventListener('DOMContentLoaded', () => {
+  loadUser(MOCK_USER);
+  renderOverviewBookings();
+  renderAllBookings(MOCK_BOOKINGS);
+  renderNotifications();
+});
+
+function loadUser(u) {
+  const i = u.name.charAt(0).toUpperCase();
+  document.getElementById('sidebarAvatar').textContent = i;
+  document.getElementById('profileAvatar').textContent = i;
+  document.getElementById('sidebarName').textContent   = u.name;
+  document.getElementById('sidebarEmail').textContent  = u.email;
+  document.getElementById('greetName').textContent     = u.name.split(' ')[0];
+  document.getElementById('pf-name').value  = u.name;
+  document.getElementById('pf-email').value = u.email;
+  document.getElementById('pf-phone').value = u.phone;
+}
+
+function showSection(name, el) {
+  document.querySelectorAll('.dash-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('sec-'+name).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  if (el) el.classList.add('active');
+  const titles = { overview:'Overview', bookings:'My Bookings', saved:'Saved Menus', profile:'My Profile', notifications:'Notifications' };
+  document.getElementById('topbarTitle').textContent = titles[name] || name;
+  document.getElementById('dashSidebar').classList.remove('open');
+}
+
+function bookingCardHTML(b) {
+  return `<div class="booking-card" data-status="${b.status}" onclick="openOrder(${b.id})">
+    <div class="bc-icon">${b.emoji}</div>
+    <div class="bc-info">
+      <div class="bc-name">${b.combo}</div>
+      <div class="bc-meta"><span>📅 ${fmtDate(b.date)}</span><span>👥 ${b.guests} guests</span><span>${b.serving==='Banana Leaf'?'🍃':'🍽️'} ${b.serving}</span><span>📍 ${b.venue.split(',')[0]}</span></div>
+      <div style="margin-top:8px;"><span class="status-badge ${b.status}">${statusLabel(b.status)}</span></div>
+    </div>
+    <div class="bc-right"><div class="bc-price">${b.total}</div><div class="bc-ref">${b.ref}</div></div>
+  </div>`;
+}
+
+function renderOverviewBookings() {
+  document.getElementById('overviewBookings').innerHTML = MOCK_BOOKINGS.slice(0,2).map(bookingCardHTML).join('');
+}
+function renderAllBookings(list) {
+  document.getElementById('allBookingsList').innerHTML = list.length
+    ? list.map(bookingCardHTML).join('')
+    : `<div class="empty-state"><div class="es-emoji">📋</div><h3>No bookings found</h3><p>Try a different filter.</p></div>`;
+}
+function filterBookings(status, btn) {
+  document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  renderAllBookings(status==='all' ? MOCK_BOOKINGS : MOCK_BOOKINGS.filter(b=>b.status===status));
+}
+
+function openOrder(id) {
+  const b = MOCK_BOOKINGS.find(x=>x.id===id); if(!b) return;
+  document.getElementById('modalComboName').textContent   = b.combo;
+  document.getElementById('modalStatusBadge').innerHTML   = `<span class="status-badge ${b.status}">${statusLabel(b.status)}</span>`;
+  document.getElementById('mdRef').textContent     = b.ref;
+  document.getElementById('mdEvent').textContent   = b.event;
+  document.getElementById('mdDate').textContent    = fmtDate(b.date);
+  document.getElementById('mdGuests').textContent  = b.guests + ' guests';
+  document.getElementById('mdServing').textContent = b.serving;
+  document.getElementById('mdVenue').textContent   = b.venue;
+  document.getElementById('mdTotal').textContent   = b.total;
+  document.getElementById('mdTimeline').innerHTML  = TIMELINE_STEPS.map((s,i)=>{
+    const done=i<b.timeline_step, cur=i===b.timeline_step;
+    return `<div class="tl-item ${done?'done':''} ${cur?'current':''}"><div class="tl-dot">${done?'✓':(cur?'●':(i+1))}</div><div class="tl-text"><div class="tl-title">${s.label}</div><div class="tl-sub">${s.sub}</div></div></div>`;
+  }).join('');
+  document.getElementById('orderModal').classList.add('show');
+}
+function closeModal(e) { if(e.target.id==='orderModal') closeOrderModal(); }
+function closeOrderModal() { document.getElementById('orderModal').classList.remove('show'); }
+
+function renderNotifications() {
+  document.getElementById('notifList').innerHTML = MOCK_NOTIFS.map(n=>`
+    <div style="background:#fff;border-radius:14px;padding:18px 20px;box-shadow:0 2px 12px rgba(26,15,5,0.06);display:flex;gap:14px;align-items:flex-start;border-left:4px solid ${n.unread?'var(--primary)':'transparent'}">
+      <div style="font-size:1.5rem;flex-shrink:0;">${n.icon}</div>
+      <div style="flex:1;">
+        <div style="font-weight:700;color:var(--dark);font-size:0.9rem;margin-bottom:3px;">${n.title}${n.unread?' <span style="background:var(--primary);color:#fff;font-size:0.6rem;padding:1px 7px;border-radius:50px;font-weight:800;margin-left:6px;">NEW</span>':''}</div>
+        <div style="font-size:0.83rem;color:var(--text-light);line-height:1.5;">${n.body}</div>
+        <div style="font-size:0.72rem;color:#B0A098;margin-top:6px;font-weight:600;">${n.time}</div>
+      </div>
+    </div>`).join('');
+}
+
+function saveProfile() {
+  const name = document.getElementById('pf-name').value.trim();
+  if (!name) { showToast('Please enter your name.','error'); return; }
+  // Flask: PUT /api/my-profile
+  const i = name.charAt(0).toUpperCase();
+  document.getElementById('sidebarAvatar').textContent = i;
+  document.getElementById('profileAvatar').textContent = i;
+  document.getElementById('sidebarName').textContent   = name;
+  document.getElementById('greetName').textContent     = name.split(' ')[0];
+  showToast('Profile updated successfully!','success');
+}
+function changePassword() {
+  const o=document.getElementById('pf-oldpass').value, n=document.getElementById('pf-newpass').value, c=document.getElementById('pf-cpass').value;
+  if(!o||!n||!c)  { showToast('Please fill all password fields.','error'); return; }
+  if(n.length<8)   { showToast('New password must be at least 8 characters.','error'); return; }
+  if(n!==c)        { showToast('New passwords do not match.','error'); return; }
+  // Flask: PUT /api/change-password
+  ['pf-oldpass','pf-newpass','pf-cpass'].forEach(id=>document.getElementById(id).value='');
+  showToast('Password changed successfully! 🔐','success');
+}
+function logout() {
+  // Flask: GET /api/logout
+  showToast('Logged out. See you soon!','success');
+  setTimeout(()=>window.location.href='auth.html',1200);
+}
+function toggleSidebar() { document.getElementById('dashSidebar').classList.toggle('open'); }
+function showToast(msg,type='success') {
+  const t=document.createElement('div');
+  t.style.cssText=`background:#fff;border-radius:12px;padding:12px 18px;box-shadow:0 6px 24px rgba(26,15,5,0.14);display:flex;align-items:center;gap:10px;font-size:0.86rem;font-weight:600;color:var(--text);border-left:4px solid ${type==='success'?'#22C55E':'#EF4444'};min-width:260px;font-family:'Nunito',sans-serif;`;
+  t.innerHTML=`<span>${type==='success'?'✅':'❌'}</span>${msg}`;
+  document.getElementById('toastWrap').appendChild(t);
+  setTimeout(()=>t.remove(),3500);
+}
+function fmtDate(d) { return d ? new Date(d).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}) : '—'; }
+function statusLabel(s) { return {pending:'⏳ Pending',confirmed:'✅ Confirmed',preparation:'👨‍🍳 In Preparation',delivered:'🎉 Delivered',cancelled:'❌ Cancelled'}[s]||s; }
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeOrderModal(); });
+</script>
+</body>
+</html>
