@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book Your Catering — MenuCraft</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="static/css/style.css" />
+  <style>
+
+    /* ══ PAGE HERO ══ */
+    .page-hero {
+      background: linear-gradient(135deg, #1A0F05 0%, #3D2B1A 60%, #5C3D20 100%);
+      padding: 130px 0 65px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-hero::before {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(circle at 15% 50%, rgba(232,113,42,0.22) 0%, transparent 55%),
+        radial-gradient(circle at 85% 30%, rgba(212,175,55,0.13) 0%, transparent 50%);
+    }
+    .page-hero .container { position: relative; z-index: 1; }
+    .page-hero h1 { color: #fff; font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 10px; }
+    .page-hero p  { color: rgba(255,255,255,0.6); font-size: 1rem; max-width: 460px; margin: 0 auto; }
+    .breadcrumb-bar {
+      display: flex; align-items: center; justify-content: center;
+      gap: 8px; margin-bottom: 16px;
+      font-size: 0.82rem; color: rgba(255,255,255,0.38);
+    }
+    .breadcrumb-bar a { color: var(--primary-light); }
+
+    /* ══ NAV VEG TAG ══ */
+    .nav-veg-tag {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: rgba(34,197,94,0.1); border: 1.5px solid rgba(34,197,94,0.35);
+      color: #16a34a; border-radius: 50px; padding: 4px 12px;
+      font-size: 0.73rem; font-weight: 700;
+    }
+    .nav-veg-tag .dot { width: 7px; height: 7px; background: #22c55e; border-radius: 50%; }
+
+    /* ══ BOOKING LAYOUT ══ */
+    .booking-section { padding: 52px 0 88px; }
+    .booking-layout {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 32px;
+      align-items: start;
+    }
+
+    /* ══ FORM CARD ══ */
+    .form-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 36px;
+      box-shadow: 0 2px 20px rgba(26,15,5,0.07);
+      margin-bottom: 24px;
+    }
+    .form-card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      color: var(--dark);
+      margin-bottom: 4px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .form-card-subtitle { font-size: 0.88rem; color: var(--text-light); margin-bottom: 28px; }
+
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .form-group { display: flex; flex-direction: column; gap: 7px; }
+    .form-group.full { grid-column: 1 / -1; }
+
+    .form-label {
+      font-size: 0.82rem; font-weight: 700;
+      color: var(--text); letter-spacing: 0.2px;
+    }
+    .form-label .req { color: var(--primary); margin-left: 2px; }
+
+    .form-input {
+      padding: 12px 16px;
+      border: 2px solid #EDE5DA;
+      border-radius: 10px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.92rem;
+      color: var(--text);
+      background: var(--cream);
+      outline: none;
+      transition: all 0.25s ease;
+      width: 100%;
+    }
+    .form-input:focus { border-color: var(--primary); background: #fff; box-shadow: 0 0 0 3px rgba(232,113,42,0.1); }
+    .form-input.error { border-color: #EF4444; background: #fff5f5; }
+    .error-msg { font-size: 0.75rem; color: #EF4444; margin-top: 2px; display: none; }
+    .error-msg.show { display: block; }
+
+    /* ══ SERVING STYLE DISPLAY ══ */
+    .serving-display {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    }
+    .serving-option {
+      border: 2px solid #EDE5DA;
+      border-radius: 14px; padding: 18px 16px;
+      text-align: center; cursor: pointer;
+      transition: all 0.25s ease; position: relative;
+      background: #fff;
+    }
+    .serving-option:hover { border-color: var(--primary-light); transform: translateY(-2px); }
+    .serving-option.active-buffet     { border-color: var(--primary); background: rgba(232,113,42,0.04); }
+    .serving-option.active-banana     { border-color: #22C55E;        background: rgba(34,197,94,0.04); }
+    .serving-option .so-check {
+      position: absolute; top: 10px; right: 10px;
+      width: 20px; height: 20px; border-radius: 50%;
+      display: none; align-items: center; justify-content: center;
+      font-size: 0.7rem; font-weight: 900; color: #fff;
+    }
+    .serving-option.active-buffet .so-check  { display: flex; background: var(--primary); }
+    .serving-option.active-banana .so-check  { display: flex; background: #22C55E; }
+    .so-emoji { font-size: 2rem; margin-bottom: 8px; display: block; }
+    .so-title { font-weight: 700; font-size: 0.9rem; color: var(--dark); margin-bottom: 3px; }
+    .so-desc  { font-size: 0.75rem; color: var(--text-light); }
+
+    /* ══ ORDER ITEMS TABLE ══ */
+    .order-items-list { margin-top: 4px; }
+    .order-item-row {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #F5EDE4;
+      gap: 12px;
+    }
+    .order-item-row:last-child { border-bottom: none; }
+    .oi-left { display: flex; align-items: center; gap: 10px; }
+    .oi-emoji {
+      width: 38px; height: 38px; border-radius: 8px;
+      background: var(--cream-dark);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; flex-shrink: 0;
+    }
+    .oi-name  { font-weight: 600; font-size: 0.88rem; color: var(--dark); }
+    .oi-cat   { font-size: 0.73rem; color: var(--text-light); margin-top: 1px; text-transform: capitalize; }
+    .oi-price { font-weight: 700; font-size: 0.9rem; color: var(--primary); white-space: nowrap; }
+
+    .empty-cart-msg {
+      text-align: center; padding: 32px 0;
+      color: var(--text-light); font-size: 0.9rem;
+    }
+    .empty-cart-msg .ec-emoji { font-size: 2.5rem; margin-bottom: 10px; }
+
+    /* ══ STICKY ORDER SUMMARY SIDEBAR ══ */
+    .order-sidebar {
+      position: sticky; top: 24px;
+    }
+    .summary-card {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 4px 28px rgba(26,15,5,0.1);
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+    .summary-header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      padding: 22px 24px;
+    }
+    .summary-header h3 { font-size: 1.1rem; color: #fff; margin-bottom: 2px; }
+    .summary-header p  { font-size: 0.8rem; color: rgba(255,255,255,0.7); }
+    .summary-body { padding: 20px 24px; }
+
+    .summary-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 9px 0; font-size: 0.87rem;
+      border-bottom: 1px solid #F5EDE4;
+    }
+    .summary-row:last-of-type { border-bottom: none; }
+    .sr-label { color: var(--text-light); font-weight: 500; }
+    .sr-value { font-weight: 700; color: var(--dark); font-size: 0.9rem; }
+    .sr-value.veg-green { color: #16a34a; }
+    .sr-value.orange    { color: var(--primary); }
+
+    .price-breakdown {
+      background: var(--cream-dark);
+      border-radius: 12px; padding: 16px 20px;
+      margin: 16px 0;
+    }
+    .pb-row {
+      display: flex; justify-content: space-between;
+      font-size: 0.84rem; margin-bottom: 8px; color: var(--text-light);
+    }
+    .pb-row .pb-val { font-weight: 700; color: var(--text); }
+    .pb-divider { height: 1px; background: #DDD8D0; margin: 10px 0; }
+    .pb-total {
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .pb-total .pb-label { font-weight: 700; color: var(--dark); font-size: 0.95rem; }
+    .pb-total .pb-val   {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem; font-weight: 700; color: var(--primary);
+    }
+
+    .confirm-btn {
+      width: 100%; padding: 15px;
+      background: var(--primary); color: #fff;
+      border: none; border-radius: 50px;
+      font-size: 1rem; font-weight: 700;
+      font-family: 'Nunito', sans-serif;
+      cursor: pointer; transition: all 0.25s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      box-shadow: 0 4px 20px rgba(232,113,42,0.32);
+    }
+    .confirm-btn:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(232,113,42,0.42); }
+    .confirm-btn:disabled { background: #D0C4BB; box-shadow: none; cursor: not-allowed; transform: none; }
+
+    .trust-badges {
+      display: flex; flex-direction: column; gap: 8px;
+      margin-top: 16px;
+    }
+    .trust-badge {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.78rem; color: var(--text-light);
+    }
+    .trust-badge .tb-icon { font-size: 0.9rem; }
+
+    /* ══ CONFIRMATION SCREEN ══ */
+    .confirmation-screen {
+      display: none;
+      text-align: center;
+      padding: 80px 24px;
+      animation: fadeSlideIn 0.5s ease;
+    }
+    .confirmation-screen.show { display: block; }
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .confirm-icon {
+      width: 100px; height: 100px;
+      background: linear-gradient(135deg, #22C55E, #16A34A);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem; margin: 0 auto 28px;
+      box-shadow: 0 12px 40px rgba(34,197,94,0.3);
+      animation: popIn 0.5s 0.2s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+    @keyframes popIn { from {opacity:0;transform:scale(0.6);} to {opacity:1;transform:scale(1);} }
+    .confirm-title { font-size: 2rem; color: var(--dark); margin-bottom: 12px; }
+    .confirm-subtitle { color: var(--text-light); font-size: 1rem; max-width: 480px; margin: 0 auto 16px; line-height: 1.7; }
+    .booking-ref {
+      display: inline-block;
+      background: var(--cream-dark);
+      border: 1px solid rgba(232,113,42,0.2);
+      border-radius: 10px;
+      padding: 10px 28px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: 3px;
+      margin: 16px 0 32px;
+    }
+    .confirm-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+    /* ══ PROGRESS STEPS TOP ══ */
+    .booking-progress {
+      background: #fff;
+      border-bottom: 1px solid #EDE5DA;
+      padding: 14px 0;
+      box-shadow: 0 1px 12px rgba(26,15,5,0.06);
+    }
+    .bp-inner {
+      display: flex; align-items: center; justify-content: center;
+      gap: 0; max-width: 560px; margin: 0 auto;
+    }
+    .bp-step {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.82rem; font-weight: 600;
+      color: var(--text-light); padding: 0 16px;
+    }
+    .bp-step.done   { color: #22C55E; }
+    .bp-step.active { color: var(--primary); font-weight: 700; }
+    .bp-num {
+      width: 26px; height: 26px; border-radius: 50%;
+      background: #F0E8DE; color: var(--text-light);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem; font-weight: 700; flex-shrink: 0;
+      transition: all 0.25s;
+    }
+    .bp-step.done   .bp-num { background: #22C55E; color: #fff; }
+    .bp-step.active .bp-num { background: var(--primary); color: #fff; box-shadow: 0 3px 10px rgba(232,113,42,0.3); }
+    .bp-arrow { color: #DDD; font-size: 1rem; flex-shrink: 0; }
+
+    @media (max-width: 992px) {
+      .booking-layout { grid-template-columns: 1fr; }
+      .order-sidebar  { position: static; }
+    }
+    @media (max-width: 600px) {
+      .form-grid    { grid-template-columns: 1fr; }
+      .form-card    { padding: 24px 18px; }
+      .serving-display { grid-template-columns: 1fr 1fr; }
+      .bp-step span { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ NAVBAR ══ -->
+  <nav class="navbar scrolled" id="navbar" data-always-scrolled="true" style="position:sticky;top:0;z-index:1000;background:rgba(255,248,240,0.98);backdrop-filter:blur(16px);box-shadow:0 2px 24px rgba(26,15,5,0.1);">
+    <div class="container navbar-inner">
+      <a href="index.html" class="navbar-logo" style="color:var(--dark);">Menu<span>Craft</span></a>
+      <ul class="navbar-links">
+        <li><a href="index.html#services">Services</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="custom-menu.html">Custom Menu</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="navbar-actions" style="gap:10px;">
+        <span class="nav-veg-tag"><span class="dot"></span> 100% Pure Veg</span>
+        <a href="auth.html" class="btn btn-outline">Login</a>
+        <a href="book.html" class="btn btn-primary" style="background:var(--primary-dark);">Book Now</a>
+      </div>
+      <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+    </div>
+  </nav>
+
+  <!-- ══ PAGE HERO ══ -->
+  <section class="page-hero">
+    <div class="container">
+      <div class="breadcrumb-bar">
+        <a href="index.html">Home</a> <span>›</span>
+        <span style="color:rgba(255,255,255,0.55);">Book Now</span>
+      </div>
+      <span class="section-label" style="color:var(--primary-light);">Almost There!</span>
+      <h1 class="mt-2">Confirm Your Booking</h1>
+      <p class="mt-2">Fill in your details below and we'll confirm your catering order within 2 hours.</p>
+    </div>
+  </section>
+
+  <!-- ══ BOOKING PROGRESS ══ -->
+  <div class="booking-progress">
+    <div class="bp-inner">
+      <div class="bp-step done">
+        <div class="bp-num">✓</div>
+        <span>Choose Menu</span>
+      </div>
+      <div class="bp-arrow">›</div>
+      <div class="bp-step done">
+        <div class="bp-num">✓</div>
+        <span>Customise</span>
+      </div>
+      <div class="bp-arrow">›</div>
+      <div class="bp-step active">
+        <div class="bp-num">3</div>
+        <span>Book & Confirm</span>
+      </div>
+      <div class="bp-arrow">›</div>
+      <div class="bp-step">
+        <div class="bp-num">4</div>
+        <span>Done!</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ BOOKING SECTION ══ -->
+  <section class="booking-section">
+    <div class="container">
+
+      <!-- ── BOOKING FORM (main view) ── -->
+      <div id="bookingForm">
+        <div class="booking-layout">
+
+          <!-- LEFT: Forms -->
+          <div class="forms-col">
+
+            <!-- Customer Details -->
+            <div class="form-card reveal">
+              <div class="form-card-title">👤 Your Details</div>
+              <p class="form-card-subtitle">We'll use these to send your booking confirmation and stay in touch.</p>
+              <div class="form-grid">
+
+                <div class="form-group">
+                  <label class="form-label">Full Name <span class="req">*</span></label>
+                  <input type="text" class="form-input" id="custName" placeholder="e.g. Ravi Kumar" />
+                  <span class="error-msg" id="err-name">Please enter your full name.</span>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Phone Number <span class="req">*</span></label>
+                  <input type="tel" class="form-input" id="custPhone" placeholder="+91 98765 43210" />
+                  <span class="error-msg" id="err-phone">Please enter a valid phone number.</span>
+                </div>
+
+                <div class="form-group full">
+                  <label class="form-label">Email Address <span class="req">*</span></label>
+                  <input type="email" class="form-input" id="custEmail" placeholder="you@example.com" />
+                  <span class="error-msg" id="err-email">Please enter a valid email address.</span>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Event Details -->
+            <div class="form-card reveal">
+              <div class="form-card-title">📅 Event Details</div>
+              <p class="form-card-subtitle">Confirm the details of your event below. Edit if anything changed.</p>
+              <div class="form-grid">
+
+                <div class="form-group">
+                  <label class="form-label">Event Type <span class="req">*</span></label>
+                  <select class="form-input" id="eventType">
+                    <option value="">Select event type</option>
+                    <option value="Wedding">💍 Wedding</option>
+                    <option value="Birthday">🎂 Birthday Party</option>
+                    <option value="Corporate">🏢 Corporate Event</option>
+                    <option value="Custom">✨ Custom Function</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Number of Guests <span class="req">*</span></label>
+                  <input type="number" class="form-input" id="guestCount" placeholder="e.g. 150" min="1" />
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Event Date <span class="req">*</span></label>
+                  <input type="date" class="form-input" id="eventDate" />
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Event Time <span class="req">*</span></label>
+                  <input type="time" class="form-input" id="eventTime" />
+                </div>
+
+                <div class="form-group full">
+                  <label class="form-label">Venue / Address <span class="req">*</span></label>
+                  <input type="text" class="form-input" id="eventVenue" placeholder="e.g. Grand Ballroom, MG Road, Bangalore" />
+                  <span class="error-msg" id="err-venue">Please enter the event venue.</span>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Serving Style -->
+            <div class="form-card reveal">
+              <div class="form-card-title">🍽️ Serving Style</div>
+              <p class="form-card-subtitle">Choose how you'd like the food to be served at your event.</p>
+              <div class="serving-display">
+
+                <div class="serving-option" id="opt-buffet" data-style="Buffet" onclick="selectServing('Buffet')">
+                  <div class="so-check">✓</div>
+                  <span class="so-emoji">🍽️</span>
+                  <div class="so-title">Buffet Style</div>
+                  <div class="so-desc">Guests help themselves from food counters</div>
+                </div>
+
+                <div class="serving-option" id="opt-banana" data-style="Banana Leaf" onclick="selectServing('Banana Leaf')">
+                  <div class="so-check">✓</div>
+                  <span class="so-emoji">🍃</span>
+                  <div class="so-title">Banana Leaf</div>
+                  <div class="so-desc">Traditional table service on banana leaves</div>
+                </div>
+
+              </div>
+              <span class="error-msg" id="err-serving" style="margin-top:10px;">Please select a serving style.</span>
+            </div>
+
+            <!-- Selected Dishes -->
+            <div class="form-card reveal">
+              <div class="form-card-title">🥗 Your Selected Dishes</div>
+              <p class="form-card-subtitle">These are the dishes from your custom menu. <a href="custom-menu.html" style="color:var(--primary);font-weight:700;">Edit menu →</a></p>
+              <div class="order-items-list" id="orderItemsList">
+                <div class="empty-cart-msg">
+                  <div class="ec-emoji">🍽️</div>
+                  <p>No dishes selected yet. <a href="custom-menu.html" style="color:var(--primary);font-weight:600;">Build your custom menu →</a></p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Special Requests -->
+            <div class="form-card reveal">
+              <div class="form-card-title">💬 Special Requests</div>
+              <p class="form-card-subtitle">Any specific dietary needs, allergies, or special arrangements?</p>
+              <textarea class="form-input" id="specialRequests" rows="4"
+                placeholder="e.g. Please avoid onion and garlic in all dishes. Need a high chair for kids' table. Jain food required for 20 guests..."></textarea>
+            </div>
+
+          </div><!-- end forms-col -->
+
+          <!-- RIGHT: Order Summary Sidebar -->
+          <div class="order-sidebar">
+
+            <div class="summary-card">
+              <div class="summary-header">
+                <h3>🧾 Order Summary</h3>
+                <p>Review before confirming</p>
+              </div>
+              <div class="summary-body">
+
+                <div class="summary-row">
+                  <span class="sr-label">Event Type</span>
+                  <span class="sr-value" id="sb-eventType">—</span>
+                </div>
+                <div class="summary-row">
+                  <span class="sr-label">Date</span>
+                  <span class="sr-value" id="sb-date">—</span>
+                </div>
+                <div class="summary-row">
+                  <span class="sr-label">Time</span>
+                  <span class="sr-value" id="sb-time">—</span>
+                </div>
+                <div class="summary-row">
+                  <span class="sr-label">Guests</span>
+                  <span class="sr-value orange" id="sb-guests">—</span>
+                </div>
+                <div class="summary-row">
+                  <span class="sr-label">Serving Style</span>
+                  <span class="sr-value" id="sb-serving">—</span>
+                </div>
+                <div class="summary-row">
+                  <span class="sr-label">Menu Type</span>
+                  <span class="sr-value veg-green">🟢 100% Pure Veg</span>
+                </div>
+                <div class="summary-row">
+                  <span class="sr-label">Dishes Selected</span>
+                  <span class="sr-value orange" id="sb-dishCount">0 dishes</span>
+                </div>
+
+                <div class="price-breakdown" id="priceBreakdown">
+                  <div class="pb-row"><span>Per head cost</span><span class="pb-val" id="pb-perhead">₹0</span></div>
+                  <div class="pb-row"><span id="pb-guestrow">× 0 guests</span><span class="pb-val" id="pb-subtotal">₹0</span></div>
+                  <div class="pb-divider"></div>
+                  <div class="pb-total">
+                    <span class="pb-label">Estimated Total</span>
+                    <span class="pb-val" id="pb-total">₹0</span>
+                  </div>
+                </div>
+
+                <button class="confirm-btn" id="confirmBtn" onclick="submitBooking()">
+                  ✅ Confirm Booking
+                </button>
+
+                <div class="trust-badges">
+                  <div class="trust-badge"><span class="tb-icon">🔒</span> Your data is safe and secure</div>
+                  <div class="trust-badge"><span class="tb-icon">⚡</span> Confirmation within 2 hours</div>
+                  <div class="trust-badge"><span class="tb-icon">❌</span> Free cancellation 48hrs before</div>
+                  <div class="trust-badge"><span class="tb-icon">📞</span> Support: +91 98765 43210</div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Back to menu link -->
+            <div style="text-align:center; padding: 8px 0;">
+              <a href="custom-menu.html" style="font-size:0.85rem; color:var(--text-light); font-weight:600;">
+                ← Go back and edit your menu
+              </a>
+            </div>
+
+          </div><!-- end order-sidebar -->
+
+        </div><!-- end booking-layout -->
+      </div><!-- end bookingForm -->
+
+      <!-- ── CONFIRMATION SCREEN ── -->
+      <div class="confirmation-screen" id="confirmationScreen">
+        <div class="confirm-icon">✓</div>
+        <h2 class="confirm-title">Booking Confirmed! 🎉</h2>
+        <p class="confirm-subtitle">
+          Thank you! Your catering order has been received. Our team will review your booking and
+          contact you within 2 hours to confirm all details and discuss payment.
+        </p>
+        <div class="booking-ref" id="bookingRefDisplay">MC-000000</div>
+        <p style="color:var(--text-light);font-size:0.88rem;margin-bottom:32px;">
+          A confirmation has been sent to <strong id="confirmEmailDisplay">—</strong>
+        </p>
+        <div class="confirm-actions">
+          <a href="index.html" class="btn btn-primary">🏠 Back to Home</a>
+          <a href="menu.html" class="btn btn-outline">🍽️ Browse Menus</a>
+        </div>
+
+        <!-- Summary box on confirmation -->
+        <div style="max-width:560px;margin:48px auto 0;">
+          <div class="form-card" style="text-align:left;">
+            <div class="form-card-title" style="margin-bottom:20px;">📋 Booking Summary</div>
+            <div id="confirmSummaryBody"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="static/js/main.js"></script>
+  <script>
+  // ══════════════════════════════════════
+  // LOAD DATA FROM CUSTOM MENU BUILDER
+  // ══════════════════════════════════════
+  let orderData   = null;
+  let servingStyle = null;
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const saved = sessionStorage.getItem('menucraft_order');
+    if (saved) {
+      try {
+        orderData = JSON.parse(saved);
+        prefillFromBuilder(orderData);
+      } catch(e) { console.warn('Could not parse order data'); }
+    }
+    // Set min date
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('eventDate').min = today;
+
+    // Live sidebar sync
+    ['eventType','guestCount','eventDate','eventTime'].forEach(id => {
+      document.getElementById(id)?.addEventListener('change', updateSidebar);
+      document.getElementById(id)?.addEventListener('input',  updateSidebar);
+    });
+    updateSidebar();
+  });
+
+  function prefillFromBuilder(data) {
+    // Event type
+    if (data.event) {
+      const sel = document.getElementById('eventType');
+      for (let opt of sel.options) { if (opt.value === data.event) { sel.value = data.event; break; } }
+    }
+    if (data.date)   document.getElementById('eventDate').value  = data.date;
+    if (data.time)   document.getElementById('eventTime').value  = data.time;
+    if (data.venue)  document.getElementById('eventVenue').value = data.venue;
+    if (data.guests) document.getElementById('guestCount').value = data.guests;
+    if (data.notes)  document.getElementById('specialRequests').value = data.notes;
+
+    // Serving style
+    if (data.serving) selectServing(data.serving);
+
+    // Dishes
+    if (data.dishes && Object.keys(data.dishes).length > 0) {
+      renderDishes(data.dishes, data.guests || 0);
+    }
+
+    updateSidebar();
+  }
+
+  // ══════════════════════════════════════
+  // RENDER DISHES LIST
+  // ══════════════════════════════════════
+  function renderDishes(dishes, guests) {
+    const list = document.getElementById('orderItemsList');
+    list.innerHTML = '';
+    let perHead = 0;
+
+    Object.values(dishes).forEach(d => {
+      perHead += d.price;
+      const row = document.createElement('div');
+      row.className = 'order-item-row';
+      row.innerHTML = `
+        <div class="oi-left">
+          <div class="oi-emoji">${d.emoji}</div>
+          <div>
+            <div class="oi-name">${d.name}</div>
+            <div class="oi-cat">${d.cat}</div>
+          </div>
+        </div>
+        <div class="oi-price">₹${d.price}<span style="font-size:0.73rem;font-weight:400;color:var(--text-light);">/head</span></div>`;
+      list.appendChild(row);
+    });
+
+    // Totals row
+    const g = guests || parseInt(document.getElementById('guestCount').value) || 0;
+    const totalRow = document.createElement('div');
+    totalRow.style.cssText = 'padding:14px 0 0;display:flex;justify-content:space-between;align-items:center;border-top:2px solid #EDE5DA;margin-top:8px;';
+    totalRow.innerHTML = `
+      <span style="font-weight:700;font-size:0.9rem;color:var(--dark);">Per head subtotal</span>
+      <span style="font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--primary);">₹${perHead}</span>`;
+    list.appendChild(totalRow);
+
+    updatePriceBox(perHead, g);
+  }
+
+  function updatePriceBox(perHead, guests) {
+    const total = perHead * guests;
+    document.getElementById('pb-perhead').textContent   = '₹' + perHead.toLocaleString('en-IN');
+    document.getElementById('pb-guestrow').textContent  = '× ' + guests + ' guests';
+    document.getElementById('pb-subtotal').textContent  = '₹' + total.toLocaleString('en-IN');
+    document.getElementById('pb-total').textContent     = '₹' + total.toLocaleString('en-IN');
+    document.getElementById('sb-dishCount').textContent = (orderData?.dishes ? Object.keys(orderData.dishes).length : 0) + ' dishes';
+  }
+
+  // ══════════════════════════════════════
+  // SERVING STYLE SELECTOR
+  // ══════════════════════════════════════
+  function selectServing(style) {
+    servingStyle = style;
+    document.getElementById('opt-buffet').classList.remove('active-buffet');
+    document.getElementById('opt-banana').classList.remove('active-banana');
+    if (style === 'Buffet')      document.getElementById('opt-buffet').classList.add('active-buffet');
+    if (style === 'Banana Leaf') document.getElementById('opt-banana').classList.add('active-banana');
+    document.getElementById('err-serving').classList.remove('show');
+    document.getElementById('sb-serving').textContent = style === 'Buffet' ? '🍽️ Buffet' : '🍃 Banana Leaf';
+    updateSidebar();
+  }
+
+  // ══════════════════════════════════════
+  // LIVE SIDEBAR UPDATER
+  // ══════════════════════════════════════
+  function updateSidebar() {
+    const eventType = document.getElementById('eventType').value;
+    const guests    = parseInt(document.getElementById('guestCount').value) || 0;
+    const dateVal   = document.getElementById('eventDate').value;
+    const timeVal   = document.getElementById('eventTime').value;
+
+    document.getElementById('sb-eventType').textContent = eventType || '—';
+    document.getElementById('sb-date').textContent      = dateVal ? formatDate(dateVal) : '—';
+    document.getElementById('sb-time').textContent      = timeVal ? formatTime(timeVal) : '—';
+    document.getElementById('sb-guests').textContent    = guests ? guests + ' guests' : '—';
+
+    if (!document.getElementById('sb-serving').textContent || document.getElementById('sb-serving').textContent === '—') {
+      document.getElementById('sb-serving').textContent = '—';
+    }
+
+    // Recalc price if dishes exist
+    if (orderData?.dishes) {
+      const perHead = Object.values(orderData.dishes).reduce((s, d) => s + d.price, 0);
+      updatePriceBox(perHead, guests);
+    }
+  }
+
+  function formatDate(d) {
+    if (!d) return '—';
+    return new Date(d).toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' });
+  }
+  function formatTime(t) {
+    if (!t) return '—';
+    const [h, m] = t.split(':');
+    const hr = parseInt(h);
+    return `${hr > 12 ? hr-12 : hr || 12}:${m} ${hr >= 12 ? 'PM' : 'AM'}`;
+  }
+
+  // ══════════════════════════════════════
+  // FORM VALIDATION
+  // ══════════════════════════════════════
+  function validate() {
+    let ok = true;
+
+    const name  = document.getElementById('custName').value.trim();
+    const phone = document.getElementById('custPhone').value.trim();
+    const email = document.getElementById('custEmail').value.trim();
+    const venue = document.getElementById('eventVenue').value.trim();
+
+    const showErr = (id, inputId, show) => {
+      document.getElementById(id).classList.toggle('show', show);
+      document.getElementById(inputId)?.classList.toggle('error', show);
+    };
+
+    if (!name)                { showErr('err-name', 'custName', true);   ok = false; }
+    else                        showErr('err-name', 'custName', false);
+    if (!phone || phone.length < 8) { showErr('err-phone','custPhone',true); ok = false; }
+    else                             showErr('err-phone','custPhone',false);
+    if (!email || !email.includes('@')) { showErr('err-email','custEmail',true); ok = false; }
+    else                                  showErr('err-email','custEmail',false);
+    if (!venue)               { showErr('err-venue','eventVenue',true);  ok = false; }
+    else                        showErr('err-venue','eventVenue',false);
+
+    if (!servingStyle) {
+      document.getElementById('err-serving').classList.add('show');
+      ok = false;
+    } else {
+      document.getElementById('err-serving').classList.remove('show');
+    }
+
+    return ok;
+  }
+
+  // ══════════════════════════════════════
+  // SUBMIT BOOKING
+  // ══════════════════════════════════════
+  async function submitBooking() {
+    if (!validate()) {
+      document.querySelector('.form-input.error')?.scrollIntoView({ behavior:'smooth', block:'center' });
+      return;
+    }
+
+    const btn = document.getElementById('confirmBtn');
+    btn.disabled = true;
+    btn.innerHTML = '⏳ Confirming...';
+
+    // Build booking payload
+    const bookingPayload = {
+      customer: {
+        name:  document.getElementById('custName').value.trim(),
+        phone: document.getElementById('custPhone').value.trim(),
+        email: document.getElementById('custEmail').value.trim(),
+      },
+      event: {
+        type:    document.getElementById('eventType').value,
+        date:    document.getElementById('eventDate').value,
+        time:    document.getElementById('eventTime').value,
+        venue:   document.getElementById('eventVenue').value.trim(),
+        guests:  parseInt(document.getElementById('guestCount').value) || 0,
+        serving: servingStyle,
+        notes:   document.getElementById('specialRequests').value.trim(),
+      },
+      dishes: orderData?.dishes || {},
+      total:  document.getElementById('pb-total').textContent,
+    };
+
+    // ── Flask API call (when backend is ready) ──
+    // try {
+    //   const res = await fetch('/api/book', {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify(bookingPayload)
+    //   });
+    //   const data = await res.json();
+    //   if (!data.success) throw new Error(data.message);
+    //   showConfirmation(bookingPayload, data.booking_ref);
+    // } catch(err) {
+    //   btn.disabled = false;
+    //   btn.innerHTML = '✅ Confirm Booking';
+    //   alert('Something went wrong. Please try again.');
+    // }
+
+    // Simulate success for now (remove when Flask backend is connected)
+    await new Promise(r => setTimeout(r, 1400));
+    const ref = 'MC-' + Math.floor(100000 + Math.random() * 900000);
+    showConfirmation(bookingPayload, ref);
+  }
+
+  // ══════════════════════════════════════
+  // SHOW CONFIRMATION SCREEN
+  // ══════════════════════════════════════
+  function showConfirmation(payload, ref) {
+    sessionStorage.removeItem('menucraft_order');
+
+    document.getElementById('bookingRefDisplay').textContent  = ref;
+    document.getElementById('confirmEmailDisplay').textContent = payload.customer.email;
+
+    // Build confirmation summary
+    const sb = document.getElementById('confirmSummaryBody');
+    const dishes = Object.values(payload.dishes || {});
+    const perHead = dishes.reduce((s, d) => s + d.price, 0);
+
+    sb.innerHTML = `
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;">
+        <div><div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);margin-bottom:4px;">Customer</div><div style="font-weight:700;">${payload.customer.name}</div><div style="font-size:0.85rem;color:var(--text-light);">${payload.customer.phone}</div></div>
+        <div><div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);margin-bottom:4px;">Event</div><div style="font-weight:700;">${payload.event.type || '—'}</div><div style="font-size:0.85rem;color:var(--text-light);">${formatDate(payload.event.date)}</div></div>
+        <div><div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);margin-bottom:4px;">Guests</div><div style="font-weight:700;">${payload.event.guests}</div></div>
+        <div><div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);margin-bottom:4px;">Serving Style</div><div style="font-weight:700;">${payload.event.serving === 'Buffet' ? '🍽️ Buffet' : '🍃 Banana Leaf'}</div></div>
+        <div style="grid-column:1/-1;"><div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);margin-bottom:4px;">Venue</div><div style="font-weight:600;font-size:0.9rem;">${payload.event.venue}</div></div>
+      </div>
+      ${dishes.length > 0 ? `
+      <div style="border-top:1px solid #EDE5DA;padding-top:16px;">
+        <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);margin-bottom:12px;">Dishes (${dishes.length})</div>
+        ${dishes.map(d => `<div style="display:flex;justify-content:space-between;padding:6px 0;font-size:0.87rem;border-bottom:1px dashed #F0E8DE;"><span>${d.emoji} ${d.name}</span><span style="color:var(--primary);font-weight:700;">₹${d.price}/head</span></div>`).join('')}
+        <div style="display:flex;justify-content:space-between;padding:14px 0 0;font-weight:700;"><span>Estimated Total (${payload.event.guests} guests)</span><span style="font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--primary);">${payload.total}</span></div>
+      </div>` : ''}
+    `;
+
+    // Switch views
+    document.getElementById('bookingForm').style.display = 'none';
+    document.getElementById('confirmationScreen').classList.add('show');
+
+    // Update progress bar
+    document.querySelectorAll('.bp-step').forEach((s, i) => {
+      s.classList.remove('active', 'done');
+      if (i < 3) s.classList.add('done');
+      if (i === 3) s.classList.add('active');
+    });
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  </script>
+
+  <style>
+    .mobile-menu { display:none; background:rgba(255,248,240,0.97); backdrop-filter:blur(16px); padding:20px 24px; border-top:1px solid rgba(232,113,42,0.1); }
+    .mobile-menu.open { display:block; }
+    .mobile-menu ul { display:flex; flex-direction:column; gap:12px; }
+    .mobile-menu ul li a { color:var(--text); font-size:1rem; font-weight:600; display:block; padding:8px 0; border-bottom:1px solid rgba(232,113,42,0.08); }
+    .hamburger.active span:nth-child(1) { transform:rotate(45deg) translate(5px,5px); }
+    .hamburger.active span:nth-child(2) { opacity:0; }
+    .hamburger.active span:nth-child(3) { transform:rotate(-45deg) translate(5px,-5px); }
+  </style>
+</body>
+</html>

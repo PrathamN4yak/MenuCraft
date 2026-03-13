@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Menu — MenuCraft | 100% Pure Veg</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="static/css/style.css" />
+  <style>
+
+    /* ══ PAGE HERO ══ */
+    .page-hero {
+      background: linear-gradient(135deg, #1A0F05 0%, #3D2B1A 60%, #5C3D20 100%);
+      padding: 140px 0 80px;
+      position: relative; overflow: hidden; text-align: center;
+    }
+    .page-hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(circle at 20% 50%, rgba(232,113,42,0.2) 0%, transparent 55%),
+                  radial-gradient(circle at 80% 30%, rgba(212,175,55,0.12) 0%, transparent 50%);
+    }
+    .page-hero .container { position: relative; z-index: 1; }
+    .page-hero h1 { color: #fff; font-size: clamp(2.2rem, 5vw, 3.5rem); margin-bottom: 14px; }
+    .page-hero p  { color: rgba(255,255,255,0.65); font-size: 1.05rem; max-width: 520px; margin: 0 auto; }
+    .breadcrumb-bar {
+      display: flex; align-items: center; justify-content: center;
+      gap: 8px; margin-bottom: 20px; font-size: 0.82rem; color: rgba(255,255,255,0.4);
+    }
+    .breadcrumb-bar a { color: var(--primary-light); }
+
+    /* ══ VEG BADGE ══ */
+    .pure-veg-hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(34,197,94,0.15); border: 1.5px solid rgba(34,197,94,0.45);
+      color: #4ade80; border-radius: 50px; padding: 7px 18px;
+      font-size: 0.8rem; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; margin-bottom: 20px;
+    }
+    .pure-veg-hero-badge .dot {
+      width: 10px; height: 10px; background: #22c55e; border-radius: 50%;
+      box-shadow: 0 0 8px rgba(34,197,94,0.8);
+      animation: pulse-green 1.8s ease-in-out infinite;
+    }
+    @keyframes pulse-green {
+      0%,100% { box-shadow: 0 0 6px rgba(34,197,94,0.8); }
+      50%      { box-shadow: 0 0 14px rgba(34,197,94,1); }
+    }
+    .nav-veg-tag {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: rgba(34,197,94,0.1); border: 1.5px solid rgba(34,197,94,0.35);
+      color: #16a34a; border-radius: 50px; padding: 4px 12px;
+      font-size: 0.73rem; font-weight: 700;
+    }
+    .nav-veg-tag .dot { width: 7px; height: 7px; background: #22c55e; border-radius: 50%; }
+
+    /* ══ FILTER BAR ══ */
+    .filter-bar {
+      background: #fff;
+      border-bottom: 1px solid #EDE5DA;
+      position: sticky; top: 64px; z-index: 99;
+      padding: 14px 0;
+      box-shadow: 0 2px 12px rgba(26,15,5,0.06);
+    }
+    .filter-bar-inner {
+      display: flex; align-items: center;
+      gap: 10px; flex-wrap: wrap;
+      justify-content: space-between;
+    }
+    .filter-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+    .filter-tab {
+      padding: 8px 20px; border-radius: 50px;
+      font-size: 0.85rem; font-weight: 700;
+      cursor: pointer; border: 2px solid #EDE5DA;
+      background: var(--cream); color: var(--text-light);
+      transition: all 0.25s; font-family: 'Nunito', sans-serif;
+    }
+    .filter-tab:hover  { border-color: var(--primary); color: var(--primary); }
+    .filter-tab.active { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: 0 4px 14px rgba(232,113,42,0.28); }
+
+    .search-box {
+      display: flex; align-items: center; gap: 10px;
+      background: var(--cream); border: 2px solid #EDE5DA;
+      border-radius: 50px; padding: 8px 18px;
+      transition: all 0.25s;
+    }
+    .search-box:focus-within { border-color: var(--primary); background: #fff; box-shadow: 0 0 0 3px rgba(232,113,42,0.1); }
+    .search-box input {
+      border: none; background: transparent; outline: none;
+      font-family: 'Nunito', sans-serif; font-size: 0.88rem;
+      color: var(--text); width: 200px;
+    }
+
+    /* ══ MENU SECTION ══ */
+    .menu-section { padding: 52px 0 88px; background: var(--cream); }
+
+    /* ══ COMBO CARD ══ */
+    .combos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 28px;
+    }
+    .combo-card {
+      background: #fff;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 2px 16px rgba(26,15,5,0.07);
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+      display: flex; flex-direction: column;
+    }
+    .combo-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 36px rgba(26,15,5,0.13);
+      border-color: rgba(232,113,42,0.2);
+    }
+
+    .combo-header {
+      padding: 22px 24px 18px;
+      position: relative; overflow: hidden;
+    }
+    .combo-header.theme-south  { background: linear-gradient(135deg, #3D2B1A, #5C3D20); }
+    .combo-header.theme-north  { background: linear-gradient(135deg, #1A1A3D, #2D2B5C); }
+    .combo-header.theme-snack  { background: linear-gradient(135deg, #1A3020, #2B5C38); }
+    .combo-header.theme-lunch  { background: linear-gradient(135deg, #3D1A1A, #5C2B20); }
+    .combo-header.theme-dinner { background: linear-gradient(135deg, #1A2A3D, #20385C); }
+    .combo-header.theme-wedding{ background: linear-gradient(135deg, #3D2B1A, #7A5530); }
+    .combo-header::after {
+      content: ''; position: absolute; bottom: -20px; right: -20px;
+      width: 100px; height: 100px; border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+    }
+
+    .combo-tag {
+      display: inline-block; padding: 3px 12px; border-radius: 50px;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; margin-bottom: 12px;
+    }
+    .combo-tag.south   { background: rgba(232,113,42,0.25); color: #F9A56A; }
+    .combo-tag.north   { background: rgba(147,112,219,0.25); color: #C3A8FF; }
+    .combo-tag.snack   { background: rgba(34,197,94,0.25);  color: #86EFAC; }
+    .combo-tag.lunch   { background: rgba(251,146,60,0.25); color: #FDB37E; }
+    .combo-tag.dinner  { background: rgba(96,165,250,0.25); color: #93C5FD; }
+    .combo-tag.wedding { background: rgba(212,175,55,0.25); color: #F0D060; }
+
+    .combo-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; font-weight: 700;
+      color: #fff; margin-bottom: 6px; line-height: 1.3;
+    }
+    .combo-tagline { font-size: 0.8rem; color: rgba(255,255,255,0.6); line-height: 1.5; }
+    .combo-emoji-row { position: absolute; top: 16px; right: 20px; font-size: 2rem; opacity: 0.55; }
+
+    .combo-body { padding: 20px 24px; flex: 1; }
+    .serves-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--cream); border: 1px solid #EDE5DA;
+      border-radius: 50px; padding: 4px 12px;
+      font-size: 0.75rem; font-weight: 700; color: var(--text-light);
+      margin-bottom: 16px;
+    }
+    .dishes-label {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1.5px; color: var(--text-light); margin-bottom: 12px;
+    }
+    .dish-items { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 18px; }
+    .dish-pill {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: var(--cream); border: 1px solid #EDE5DA;
+      border-radius: 50px; padding: 5px 12px;
+      font-size: 0.8rem; color: var(--text); font-weight: 600;
+      transition: all 0.2s;
+    }
+    .dish-pill:hover { background: rgba(232,113,42,0.07); border-color: rgba(232,113,42,0.25); color: var(--primary); }
+    .dish-pill .pill-dot { width: 7px; height: 7px; border-radius: 50%; background: #22C55E; flex-shrink: 0; }
+
+    .combo-footer {
+      padding: 16px 24px 20px;
+      border-top: 1px solid #F5EDE4;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .price-block .price-label { font-size: 0.7rem; color: var(--text-light); font-weight: 600; text-transform: uppercase; }
+    .price-block .price-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem; font-weight: 700; color: var(--primary); line-height: 1.1;
+    }
+    .price-block .price-sub { font-size: 0.75rem; color: var(--text-light); }
+
+    .combo-actions { display: flex; gap: 8px; }
+    .btn-book-combo {
+      padding: 10px 20px; border-radius: 50px;
+      background: var(--primary); color: #fff; border: none;
+      font-size: 0.85rem; font-weight: 700;
+      font-family: 'Nunito', sans-serif; cursor: pointer;
+      transition: all 0.25s; white-space: nowrap;
+      box-shadow: 0 4px 14px rgba(232,113,42,0.28);
+    }
+    .btn-book-combo:hover { background: var(--primary-dark); transform: translateY(-2px); }
+    .btn-details {
+      padding: 10px 14px; border-radius: 50px;
+      background: var(--cream); color: var(--text);
+      border: 2px solid #EDE5DA; font-size: 0.85rem; font-weight: 700;
+      font-family: 'Nunito', sans-serif; cursor: pointer; transition: all 0.25s;
+    }
+    .btn-details:hover { border-color: var(--primary); color: var(--primary); }
+
+    .popular-badge {
+      position: absolute; top: 16px; left: 24px;
+      background: linear-gradient(135deg, #D4AF37, #F0C830);
+      color: #1A0F05; font-size: 0.65rem; font-weight: 900;
+      letter-spacing: 1px; text-transform: uppercase;
+      padding: 4px 10px; border-radius: 50px;
+      box-shadow: 0 2px 8px rgba(212,175,55,0.4);
+    }
+
+    /* ══ NO RESULTS ══ */
+    .no-results { text-align: center; padding: 64px 24px; display: none; }
+    .no-results.show { display: block; }
+    .no-results .nr-emoji { font-size: 3rem; margin-bottom: 16px; }
+
+    /* ══ DETAIL MODAL ══ */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(26,15,5,0.65); backdrop-filter: blur(4px);
+      z-index: 9999; display: none; align-items: center; justify-content: center; padding: 20px;
+    }
+    .modal-overlay.show { display: flex; }
+    .modal-box {
+      background: #fff; border-radius: 24px;
+      width: 100%; max-width: 560px; max-height: 90vh; overflow-y: auto;
+      animation: modalIn 0.35s cubic-bezier(0.34,1.56,0.64,1);
+      box-shadow: 0 24px 80px rgba(26,15,5,0.25);
+    }
+    @keyframes modalIn { from {opacity:0;transform:scale(0.88) translateY(20px);} to {opacity:1;transform:scale(1) translateY(0);} }
+    .modal-header {
+      padding: 28px 28px 20px; border-bottom: 1px solid #EDE5DA;
+      display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+    }
+    .modal-close {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--cream); border: none; cursor: pointer;
+      font-size: 1rem; color: var(--text-light); flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+    }
+    .modal-close:hover { background: var(--primary); color: #fff; }
+    .modal-body { padding: 24px 28px 28px; }
+    .modal-dish-list { display: flex; flex-direction: column; gap: 8px; margin: 16px 0; }
+    .modal-dish-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 14px; background: var(--cream); border-radius: 10px;
+      font-size: 0.88rem; font-weight: 600; color: var(--text);
+    }
+    .veg-sq {
+      width: 14px; height: 14px; border-radius: 3px;
+      border: 2px solid #22C55E; display: flex; align-items: center;
+      justify-content: center; flex-shrink: 0;
+    }
+    .veg-sq::after { content:''; width:5px; height:5px; background:#22C55E; border-radius:50%; }
+    .modal-price-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 0 0; border-top: 1px solid #EDE5DA; margin-top: 8px;
+    }
+
+    @media (max-width: 768px) {
+      .filter-bar-inner { flex-direction: column; align-items: stretch; }
+      .search-box input  { width: 100%; }
+      .combos-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ NAVBAR ══ -->
+  <nav class="navbar scrolled" id="navbar" data-always-scrolled="true" style="position:sticky;top:0;z-index:1000;background:rgba(255,248,240,0.98);backdrop-filter:blur(16px);box-shadow:0 2px 24px rgba(26,15,5,0.1);">
+    <div class="container navbar-inner">
+      <a href="index.html" class="navbar-logo" style="color:var(--dark);">Menu<span>Craft</span></a>
+      <ul class="navbar-links">
+        <li><a href="index.html#services">Services</a></li>
+        <li><a href="menu.html" style="color:var(--primary);">Menu</a></li>
+        <li><a href="custom-menu.html">Custom Menu</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="navbar-actions" style="gap:10px;">
+        <span class="nav-veg-tag"><span class="dot"></span> 100% Pure Veg</span>
+        <a href="auth.html" class="btn btn-outline">Login</a>
+        <a href="book.html" class="btn btn-primary">Book Now</a>
+      </div>
+      <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+    </div>
+  </nav>
+
+  <!-- ══ PAGE HERO ══ -->
+  <section class="page-hero">
+    <div class="container">
+      <div class="breadcrumb-bar">
+        <a href="index.html">Home</a> <span>›</span>
+        <span style="color:rgba(255,255,255,0.55);">Our Menu</span>
+      </div>
+      <div class="pure-veg-hero-badge"><span class="dot"></span> 100% Pure Vegetarian</div>
+      <h1>Our Combo Packages</h1>
+      <p class="mt-2">Thoughtfully curated combo meals for every occasion — from a simple dinner to a grand wedding feast. Pick a package, we handle the rest.</p>
+    </div>
+  </section>
+
+  <!-- ══ FILTER BAR ══ -->
+  <div class="filter-bar">
+    <div class="container filter-bar-inner">
+      <div class="filter-tabs">
+        <button class="filter-tab active" data-filter="all"     onclick="filterCombos(this)">🍽️ All Packages</button>
+        <button class="filter-tab"        data-filter="south"   onclick="filterCombos(this)">🌴 South Indian</button>
+        <button class="filter-tab"        data-filter="north"   onclick="filterCombos(this)">🫓 North Indian</button>
+        <button class="filter-tab"        data-filter="lunch"   onclick="filterCombos(this)">☀️ Lunch</button>
+        <button class="filter-tab"        data-filter="dinner"  onclick="filterCombos(this)">🌙 Dinner</button>
+        <button class="filter-tab"        data-filter="wedding" onclick="filterCombos(this)">💍 Wedding</button>
+        <button class="filter-tab"        data-filter="snack"   onclick="filterCombos(this)">🥪 Snack</button>
+      </div>
+      <div class="search-box">
+        <span>🔍</span>
+        <input type="text" placeholder="Search packages..." oninput="searchCombos(this.value)" />
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ MENU SECTION ══ -->
+  <section class="menu-section">
+    <div class="container">
+
+      <!-- NOTE: In production, fetched from GET /api/combos?category=...
+           Admin Panel will add / edit / delete combos.
+           DB model: ComboPackage(id, name, tagline, category, price_per_head, dishes JSON, is_popular) -->
+
+      <div class="combos-grid" id="combosGrid">
+
+        <!-- 1. Simple South Indian Dinner -->
+        <div class="combo-card reveal" data-category="south dinner" data-name="simple south indian dinner">
+          <div class="combo-header theme-south">
+            <span class="combo-tag south">South Indian</span>
+            <div class="combo-emoji-row">🍌</div>
+            <div class="combo-name">Simple South Indian Dinner</div>
+            <div class="combo-tagline">Classic homestyle South Indian meal — comforting and complete</div>
+          </div>
+          <div class="combo-body">
+            <div class="serves-badge">👥 Suitable for all event sizes</div>
+            <div class="dishes-label">What's included</div>
+            <div class="dish-items">
+              <span class="dish-pill"><span class="pill-dot"></span>Steamed Rice</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Sambar</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Rasam</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Kootu</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Papad</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Pickle</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Salad</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Sweet Pongal</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Buttermilk</span>
+            </div>
+          </div>
+          <div class="combo-footer">
+            <div class="price-block">
+              <div class="price-label">Starting from</div>
+              <div class="price-value">₹350</div>
+              <div class="price-sub">per head</div>
+            </div>
+            <div class="combo-actions">
+              <button class="btn-details" onclick="showDetails('simple-south-dinner')">Details</button>
+              <button class="btn-book-combo" onclick="bookCombo('Simple South Indian Dinner',350)">Book This →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Grand South Indian Feast -->
+        <div class="combo-card reveal" data-category="south dinner wedding" data-name="grand south indian feast">
+          <div class="combo-header theme-wedding" style="position:relative;">
+            <div class="popular-badge">⭐ Most Popular</div>
+            <span class="combo-tag wedding" style="margin-top:22px;display:inline-block;">Wedding Special</span>
+            <div class="combo-emoji-row">🎊</div>
+            <div class="combo-name">Grand South Indian Feast</div>
+            <div class="combo-tagline">Full traditional spread perfect for weddings & big functions</div>
+          </div>
+          <div class="combo-body">
+            <div class="serves-badge">👥 Best for 100+ guests</div>
+            <div class="dishes-label">What's included</div>
+            <div class="dish-items">
+              <span class="dish-pill"><span class="pill-dot"></span>Welcome Drink</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Vadai</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Steamed Rice</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Sambar</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Rasam</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Avial</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Kootu</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Poriyal</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Appalam</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Pickle</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Payasam</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Buttermilk</span>
+            </div>
+          </div>
+          <div class="combo-footer">
+            <div class="price-block">
+              <div class="price-label">Starting from</div>
+              <div class="price-value">₹650</div>
+              <div class="price-sub">per head</div>
+            </div>
+            <div class="combo-actions">
+              <button class="btn-details" onclick="showDetails('grand-south-feast')">Details</button>
+              <button class="btn-book-combo" onclick="bookCombo('Grand South Indian Feast',650)">Book This →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. North Indian Lunch Thali -->
+        <div class="combo-card reveal" data-category="north lunch" data-name="north indian lunch thali">
+          <div class="combo-header theme-north">
+            <span class="combo-tag north">North Indian</span>
+            <div class="combo-emoji-row">🫓</div>
+            <div class="combo-name">North Indian Lunch Thali</div>
+            <div class="combo-tagline">Rich, flavourful North Indian lunch spread</div>
+          </div>
+          <div class="combo-body">
+            <div class="serves-badge">👥 Great for corporate & birthday</div>
+            <div class="dishes-label">What's included</div>
+            <div class="dish-items">
+              <span class="dish-pill"><span class="pill-dot"></span>Dal Makhani</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Paneer Butter Masala</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Jeera Rice</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Naan / Roti</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Raita</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Salad</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Pickle</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Gulab Jamun</span>
+            </div>
+          </div>
+          <div class="combo-footer">
+            <div class="price-block">
+              <div class="price-label">Starting from</div>
+              <div class="price-value">₹480</div>
+              <div class="price-sub">per head</div>
+            </div>
+            <div class="combo-actions">
+              <button class="btn-details" onclick="showDetails('north-lunch')">Details</button>
+              <button class="btn-book-combo" onclick="bookCombo('North Indian Lunch Thali',480)">Book This →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Evening Snack Package -->
+        <div class="combo-card reveal" data-category="snack" data-name="evening snack package">
+          <div class="combo-header theme-snack">
+            <span class="combo-tag snack">Snack Package</span>
+            <div class="combo-emoji-row">☕</div>
+            <div class="combo-name">Evening Snack Package</div>
+            <div class="combo-tagline">Perfect for corporate meetings, kitty parties & get-togethers</div>
+          </div>
+          <div class="combo-body">
+            <div class="serves-badge">👥 Ideal for 20–200 guests</div>
+            <div class="dishes-label">What's included</div>
+            <div class="dish-items">
+              <span class="dish-pill"><span class="pill-dot"></span>Masala Chai</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Filter Coffee</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Samosa</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Bread Pakora</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Chutney</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Biscuits</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Fruit Platter</span>
+            </div>
+          </div>
+          <div class="combo-footer">
+            <div class="price-block">
+              <div class="price-label">Starting from</div>
+              <div class="price-value">₹180</div>
+              <div class="price-sub">per head</div>
+            </div>
+            <div class="combo-actions">
+              <button class="btn-details" onclick="showDetails('evening-snack')">Details</button>
+              <button class="btn-book-combo" onclick="bookCombo('Evening Snack Package',180)">Book This →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. Premium Wedding Banquet -->
+        <div class="combo-card reveal" data-category="wedding dinner" data-name="premium wedding banquet">
+          <div class="combo-header theme-wedding" style="position:relative;">
+            <div class="popular-badge">👑 Premium</div>
+            <span class="combo-tag wedding" style="margin-top:22px;display:inline-block;">Wedding Banquet</span>
+            <div class="combo-emoji-row">💍</div>
+            <div class="combo-name">Premium Wedding Banquet</div>
+            <div class="combo-tagline">An extravagant multi-course celebration feast</div>
+          </div>
+          <div class="combo-body">
+            <div class="serves-badge">👥 Best for 200+ guests</div>
+            <div class="dishes-label">What's included</div>
+            <div class="dish-items">
+              <span class="dish-pill"><span class="pill-dot"></span>Welcome Mocktails</span>
+              <span class="dish-pill"><span class="pill-dot"></span>3 Starters</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Soup</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Paneer Dish</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Dal</span>
+              <span class="dish-pill"><span class="pill-dot"></span>2 Sabzi</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Biryani / Pulao</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Naan & Rice</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Raita</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Papad & Pickle</span>
+              <span class="dish-pill"><span class="pill-dot"></span>2 Desserts</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Eggless Cake</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Buttermilk</span>
+            </div>
+          </div>
+          <div class="combo-footer">
+            <div class="price-block">
+              <div class="price-label">Starting from</div>
+              <div class="price-value">₹950</div>
+              <div class="price-sub">per head</div>
+            </div>
+            <div class="combo-actions">
+              <button class="btn-details" onclick="showDetails('premium-wedding')">Details</button>
+              <button class="btn-book-combo" onclick="bookCombo('Premium Wedding Banquet',950)">Book This →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. Corporate Lunch Box -->
+        <div class="combo-card reveal" data-category="north south lunch" data-name="corporate lunch box">
+          <div class="combo-header theme-dinner">
+            <span class="combo-tag dinner">Corporate</span>
+            <div class="combo-emoji-row">🏢</div>
+            <div class="combo-name">Corporate Lunch Box</div>
+            <div class="combo-tagline">Neat, hygienic, and satisfying — perfect for office events</div>
+          </div>
+          <div class="combo-body">
+            <div class="serves-badge">👥 Minimum 30 boxes</div>
+            <div class="dishes-label">What's included</div>
+            <div class="dish-items">
+              <span class="dish-pill"><span class="pill-dot"></span>Rice</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Dal Tadka</span>
+              <span class="dish-pill"><span class="pill-dot"></span>1 Sabzi</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Chapati (3)</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Salad</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Pickle</span>
+              <span class="dish-pill"><span class="pill-dot"></span>Sweet</span>
+            </div>
+          </div>
+          <div class="combo-footer">
+            <div class="price-block">
+              <div class="price-label">Starting from</div>
+              <div class="price-value">₹220</div>
+              <div class="price-sub">per box</div>
+            </div>
+            <div class="combo-actions">
+              <button class="btn-details" onclick="showDetails('corporate-lunch')">Details</button>
+              <button class="btn-book-combo" onclick="bookCombo('Corporate Lunch Box',220)">Book This →</button>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- end combos-grid -->
+
+      <div class="no-results" id="noResults">
+        <div class="nr-emoji">🔍</div>
+        <h3>No packages found</h3>
+        <p>Try a different filter. Or <a href="custom-menu.html" style="color:var(--primary);font-weight:600;">build a custom menu →</a></p>
+      </div>
+
+      <div style="text-align:center;margin-top:56px;" class="reveal">
+        <p style="color:var(--text-light);margin-bottom:16px;">Can't find the right combo? Build your own!</p>
+        <a href="custom-menu.html" class="btn btn-primary" style="font-size:1rem;padding:14px 32px;">🧩 Build Your Custom Menu</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ DETAIL MODAL ══ -->
+  <div class="modal-overlay" id="detailModal" onclick="closeModal(event)">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div>
+          <div id="modalTag" style="margin-bottom:8px;"></div>
+          <h3 id="modalTitle" style="font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--dark);margin:0;"></h3>
+          <p id="modalTagline" style="color:var(--text-light);font-size:0.88rem;margin-top:4px;"></p>
+        </div>
+        <button class="modal-close" onclick="closeModalBtn()">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-light);margin-bottom:4px;">Dishes Included</p>
+        <div class="modal-dish-list" id="modalDishList"></div>
+        <div class="modal-price-row">
+          <div>
+            <div style="font-size:0.75rem;color:var(--text-light);font-weight:600;text-transform:uppercase;">Starting from</div>
+            <div style="font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--primary);" id="modalPrice">₹0</div>
+            <div style="font-size:0.78rem;color:var(--text-light);" id="modalPriceSub">per head</div>
+          </div>
+          <button class="btn-book-combo" id="modalBookBtn" style="padding:12px 28px;">Book This Package →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="static/js/main.js"></script>
+  <script>
+  // ══════════════════════════════════════
+  // COMBO DATA — mirrors backend DB
+  // GET /api/combos fetches this from DB
+  // Admin panel CRUD controls this data
+  // DB Model: ComboPackage(id, name, tagline,
+  //   category, price_per_head, dishes JSON,
+  //   is_popular, price_sub)
+  // ══════════════════════════════════════
+  const COMBOS = {
+    'simple-south-dinner': {
+      name:'Simple South Indian Dinner', tag:'South Indian', tagClass:'south',
+      tagline:'Classic homestyle South Indian meal — comforting and complete',
+      price:350, priceSub:'per head',
+      dishes:['Steamed Rice','Sambar','Rasam','Kootu','Papad','Pickle','Salad','Sweet Pongal','Buttermilk']
+    },
+    'grand-south-feast': {
+      name:'Grand South Indian Feast', tag:'Wedding Special', tagClass:'wedding',
+      tagline:'Full traditional spread perfect for weddings & big functions',
+      price:650, priceSub:'per head',
+      dishes:['Welcome Drink','Vadai','Steamed Rice','Sambar','Rasam','Avial','Kootu','Poriyal','Appalam','Pickle','Payasam','Buttermilk']
+    },
+    'north-lunch': {
+      name:'North Indian Lunch Thali', tag:'North Indian', tagClass:'north',
+      tagline:'Rich, flavourful North Indian lunch spread',
+      price:480, priceSub:'per head',
+      dishes:['Dal Makhani','Paneer Butter Masala','Jeera Rice','Naan / Roti','Raita','Salad','Pickle','Gulab Jamun']
+    },
+    'evening-snack': {
+      name:'Evening Snack Package', tag:'Snack Package', tagClass:'snack',
+      tagline:'Perfect for corporate meetings, kitty parties & get-togethers',
+      price:180, priceSub:'per head',
+      dishes:['Masala Chai','Filter Coffee','Samosa','Bread Pakora','Chutney','Biscuits','Fruit Platter']
+    },
+    'premium-wedding': {
+      name:'Premium Wedding Banquet', tag:'Wedding Banquet', tagClass:'wedding',
+      tagline:'An extravagant multi-course celebration feast',
+      price:950, priceSub:'per head',
+      dishes:['Welcome Mocktails','3 Starters','Soup','Paneer Dish','Dal','2 Sabzi','Biryani / Pulao','Naan & Rice','Raita','Papad & Pickle','2 Desserts','Eggless Cake','Buttermilk']
+    },
+    'corporate-lunch': {
+      name:'Corporate Lunch Box', tag:'Corporate', tagClass:'dinner',
+      tagline:'Neat, hygienic, and satisfying — perfect for office events',
+      price:220, priceSub:'per box',
+      dishes:['Rice','Dal Tadka','1 Sabzi','Chapati (3)','Salad','Pickle','Sweet']
+    }
+  };
+
+  // ── Filter & Search ──
+  function filterCombos(btn) {
+    document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    applyFilters(btn.dataset.filter, document.querySelector('.search-box input').value);
+  }
+  function searchCombos(val) {
+    const activeFilter = document.querySelector('.filter-tab.active')?.dataset.filter || 'all';
+    applyFilters(activeFilter, val);
+  }
+  function applyFilters(category, searchTerm) {
+    const cards = document.querySelectorAll('.combo-card');
+    const term  = searchTerm.toLowerCase().trim();
+    let visible = 0;
+    cards.forEach(card => {
+      const cats = card.dataset.category || '';
+      const name = card.dataset.name     || '';
+      const ok = (category === 'all' || cats.includes(category)) &&
+                 (!term || name.includes(term) || cats.includes(term));
+      card.style.display = ok ? '' : 'none';
+      if (ok) visible++;
+    });
+    document.getElementById('noResults').classList.toggle('show', visible === 0);
+  }
+
+  // ── Detail Modal ──
+  function showDetails(id) {
+    const c = COMBOS[id]; if (!c) return;
+    document.getElementById('modalTag').innerHTML     = `<span style="display:inline-block;padding:3px 12px;background:rgba(232,113,42,0.12);color:var(--primary);border-radius:50px;font-size:0.72rem;font-weight:700;text-transform:uppercase;">${c.tag}</span>`;
+    document.getElementById('modalTitle').textContent   = c.name;
+    document.getElementById('modalTagline').textContent = c.tagline;
+    document.getElementById('modalPrice').textContent   = '₹' + c.price;
+    document.getElementById('modalPriceSub').textContent = c.priceSub;
+    document.getElementById('modalDishList').innerHTML  = c.dishes.map(d =>
+      `<div class="modal-dish-item"><div class="veg-sq"></div><span>${d}</span></div>`).join('');
+    document.getElementById('modalBookBtn').onclick = () => { closeModalBtn(); bookCombo(c.name, c.price); };
+    document.getElementById('detailModal').classList.add('show');
+  }
+  function closeModal(e) { if (e.target.id === 'detailModal') closeModalBtn(); }
+  function closeModalBtn() { document.getElementById('detailModal').classList.remove('show'); }
+
+  // ── Book ──
+  function bookCombo(name, price) {
+    sessionStorage.setItem('menucraft_order', JSON.stringify({
+      comboName: name, comboPrice: price,
+      event:null, serving:null, date:null, time:null,
+      venue:null, notes:null, guests:50, dishes:{}
+    }));
+    window.location.href = 'book.html';
+  }
+  </script>
+</body>
+</html>

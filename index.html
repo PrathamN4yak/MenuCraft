@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MenuCraft — Premium Catering Services</title>
+  <meta name="description" content="MenuCraft offers premium catering services for weddings, birthdays, corporate events and more. Order online, customize your menu, and make your event unforgettable." />
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="static/css/style.css" />
+  <!-- Google Fonts (fallback link inside CSS handles this) -->
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════
+       NAVBAR
+  ══════════════════════════════════════ -->
+  <nav class="navbar" id="navbar">
+    <div class="container navbar-inner">
+
+      <!-- Logo -->
+      <a href="index.html" class="navbar-logo">Menu<span>Craft</span></a>
+
+      <!-- Desktop Nav Links -->
+      <ul class="navbar-links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="custom-menu.html">Custom Menu</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+
+      <!-- Actions -->
+      <div class="navbar-actions">
+        <a href="auth.html" class="btn btn-outline">Login</a>
+        <a href="book.html" class="btn btn-primary">Book Now</a>
+      </div>
+
+      <!-- Hamburger (mobile) -->
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+      <ul>
+        <li><a href="#services">Services</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="custom-menu.html">Custom Menu</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="auth.html" class="btn btn-outline" style="margin-top:8px;">Login</a></li>
+        <li><a href="book.html" class="btn btn-primary" style="margin-top:8px;">Book Now</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ══════════════════════════════════════
+       HERO SECTION
+  ══════════════════════════════════════ -->
+  <section class="hero" id="home">
+    <div class="hero-bg"></div>
+    <div class="hero-pattern"></div>
+
+    <div class="container">
+      <div class="hero-content">
+
+        <!-- Tag -->
+        <div class="hero-tag">
+          ✦ Premium Catering Services
+        </div>
+
+        <!-- Headline -->
+        <h1 class="hero-title">
+          Every Dish Tells<br>
+          <em>Your Story</em>
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="hero-subtitle">
+          From intimate birthday dinners to grand weddings — MenuCraft brings
+          exceptional food and seamless service to every table. Book online in minutes.
+        </p>
+
+        <!-- CTAs -->
+        <div class="hero-actions">
+          <a href="menu.html" class="btn btn-primary">
+            🍽️ Explore Menus
+          </a>
+          <a href="custom-menu.html" class="btn btn-ghost">
+            ✏️ Build Custom Menu
+          </a>
+        </div>
+
+        <!-- Stats -->
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="hero-stat-number">
+              <span data-counter="500" data-suffix="+">0+</span>
+            </div>
+            <div class="hero-stat-label">Events Catered</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-number">
+              <span data-counter="50" data-suffix="+">0+</span>
+            </div>
+            <div class="hero-stat-label">Menu Items</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-number">
+              <span data-counter="98" data-suffix="%">0%</span>
+            </div>
+            <div class="hero-stat-label">Happy Clients</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Decorative floating element -->
+    <div class="hero-image-side">
+      <div class="hero-image-inner">🍽️</div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div style="position:absolute; bottom:32px; left:50%; transform:translateX(-50%); text-align:center; animation: fadeInUp 1s 0.8s both;">
+      <div style="color:rgba(255,255,255,0.4); font-size:0.78rem; letter-spacing:2px; text-transform:uppercase; margin-bottom:8px;">Scroll</div>
+      <div style="width:1px; height:40px; background:linear-gradient(to bottom, rgba(255,255,255,0.4), transparent); margin:0 auto;"></div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       SERVICES SECTION
+  ══════════════════════════════════════ -->
+  <section class="services section-pad" id="services">
+    <div class="container text-center">
+
+      <span class="section-label reveal">What We Offer</span>
+      <h2 class="section-title reveal">Catering for Every Occasion</h2>
+      <div class="divider reveal"></div>
+      <p class="section-subtitle reveal">
+        Whether it's an intimate gathering or a grand celebration, we tailor our
+        services to match your vision and budget.
+      </p>
+
+      <div class="services-grid">
+
+        <div class="service-card reveal reveal-delay-1">
+          <span class="service-icon">💍</span>
+          <h3>Wedding Catering</h3>
+          <p>Elegant multi-course menus, personalized service, and flawless execution for your perfect day.</p>
+        </div>
+
+        <div class="service-card reveal reveal-delay-2">
+          <span class="service-icon">🎂</span>
+          <h3>Birthday Parties</h3>
+          <p>Fun, festive menus ranging from finger foods to lavish spreads — for any age group.</p>
+        </div>
+
+        <div class="service-card reveal reveal-delay-3">
+          <span class="service-icon">🏢</span>
+          <h3>Corporate Events</h3>
+          <p>Professional catering for meetings, conferences, product launches and office parties.</p>
+        </div>
+
+        <div class="service-card reveal reveal-delay-4">
+          <span class="service-icon">🎉</span>
+          <h3>Custom Functions</h3>
+          <p>Got something unique in mind? We'll craft a completely bespoke catering experience just for you.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       HOW IT WORKS
+  ══════════════════════════════════════ -->
+  <section class="how-it-works section-pad" id="how-it-works">
+    <div class="container text-center">
+
+      <span class="section-label reveal">Simple Process</span>
+      <h2 class="section-title reveal">Order in 3 Easy Steps</h2>
+      <div class="divider reveal"></div>
+
+      <div class="steps-row">
+
+        <div class="step-item reveal reveal-delay-1">
+          <div class="step-number">1</div>
+          <h3>Browse & Choose</h3>
+          <p>Explore our curated menus by event type or dietary preference. Pick what suits your celebration.</p>
+        </div>
+
+        <div class="step-item reveal reveal-delay-2">
+          <div class="step-number">2</div>
+          <h3>Customize Your Menu</h3>
+          <p>Add guests count, swap dishes, mix and match starters, mains and desserts to perfection.</p>
+        </div>
+
+        <div class="step-item reveal reveal-delay-3">
+          <div class="step-number">3</div>
+          <h3>Confirm & Relax</h3>
+          <p>Submit your booking, receive instant confirmation, and leave all the preparation to us.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       FEATURED MENUS
+  ══════════════════════════════════════ -->
+  <section class="featured-menus section-pad" id="menus">
+    <div class="container text-center">
+
+      <span class="section-label reveal">Popular Picks</span>
+      <h2 class="section-title reveal">Featured Menu Packages</h2>
+      <div class="divider reveal"></div>
+      <p class="section-subtitle reveal">
+        Handpicked packages loved by our customers — ready to order or customize to your taste.
+      </p>
+
+      <div class="menus-grid">
+
+        <!-- Wedding Package -->
+        <div class="menu-card reveal reveal-delay-1">
+          <div class="menu-card-img wedding">💍</div>
+          <div class="menu-card-body">
+            <span class="menu-badge">Wedding</span>
+            <h3>Royal Wedding Feast</h3>
+            <p>5-course sit-down dinner with starters, soup, salad, main, and dessert. Includes live cooking station.</p>
+            <div class="menu-footer">
+              <div class="menu-price">₹850 <span>/ per head</span></div>
+              <a href="menu.html" class="btn btn-primary" style="padding:8px 18px; font-size:0.82rem;">View Details</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Birthday Package -->
+        <div class="menu-card reveal reveal-delay-2">
+          <div class="menu-card-img birthday">🎂</div>
+          <div class="menu-card-body">
+            <span class="menu-badge">Birthday</span>
+            <h3>Celebration Spread</h3>
+            <p>Buffet-style party menu with finger foods, mocktails, pasta station, and dessert counter.</p>
+            <div class="menu-footer">
+              <div class="menu-price">₹450 <span>/ per head</span></div>
+              <a href="menu.html" class="btn btn-primary" style="padding:8px 18px; font-size:0.82rem;">View Details</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Corporate Package -->
+        <div class="menu-card reveal reveal-delay-3">
+          <div class="menu-card-img corporate">🏢</div>
+          <div class="menu-card-body">
+            <span class="menu-badge">Corporate</span>
+            <h3>Executive Business Lunch</h3>
+            <p>Clean, professional lunch or dinner for business settings. Health-focused with vegetarian options.</p>
+            <div class="menu-footer">
+              <div class="menu-price">₹350 <span>/ per head</span></div>
+              <a href="menu.html" class="btn btn-primary" style="padding:8px 18px; font-size:0.82rem;">View Details</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Custom Package -->
+        <div class="menu-card reveal reveal-delay-4">
+          <div class="menu-card-img custom">✏️</div>
+          <div class="menu-card-body">
+            <span class="menu-badge">Custom</span>
+            <h3>Build Your Own Package</h3>
+            <p>Pick and choose every dish. Set your guest count. Get a live price estimate as you build your ideal menu.</p>
+            <div class="menu-footer">
+              <div class="menu-price">Your Price</div>
+              <a href="custom-menu.html" class="btn btn-outline" style="padding:8px 18px; font-size:0.82rem;">Start Building</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="margin-top:48px;" class="reveal">
+        <a href="menu.html" class="btn btn-outline">View All Menus →</a>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       TESTIMONIALS
+  ══════════════════════════════════════ -->
+  <section class="testimonials section-pad" id="testimonials">
+    <div class="container text-center">
+
+      <span class="section-label reveal">Client Stories</span>
+      <h2 class="section-title reveal">What Our Customers Say</h2>
+      <div class="divider reveal"></div>
+      <p class="section-subtitle reveal">Real words from real celebrations.</p>
+
+      <div class="testimonials-grid">
+
+        <div class="testimonial-card reveal reveal-delay-1">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">
+            "MenuCraft made our wedding absolutely magical. The food was exquisite, the service was impeccable, 
+            and our guests couldn't stop raving about it!"
+          </p>
+          <div class="testimonial-author">
+            <div class="author-avatar">👰</div>
+            <div>
+              <div class="author-name">Priya Sharma</div>
+              <div class="author-event">Wedding Reception · Bangalore</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card reveal reveal-delay-2">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">
+            "Booked the corporate lunch package for our annual meet. Everyone was impressed — 
+            healthy, delicious, and delivered right on time. Highly recommend!"
+          </p>
+          <div class="testimonial-author">
+            <div class="author-avatar">💼</div>
+            <div>
+              <div class="author-name">Rahul Menon</div>
+              <div class="author-event">Corporate Event · Mumbai</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card reveal reveal-delay-3">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">
+            "Used the custom menu builder for my daughter's birthday. So easy to use! 
+            The whole family loved the food and the online ordering was super smooth."
+          </p>
+          <div class="testimonial-author">
+            <div class="author-avatar">🎉</div>
+            <div>
+              <div class="author-name">Anita Reddy</div>
+              <div class="author-event">Birthday Party · Hyderabad</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       CTA BANNER
+  ══════════════════════════════════════ -->
+  <section class="cta-banner">
+    <div class="container">
+      <h2 class="reveal">Ready to Make Your Event Memorable?</h2>
+      <p class="reveal">Start planning today — it only takes a few minutes to book your perfect catering package.</p>
+      <div class="cta-actions reveal">
+        <a href="book.html" class="btn btn-white">📅 Book Now</a>
+        <a href="contact.html" class="btn btn-ghost">💬 Talk to Us</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="container">
+
+      <div class="footer-grid">
+
+        <!-- Brand -->
+        <div class="footer-brand">
+          <div class="logo">Menu<span>Craft</span></div>
+          <p>Premium catering services for every occasion. We turn your events into unforgettable culinary experiences.</p>
+          <div class="footer-socials">
+            <a href="#" class="social-icon" title="Facebook">📘</a>
+            <a href="#" class="social-icon" title="Instagram">📸</a>
+            <a href="#" class="social-icon" title="WhatsApp">💬</a>
+            <a href="#" class="social-icon" title="Twitter">🐦</a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="menu.html">Our Menus</a></li>
+            <li><a href="custom-menu.html">Custom Menu</a></li>
+            <li><a href="book.html">Book Now</a></li>
+            <li><a href="about.html">About Us</a></li>
+          </ul>
+        </div>
+
+        <!-- Services -->
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="#">Wedding Catering</a></li>
+            <li><a href="#">Birthday Parties</a></li>
+            <li><a href="#">Corporate Events</a></li>
+            <li><a href="#">Custom Functions</a></li>
+            <li><a href="#">Live Cooking Stations</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact -->
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="tel:+919876543210">📞 +91 98765 43210</a></li>
+            <li><a href="mailto:hello@menucraft.in">📧 hello@menucraft.in</a></li>
+            <li><a href="#">📍 Bangalore, Karnataka</a></li>
+            <li><a href="contact.html">Contact Form</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Footer Bottom -->
+      <div class="footer-bottom">
+        <div>© 2025 MenuCraft. All rights reserved.</div>
+        <div>
+          <a href="#" style="color:rgba(255,248,240,0.4); margin-right:20px; font-size:0.85rem;">Privacy Policy</a>
+          <a href="#" style="color:rgba(255,248,240,0.4); font-size:0.85rem;">Terms of Service</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Main JS -->
+  <script src="static/js/main.js"></script>
+
+  <!-- Mobile menu styles (inline for simplicity) -->
+  <style>
+    .mobile-menu {
+      display: none;
+      background: rgba(255,248,240,0.97);
+      backdrop-filter: blur(16px);
+      padding: 20px 24px;
+      border-top: 1px solid rgba(232,113,42,0.1);
+    }
+    .mobile-menu.open { display: block; }
+    .mobile-menu ul { display: flex; flex-direction: column; gap: 12px; }
+    .mobile-menu ul li a {
+      color: var(--text);
+      font-size: 1rem;
+      font-weight: 600;
+      display: block;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(232,113,42,0.08);
+    }
+    .mobile-menu ul li a.btn { border-bottom: none; text-align: center; }
+    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+    .navbar-links a.active { color: var(--primary) !important; }
+    .navbar-links a.active::after { width: 100% !important; }
+  </style>
+
+</body>
+</html>
