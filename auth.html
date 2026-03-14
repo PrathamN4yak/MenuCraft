@@ -362,7 +362,7 @@
 
     <!-- Brand -->
     <div class="left-brand">
-      <a href="index.html" class="logo">Menu<span>Craft</span></a>
+      <a href="/" class="logo">Menu<span>Craft</span></a>
       <div class="tagline">✦ Premium Catering Services</div>
     </div>
 
@@ -655,7 +655,7 @@
     //     btn.disabled = false; btn.innerHTML = '🔐 Login to MenuCraft'; return;
     //   }
     //   showToast('Welcome back! Redirecting...', 'success');
-    //   setTimeout(() => window.location.href = 'dashboard.html', 1200);
+    //   setTimeout(() => window.location.href = '/dashboard', 1200);
     // } catch(e) {
     //   showToast('Something went wrong. Please try again.', 'error');
     //   btn.disabled = false; btn.innerHTML = '🔐 Login to MenuCraft';
@@ -665,7 +665,7 @@
     await delay(1400);
     showToast('Welcome back! Redirecting to your dashboard...', 'success');
     btn.innerHTML = '✅ Logged In!';
-    setTimeout(() => window.location.href = 'dashboard.html', 1600);
+    setTimeout(() => window.location.href = '/dashboard', 1600);
   }
 
   // ══════════════════════════════════════
@@ -708,7 +708,7 @@
     //     btn.disabled=false; btn.innerHTML='✨ Create My Account'; return;
     //   }
     //   showToast('Account created! Welcome to MenuCraft 🎉', 'success');
-    //   setTimeout(() => window.location.href = 'dashboard.html', 1600);
+    //   setTimeout(() => window.location.href = '/dashboard', 1600);
     // } catch(e) {
     //   showToast('Something went wrong. Please try again.', 'error');
     //   btn.disabled=false; btn.innerHTML='✨ Create My Account';
@@ -718,7 +718,7 @@
     await delay(1600);
     showToast('Account created! Welcome to MenuCraft 🎉', 'success');
     btn.innerHTML = '✅ Account Created!';
-    setTimeout(() => window.location.href = 'dashboard.html', 1800);
+    setTimeout(() => window.location.href = '/dashboard', 1800);
   }
 
   // ══════════════════════════════════════

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,25 +11,20 @@
        ADMIN — DARK THEME
     ══════════════════════════════ */
     :root {
-      --ad-bg: #0F1117;
+      --ad-bg:      #0F1117;
       --ad-surface: #181C27;
-      --ad-card: #1E2235;
-      --ad-border: rgba(255, 255, 255, 0.07);
-      --ad-text: #E2E8F0;
-      --ad-muted: rgba(226, 232, 240, 0.45);
-      --ad-orange: #E8712A;
-      --ad-green: #22C55E;
-      --ad-blue: #3B82F6;
-      --ad-red: #EF4444;
-      --ad-gold: #D4AF37;
+      --ad-card:    #1E2235;
+      --ad-border:  rgba(255,255,255,0.07);
+      --ad-text:    #E2E8F0;
+      --ad-muted:   rgba(226,232,240,0.45);
+      --ad-orange:  #E8712A;
+      --ad-green:   #22C55E;
+      --ad-blue:    #3B82F6;
+      --ad-red:     #EF4444;
+      --ad-gold:    #D4AF37;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       background: var(--ad-bg);
       font-family: 'Nunito', sans-serif;
@@ -49,1763 +43,1069 @@
     .admin-sidebar {
       background: var(--ad-surface);
       border-right: 1px solid var(--ad-border);
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
+      position: sticky; top: 0; height: 100vh;
+      display: flex; flex-direction: column;
       overflow: hidden;
     }
-
     .admin-brand {
       padding: 24px 20px 18px;
       border-bottom: 1px solid var(--ad-border);
     }
-
     .admin-brand .logo {
       font-family: 'Playfair Display', serif;
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: #fff;
-      text-decoration: none;
-      display: block;
-      margin-bottom: 5px;
+      font-size: 1.4rem; font-weight: 700; color: #fff;
+      text-decoration: none; display: block; margin-bottom: 5px;
     }
-
-    .admin-brand .logo span {
-      color: var(--ad-orange);
-    }
-
+    .admin-brand .logo span { color: var(--ad-orange); }
     .admin-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      background: rgba(239, 68, 68, 0.15);
-      border: 1px solid rgba(239, 68, 68, 0.25);
-      color: #FCA5A5;
-      border-radius: 4px;
-      padding: 2px 8px;
-      font-size: 0.65rem;
-      font-weight: 800;
-      letter-spacing: 1.5px;
+      display: inline-flex; align-items: center; gap: 5px;
+      background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.25);
+      color: #FCA5A5; border-radius: 4px; padding: 2px 8px;
+      font-size: 0.65rem; font-weight: 800; letter-spacing: 1.5px;
       text-transform: uppercase;
     }
-
-    .admin-nav {
-      flex: 1;
-      padding: 16px 12px;
-      overflow-y: auto;
-    }
-
+    .admin-nav { flex: 1; padding: 16px 12px; overflow-y: auto; }
     .nav-section {
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--ad-muted);
-      padding: 10px 10px 6px;
-      margin-top: 6px;
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--ad-muted);
+      padding: 10px 10px 6px; margin-top: 6px;
     }
-
     .nav-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 12px;
-      border-radius: 8px;
-      color: var(--ad-muted);
-      font-size: 0.87rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.18s;
-      margin-bottom: 2px;
-      text-decoration: none;
-      border: 1px solid transparent;
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 12px; border-radius: 8px;
+      color: var(--ad-muted); font-size: 0.87rem; font-weight: 600;
+      cursor: pointer; transition: all 0.18s; margin-bottom: 2px;
+      text-decoration: none; border: 1px solid transparent;
     }
-
-    .nav-item:hover {
-      background: rgba(255, 255, 255, 0.05);
-      color: var(--ad-text);
-    }
-
+    .nav-item:hover { background: rgba(255,255,255,0.05); color: var(--ad-text); }
     .nav-item.active {
-      background: rgba(232, 113, 42, 0.15);
-      color: var(--ad-orange);
-      border-color: rgba(232, 113, 42, 0.2);
+      background: rgba(232,113,42,0.15);
+      color: var(--ad-orange); border-color: rgba(232,113,42,0.2);
     }
-
-    .nav-item .ni {
-      width: 18px;
-      text-align: center;
-      font-size: 0.95rem;
-    }
-
+    .nav-item .ni { width: 18px; text-align: center; font-size: 0.95rem; }
     .nav-item .nbadge {
-      margin-left: auto;
-      background: var(--ad-orange);
-      color: #fff;
-      font-size: 0.62rem;
-      font-weight: 800;
-      padding: 2px 7px;
-      border-radius: 50px;
+      margin-left: auto; background: var(--ad-orange);
+      color: #fff; font-size: 0.62rem; font-weight: 800;
+      padding: 2px 7px; border-radius: 50px;
     }
-
     .admin-footer {
-      padding: 14px 12px;
-      border-top: 1px solid var(--ad-border);
+      padding: 14px 12px; border-top: 1px solid var(--ad-border);
     }
-
     .admin-user {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 12px;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.04);
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 12px; border-radius: 8px;
+      background: rgba(255,255,255,0.04);
     }
-
     .au-avatar {
-      width: 34px;
-      height: 34px;
-      border-radius: 8px;
+      width: 34px; height: 34px; border-radius: 8px;
       background: linear-gradient(135deg, var(--ad-orange), #C45A18);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      font-size: 0.85rem;
-      color: #fff;
-      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 0.85rem; color: #fff; flex-shrink: 0;
     }
-
-    .au-name {
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: var(--ad-text);
-    }
-
-    .au-role {
-      font-size: 0.68rem;
-      color: var(--ad-muted);
-    }
+    .au-name  { font-size: 0.82rem; font-weight: 700; color: var(--ad-text); }
+    .au-role  { font-size: 0.68rem; color: var(--ad-muted); }
 
     /* ══ MAIN ══ */
-    .admin-main {
-      overflow-y: auto;
-      min-height: 100vh;
-    }
-
+    .admin-main { overflow-y: auto; min-height: 100vh; }
     .admin-topbar {
       background: var(--ad-surface);
       border-bottom: 1px solid var(--ad-border);
       padding: 14px 28px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      z-index: 50;
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 50;
     }
-
     .topbar-title {
       font-family: 'Playfair Display', serif;
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--ad-text);
+      font-size: 1.25rem; font-weight: 700; color: var(--ad-text);
     }
-
-    .topbar-right {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
+    .topbar-right { display: flex; align-items: center; gap: 10px; }
     .btn-admin-primary {
-      padding: 9px 20px;
-      border-radius: 8px;
-      background: var(--ad-orange);
-      color: #fff;
-      border: none;
-      font-family: 'Nunito', sans-serif;
-      font-size: 0.85rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      padding: 9px 20px; border-radius: 8px;
+      background: var(--ad-orange); color: #fff; border: none;
+      font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 700;
+      cursor: pointer; transition: all 0.2s;
+      display: flex; align-items: center; gap: 6px;
     }
-
-    .btn-admin-primary:hover {
-      background: #C45A18;
-      transform: translateY(-1px);
-    }
+    .btn-admin-primary:hover { background: #C45A18; transform: translateY(-1px); }
 
     /* ══ CONTENT ══ */
-    .admin-content {
-      padding: 28px;
-    }
-
-    .admin-panel {
-      display: none;
-      animation: fadeUp 0.28s ease;
-    }
-
-    .admin-panel.active {
-      display: block;
-    }
-
-    @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(8px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+    .admin-content { padding: 28px; }
+    .admin-panel { display: none; animation: fadeUp 0.28s ease; }
+    .admin-panel.active { display: block; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);} }
 
     /* ══ STAT CARDS ══ */
     .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-      margin-bottom: 24px;
+      display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin-bottom: 24px;
     }
-
     .stat-card {
-      background: var(--ad-card);
-      border-radius: 12px;
-      padding: 20px;
-      border: 1px solid var(--ad-border);
-      position: relative;
-      overflow: hidden;
+      background: var(--ad-card); border-radius: 12px; padding: 20px;
+      border: 1px solid var(--ad-border); position: relative; overflow: hidden;
       transition: transform 0.2s;
     }
-
-    .stat-card:hover {
-      transform: translateY(-2px);
-    }
-
+    .stat-card:hover { transform: translateY(-2px); }
     .stat-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 70px;
-      height: 70px;
-      border-radius: 0 12px 0 70px;
-      opacity: 0.1;
+      content:''; position:absolute; top:0; right:0;
+      width:70px; height:70px; border-radius:0 12px 0 70px; opacity:0.1;
     }
-
-    .stat-card.orange::before {
-      background: var(--ad-orange);
-    }
-
-    .stat-card.green::before {
-      background: var(--ad-green);
-    }
-
-    .stat-card.blue::before {
-      background: var(--ad-blue);
-    }
-
-    .stat-card.red::before {
-      background: var(--ad-red);
-    }
-
-    .sc-icon {
-      font-size: 1.5rem;
-      margin-bottom: 10px;
-    }
-
-    .sc-val {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: #fff;
-    }
-
-    .sc-lbl {
-      font-size: 0.75rem;
-      color: var(--ad-muted);
-      margin-top: 3px;
-      font-weight: 600;
-    }
-
-    .sc-trend {
-      font-size: 0.7rem;
-      margin-top: 6px;
-      font-weight: 700;
-    }
-
-    .sc-trend.up {
-      color: var(--ad-green);
-    }
-
-    .sc-trend.warn {
-      color: var(--ad-gold);
-    }
+    .stat-card.orange::before { background: var(--ad-orange); }
+    .stat-card.green::before  { background: var(--ad-green); }
+    .stat-card.blue::before   { background: var(--ad-blue); }
+    .stat-card.red::before    { background: var(--ad-red); }
+    .sc-icon { font-size: 1.5rem; margin-bottom: 10px; }
+    .sc-val  { font-family:'Playfair Display',serif; font-size:1.8rem; font-weight:700; color:#fff; }
+    .sc-lbl  { font-size:0.75rem; color:var(--ad-muted); margin-top:3px; font-weight:600; }
+    .sc-trend{ font-size:0.7rem; margin-top:6px; font-weight:700; }
+    .sc-trend.up  { color: var(--ad-green); }
+    .sc-trend.warn{ color: var(--ad-gold); }
 
     /* ══ SECTION HEADER ══ */
     .sec-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      display: flex; align-items: center; justify-content: space-between;
       margin-bottom: 16px;
     }
-
     .sec-head h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.1rem;
-      color: #fff;
-      margin: 0;
+      font-family:'Playfair Display',serif; font-size:1.1rem; color:#fff; margin:0;
     }
 
     /* ══ TABLE ══ */
     .ad-table-wrap {
-      background: var(--ad-card);
-      border-radius: 12px;
-      border: 1px solid var(--ad-border);
-      overflow: hidden;
-      margin-bottom: 24px;
+      background: var(--ad-card); border-radius: 12px;
+      border: 1px solid var(--ad-border); overflow: hidden; margin-bottom: 24px;
     }
-
-    .ad-table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
+    .ad-table { width:100%; border-collapse:collapse; }
     .ad-table th {
-      text-align: left;
-      font-size: 0.68rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: var(--ad-muted);
-      padding: 13px 18px;
-      border-bottom: 1px solid var(--ad-border);
-      background: rgba(255, 255, 255, 0.02);
+      text-align:left; font-size:0.68rem; font-weight:700;
+      text-transform:uppercase; letter-spacing:1.5px; color:var(--ad-muted);
+      padding:13px 18px; border-bottom:1px solid var(--ad-border);
+      background:rgba(255,255,255,0.02);
     }
-
     .ad-table td {
-      padding: 14px 18px;
-      font-size: 0.87rem;
-      color: var(--ad-text);
-      border-bottom: 1px solid var(--ad-border);
-      vertical-align: middle;
+      padding:14px 18px; font-size:0.87rem; color:var(--ad-text);
+      border-bottom:1px solid var(--ad-border); vertical-align:middle;
     }
-
-    .ad-table tr:last-child td {
-      border-bottom: none;
-    }
-
-    .ad-table tr:hover td {
-      background: rgba(255, 255, 255, 0.02);
-    }
-
-    .td-ref {
-      font-weight: 700;
-      color: var(--ad-orange);
-      font-family: 'Playfair Display', serif;
-    }
-
-    .td-name {
-      font-weight: 600;
-      color: #fff;
-    }
-
-    .td-sub {
-      font-size: 0.73rem;
-      color: var(--ad-muted);
-      margin-top: 2px;
-    }
+    .ad-table tr:last-child td { border-bottom:none; }
+    .ad-table tr:hover td { background:rgba(255,255,255,0.02); }
+    .td-ref { font-weight:700; color:var(--ad-orange); font-family:'Playfair Display',serif; }
+    .td-name{ font-weight:600; color:#fff; }
+    .td-sub { font-size:0.73rem; color:var(--ad-muted); margin-top:2px; }
 
     /* Status select in orders table */
     .status-select {
-      background: var(--ad-surface);
-      border: 1px solid var(--ad-border);
-      color: var(--ad-text);
-      border-radius: 6px;
-      padding: 5px 10px;
-      font-family: 'Nunito', sans-serif;
-      font-size: 0.78rem;
-      font-weight: 700;
-      cursor: pointer;
-      outline: none;
-      transition: border-color 0.2s;
+      background: var(--ad-surface); border: 1px solid var(--ad-border);
+      color: var(--ad-text); border-radius: 6px; padding: 5px 10px;
+      font-family:'Nunito',sans-serif; font-size:0.78rem; font-weight:700;
+      cursor: pointer; outline: none; transition: border-color 0.2s;
     }
-
-    .status-select:focus {
-      border-color: var(--ad-orange);
-    }
-
-    .status-select.pending {
-      border-left: 3px solid #F59E0B;
-    }
-
-    .status-select.confirmed {
-      border-left: 3px solid var(--ad-blue);
-    }
-
-    .status-select.preparation {
-      border-left: 3px solid var(--ad-orange);
-    }
-
-    .status-select.delivered {
-      border-left: 3px solid var(--ad-green);
-    }
+    .status-select:focus { border-color: var(--ad-orange); }
+    .status-select.pending     { border-left: 3px solid #F59E0B; }
+    .status-select.confirmed   { border-left: 3px solid var(--ad-blue); }
+    .status-select.preparation { border-left: 3px solid var(--ad-orange); }
+    .status-select.delivered   { border-left: 3px solid var(--ad-green); }
 
     /* Status badge (read-only) */
     .s-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      padding: 3px 10px;
-      border-radius: 4px;
-      font-size: 0.7rem;
-      font-weight: 700;
+      display:inline-flex; align-items:center; gap:4px;
+      padding:3px 10px; border-radius:4px; font-size:0.7rem; font-weight:700;
     }
-
-    .s-badge .dot {
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-    }
-
-    .s-badge.pending {
-      background: rgba(245, 158, 11, 0.12);
-      color: #F59E0B;
-    }
-
-    .s-badge.pending .dot {
-      background: #F59E0B;
-    }
-
-    .s-badge.confirmed {
-      background: rgba(59, 130, 246, 0.1);
-      color: var(--ad-blue);
-    }
-
-    .s-badge.confirmed .dot {
-      background: var(--ad-blue);
-    }
-
-    .s-badge.preparation {
-      background: rgba(232, 113, 42, 0.1);
-      color: var(--ad-orange);
-    }
-
-    .s-badge.preparation .dot {
-      background: var(--ad-orange);
-    }
-
-    .s-badge.delivered {
-      background: rgba(34, 197, 94, 0.1);
-      color: var(--ad-green);
-    }
-
-    .s-badge.delivered .dot {
-      background: var(--ad-green);
-    }
+    .s-badge .dot { width:5px;height:5px;border-radius:50%; }
+    .s-badge.pending     { background:rgba(245,158,11,0.12); color:#F59E0B; }
+    .s-badge.pending .dot{ background:#F59E0B; }
+    .s-badge.confirmed   { background:rgba(59,130,246,0.1);  color:var(--ad-blue); }
+    .s-badge.confirmed .dot{ background:var(--ad-blue); }
+    .s-badge.preparation { background:rgba(232,113,42,0.1);  color:var(--ad-orange); }
+    .s-badge.preparation .dot{ background:var(--ad-orange); }
+    .s-badge.delivered   { background:rgba(34,197,94,0.1);   color:var(--ad-green); }
+    .s-badge.delivered .dot{ background:var(--ad-green); }
 
     /* Action buttons */
     .btn-icon {
-      width: 32px;
-      height: 32px;
-      border-radius: 7px;
-      border: none;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.85rem;
-      transition: all 0.18s;
-      background: rgba(255, 255, 255, 0.05);
-      color: var(--ad-muted);
+      width:32px;height:32px;border-radius:7px;border:none;cursor:pointer;
+      display:inline-flex;align-items:center;justify-content:center;
+      font-size:0.85rem; transition:all 0.18s; background:rgba(255,255,255,0.05);
+      color:var(--ad-muted);
     }
-
-    .btn-icon:hover.edit {
-      background: rgba(59, 130, 246, 0.15);
-      color: var(--ad-blue);
-    }
-
-    .btn-icon:hover.delete {
-      background: rgba(239, 68, 68, 0.15);
-      color: var(--ad-red);
-    }
-
-    .btn-icon:hover.view {
-      background: rgba(232, 113, 42, 0.15);
-      color: var(--ad-orange);
-    }
+    .btn-icon:hover.edit   { background:rgba(59,130,246,0.15); color:var(--ad-blue); }
+    .btn-icon:hover.delete { background:rgba(239,68,68,0.15);  color:var(--ad-red); }
+    .btn-icon:hover.view   { background:rgba(232,113,42,0.15); color:var(--ad-orange); }
 
     /* ══ COMBO CARDS GRID ══ */
     .combos-admin-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 16px;
-      margin-bottom: 24px;
+      display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+      gap:16px; margin-bottom:24px;
     }
-
     .combo-admin-card {
-      background: var(--ad-card);
-      border-radius: 12px;
-      padding: 20px;
-      border: 1px solid var(--ad-border);
-      transition: all 0.2s;
+      background:var(--ad-card); border-radius:12px; padding:20px;
+      border:1px solid var(--ad-border); transition:all 0.2s;
     }
-
-    .combo-admin-card:hover {
-      border-color: rgba(232, 113, 42, 0.3);
+    .combo-admin-card:hover { border-color:rgba(232,113,42,0.3); }
+    .cac-head { display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px; }
+    .cac-name { font-family:'Playfair Display',serif; font-size:1rem; font-weight:700; color:#fff; }
+    .cac-cat  { font-size:0.7rem; color:var(--ad-muted); margin-top:3px; text-transform:capitalize; }
+    .cac-price{ font-family:'Playfair Display',serif; font-size:1.3rem; font-weight:700; color:var(--ad-orange); }
+    .cac-dishes{
+      display:flex;flex-wrap:wrap;gap:5px;margin:12px 0;
     }
-
-    .cac-head {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      margin-bottom: 12px;
-    }
-
-    .cac-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 1rem;
-      font-weight: 700;
-      color: #fff;
-    }
-
-    .cac-cat {
-      font-size: 0.7rem;
-      color: var(--ad-muted);
-      margin-top: 3px;
-      text-transform: capitalize;
-    }
-
-    .cac-price {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: var(--ad-orange);
-    }
-
-    .cac-dishes {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
-      margin: 12px 0;
-    }
-
     .dish-chip {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--ad-border);
-      color: var(--ad-muted);
-      border-radius: 4px;
-      padding: 2px 8px;
-      font-size: 0.72rem;
-      font-weight: 600;
+      background:rgba(255,255,255,0.05); border:1px solid var(--ad-border);
+      color:var(--ad-muted); border-radius:4px; padding:2px 8px;
+      font-size:0.72rem; font-weight:600;
     }
-
-    .cac-actions {
-      display: flex;
-      gap: 8px;
-      margin-top: 14px;
-      padding-top: 14px;
-      border-top: 1px solid var(--ad-border);
-    }
-
-    .cac-actions button {
-      flex: 1;
-    }
-
+    .cac-actions { display:flex;gap:8px;margin-top:14px;padding-top:14px;border-top:1px solid var(--ad-border); }
+    .cac-actions button { flex:1; }
     .btn-edit-combo {
-      padding: 8px;
-      border-radius: 7px;
-      border: 1px solid rgba(59, 130, 246, 0.3);
-      background: rgba(59, 130, 246, 0.08);
-      color: var(--ad-blue);
-      font-family: 'Nunito', sans-serif;
-      font-size: 0.8rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s;
+      padding:8px; border-radius:7px; border:1px solid rgba(59,130,246,0.3);
+      background:rgba(59,130,246,0.08); color:var(--ad-blue);
+      font-family:'Nunito',sans-serif; font-size:0.8rem; font-weight:700;
+      cursor:pointer; transition:all 0.2s;
     }
-
-    .btn-edit-combo:hover {
-      background: rgba(59, 130, 246, 0.18);
-    }
-
+    .btn-edit-combo:hover { background:rgba(59,130,246,0.18); }
     .btn-delete-combo {
-      padding: 8px;
-      border-radius: 7px;
-      border: 1px solid rgba(239, 68, 68, 0.25);
-      background: rgba(239, 68, 68, 0.07);
-      color: var(--ad-red);
-      font-family: 'Nunito', sans-serif;
-      font-size: 0.8rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s;
+      padding:8px; border-radius:7px; border:1px solid rgba(239,68,68,0.25);
+      background:rgba(239,68,68,0.07); color:var(--ad-red);
+      font-family:'Nunito',sans-serif; font-size:0.8rem; font-weight:700;
+      cursor:pointer; transition:all 0.2s;
     }
-
-    .btn-delete-combo:hover {
-      background: rgba(239, 68, 68, 0.18);
-    }
-
+    .btn-delete-combo:hover { background:rgba(239,68,68,0.18); }
     .popular-chip {
-      background: rgba(212, 175, 55, 0.15);
-      border: 1px solid rgba(212, 175, 55, 0.3);
-      color: var(--ad-gold);
-      border-radius: 4px;
-      padding: 2px 8px;
-      font-size: 0.65rem;
-      font-weight: 800;
-      letter-spacing: 0.5px;
+      background:rgba(212,175,55,0.15); border:1px solid rgba(212,175,55,0.3);
+      color:var(--ad-gold); border-radius:4px; padding:2px 8px;
+      font-size:0.65rem; font-weight:800; letter-spacing:0.5px;
     }
 
     /* ══ MODAL ══ */
     .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.75);
-      backdrop-filter: blur(5px);
-      z-index: 9999;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
+      position:fixed;inset:0;background:rgba(0,0,0,0.75);
+      backdrop-filter:blur(5px);z-index:9999;
+      display:none;align-items:center;justify-content:center;padding:20px;
     }
-
-    .modal-overlay.show {
-      display: flex;
-    }
-
+    .modal-overlay.show { display:flex; }
     .modal-box {
-      background: var(--ad-card);
-      border-radius: 16px;
-      width: 100%;
-      max-width: 560px;
-      max-height: 90vh;
-      overflow-y: auto;
-      border: 1px solid var(--ad-border);
-      animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+      background:var(--ad-card);border-radius:16px;
+      width:100%;max-width:560px;max-height:90vh;overflow-y:auto;
+      border:1px solid var(--ad-border);
+      animation:popIn 0.3s cubic-bezier(0.34,1.56,0.64,1);
+      box-shadow:0 24px 80px rgba(0,0,0,0.5);
     }
-
-    .modal-box.wide {
-      max-width: 680px;
-    }
-
-    @keyframes popIn {
-      from {
-        opacity: 0;
-        transform: scale(0.9);
-      }
-
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-
+    .modal-box.wide { max-width:680px; }
+    @keyframes popIn{from{opacity:0;transform:scale(0.9);}to{opacity:1;transform:scale(1);}}
     .modal-head {
-      padding: 22px 24px 18px;
-      border-bottom: 1px solid var(--ad-border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      padding:22px 24px 18px;border-bottom:1px solid var(--ad-border);
+      display:flex;align-items:center;justify-content:space-between;
     }
-
-    .modal-head h4 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.15rem;
-      color: #fff;
-      margin: 0;
-    }
-
+    .modal-head h4 { font-family:'Playfair Display',serif;font-size:1.15rem;color:#fff;margin:0; }
     .modal-close {
-      width: 28px;
-      height: 28px;
-      border-radius: 6px;
-      background: rgba(255, 255, 255, 0.06);
-      border: none;
-      color: var(--ad-muted);
-      cursor: pointer;
-      font-size: 0.85rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s;
+      width:28px;height:28px;border-radius:6px;background:rgba(255,255,255,0.06);
+      border:none;color:var(--ad-muted);cursor:pointer;font-size:0.85rem;
+      display:flex;align-items:center;justify-content:center;transition:all 0.2s;
     }
-
-    .modal-close:hover {
-      background: rgba(239, 68, 68, 0.2);
-      color: var(--ad-red);
-    }
-
-    .modal-body {
-      padding: 22px 24px 26px;
-    }
+    .modal-close:hover{background:rgba(239,68,68,0.2);color:var(--ad-red);}
+    .modal-body { padding:22px 24px 26px; }
 
     /* Form fields inside modal */
-    .mf-group {
-      margin-bottom: 16px;
+    .mf-group { margin-bottom:16px; }
+    .mf-label { font-size:0.75rem;font-weight:700;color:var(--ad-muted);margin-bottom:6px;display:block;text-transform:uppercase;letter-spacing:0.5px; }
+    .mf-input, .mf-select, .mf-textarea {
+      width:100%;padding:10px 14px;
+      background:var(--ad-surface);border:1px solid var(--ad-border);
+      border-radius:8px;color:var(--ad-text);
+      font-family:'Nunito',sans-serif;font-size:0.9rem;
+      outline:none;transition:border-color 0.2s;
     }
-
-    .mf-label {
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: var(--ad-muted);
-      margin-bottom: 6px;
-      display: block;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .mf-input,
-    .mf-select,
-    .mf-textarea {
-      width: 100%;
-      padding: 10px 14px;
-      background: var(--ad-surface);
-      border: 1px solid var(--ad-border);
-      border-radius: 8px;
-      color: var(--ad-text);
-      font-family: 'Nunito', sans-serif;
-      font-size: 0.9rem;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    .mf-input:focus,
-    .mf-select:focus,
-    .mf-textarea:focus {
-      border-color: var(--ad-orange);
-    }
-
-    .mf-textarea {
-      resize: vertical;
-      min-height: 80px;
-      line-height: 1.5;
-    }
-
-    .mf-select option {
-      background: var(--ad-surface);
-    }
-
-    .mf-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-
-    .mf-hint {
-      font-size: 0.72rem;
-      color: var(--ad-muted);
-      margin-top: 5px;
-    }
+    .mf-input:focus,.mf-select:focus,.mf-textarea:focus { border-color:var(--ad-orange); }
+    .mf-textarea { resize:vertical;min-height:80px;line-height:1.5; }
+    .mf-select option { background:var(--ad-surface); }
+    .mf-row { display:grid;grid-template-columns:1fr 1fr;gap:14px; }
+    .mf-hint { font-size:0.72rem;color:var(--ad-muted);margin-top:5px; }
 
     /* ── Dishes input list ── */
     .dishes-input-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 10px;
+      display: flex; flex-direction: column; gap: 10px; margin-bottom: 10px;
     }
-
     .dish-input-row {
       display: grid;
       grid-template-columns: 56px 1fr 30px;
-      gap: 10px;
-      align-items: center;
+      gap: 10px; align-items: center;
       background: var(--ad-surface);
       border: 1px solid var(--ad-border);
       border-radius: 10px;
       padding: 10px 12px;
       transition: border-color 0.2s;
     }
-
-    .dish-input-row:hover {
-      border-color: rgba(232, 113, 42, 0.35);
-    }
+    .dish-input-row:hover { border-color: rgba(232,113,42,0.35); }
 
     .dish-img-wrap {
-      width: 48px;
-      height: 48px;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 2px dashed rgba(255, 255, 255, 0.18);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      overflow: hidden;
-      flex-shrink: 0;
-      position: relative;
-      transition: border-color 0.2s;
+      width: 48px; height: 48px; border-radius: 8px;
+      background: rgba(255,255,255,0.05);
+      border: 2px dashed rgba(255,255,255,0.18);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; overflow: hidden; flex-shrink: 0;
+      position: relative; transition: border-color 0.2s;
     }
-
-    .dish-img-wrap:hover {
-      border-color: var(--ad-orange);
-    }
-
+    .dish-img-wrap:hover { border-color: var(--ad-orange); }
     .dish-img-wrap img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      position: absolute;
-      inset: 0;
-      border-radius: 6px;
+      width:100%;height:100%;object-fit:cover;position:absolute;inset:0;border-radius:6px;
     }
+    .dish-img-wrap .img-placeholder { font-size:1.3rem;opacity:0.45;transition:opacity 0.2s; }
+    .dish-img-wrap:hover .img-placeholder { opacity:0.9; }
+    .dish-img-file { display:none; }
 
-    .dish-img-wrap .img-placeholder {
-      font-size: 1.3rem;
-      opacity: 0.45;
-      transition: opacity 0.2s;
+    .dish-fields { display:flex;flex-direction:column;gap:6px; }
+    .dish-name-input, .dish-price-input {
+      width:100%;padding:7px 10px;
+      background:rgba(255,255,255,0.05);
+      border:1px solid var(--ad-border);
+      border-radius:7px;color:var(--ad-text);
+      font-family:'Nunito',sans-serif;font-size:0.86rem;
+      outline:none;transition:border-color 0.2s;
     }
-
-    .dish-img-wrap:hover .img-placeholder {
-      opacity: 0.9;
-    }
-
-    .dish-img-file {
-      display: none;
-    }
-
-    .dish-fields {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .dish-name-input,
-    .dish-price-input {
-      width: 100%;
-      padding: 7px 10px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--ad-border);
-      border-radius: 7px;
-      color: var(--ad-text);
-      font-family: 'Nunito', sans-serif;
-      font-size: 0.86rem;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    .dish-name-input:focus,
-    .dish-price-input:focus {
-      border-color: var(--ad-orange);
-    }
-
-    .dish-name-input::placeholder,
-    .dish-price-input::placeholder {
-      color: rgba(226, 232, 240, 0.3);
-    }
-
-    .dish-price-input {
-      font-size: 0.78rem;
-    }
+    .dish-name-input:focus,.dish-price-input:focus { border-color:var(--ad-orange); }
+    .dish-name-input::placeholder,.dish-price-input::placeholder { color:rgba(226,232,240,0.3); }
+    .dish-price-input { font-size:0.78rem; }
 
     .btn-rm-dish {
-      width: 30px;
-      height: 30px;
-      border-radius: 7px;
-      background: rgba(239, 68, 68, 0.1);
-      border: 1px solid rgba(239, 68, 68, 0.2);
-      color: var(--ad-red);
-      cursor: pointer;
-      font-size: 0.85rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.18s;
-      flex-shrink: 0;
-      align-self: center;
+      width:30px;height:30px;border-radius:7px;
+      background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);
+      color:var(--ad-red);cursor:pointer;font-size:0.85rem;
+      display:flex;align-items:center;justify-content:center;
+      transition:all 0.18s;flex-shrink:0;align-self:center;
     }
-
-    .btn-rm-dish:hover {
-      background: rgba(239, 68, 68, 0.3);
-    }
-
+    .btn-rm-dish:hover{background:rgba(239,68,68,0.3);}
     .btn-add-dish {
-      padding: 8px 16px;
-      border-radius: 7px;
-      background: rgba(34, 197, 94, 0.1);
-      border: 1px solid rgba(34, 197, 94, 0.25);
-      color: var(--ad-green);
-      cursor: pointer;
-      font-size: 0.82rem;
-      font-weight: 700;
-      font-family: 'Nunito', sans-serif;
-      transition: all 0.18s;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+      padding:8px 16px;border-radius:7px;
+      background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.25);
+      color:var(--ad-green);cursor:pointer;
+      font-size:0.82rem;font-weight:700;
+      font-family:'Nunito',sans-serif;transition:all 0.18s;
+      display:inline-flex;align-items:center;gap:6px;
     }
-
-    .btn-add-dish:hover {
-      background: rgba(34, 197, 94, 0.22);
-    }
-
+    .btn-add-dish:hover{background:rgba(34,197,94,0.22);}
     .dishes-count-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      background: rgba(232, 113, 42, 0.12);
-      border: 1px solid rgba(232, 113, 42, 0.25);
-      color: var(--ad-orange);
-      border-radius: 5px;
-      padding: 2px 10px;
-      font-size: 0.72rem;
-      font-weight: 700;
+      display:inline-flex;align-items:center;gap:5px;
+      background:rgba(232,113,42,0.12);border:1px solid rgba(232,113,42,0.25);
+      color:var(--ad-orange);border-radius:5px;
+      padding:2px 10px;font-size:0.72rem;font-weight:700;
     }
 
     .modal-footer {
-      padding: 16px 24px;
-      border-top: 1px solid var(--ad-border);
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 10px;
+      padding:16px 24px;border-top:1px solid var(--ad-border);
+      display:flex;align-items:center;justify-content:flex-end;gap:10px;
     }
-
     .btn-cancel {
-      padding: 9px 20px;
-      border-radius: 7px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--ad-border);
-      color: var(--ad-muted);
-      font-family: 'Nunito', sans-serif;
-      font-size: 0.85rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s;
+      padding:9px 20px;border-radius:7px;
+      background:rgba(255,255,255,0.05);border:1px solid var(--ad-border);
+      color:var(--ad-muted);font-family:'Nunito',sans-serif;
+      font-size:0.85rem;font-weight:700;cursor:pointer;transition:all 0.2s;
     }
-
-    .btn-cancel:hover {
-      background: rgba(255, 255, 255, 0.08);
-      color: var(--ad-text);
-    }
-
+    .btn-cancel:hover{background:rgba(255,255,255,0.08);color:var(--ad-text);}
     .btn-save {
-      padding: 9px 24px;
-      border-radius: 7px;
-      background: var(--ad-orange);
-      border: none;
-      color: #fff;
-      font-family: 'Nunito', sans-serif;
-      font-size: 0.85rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s;
+      padding:9px 24px;border-radius:7px;
+      background:var(--ad-orange);border:none;color:#fff;
+      font-family:'Nunito',sans-serif;font-size:0.85rem;font-weight:700;
+      cursor:pointer;transition:all 0.2s;
     }
-
-    .btn-save:hover {
-      background: #C45A18;
-    }
+    .btn-save:hover{background:#C45A18;}
 
     /* Confirm delete */
-    .confirm-box {
-      text-align: center;
-      padding: 8px 0;
-    }
-
-    .confirm-box .cb-icon {
-      font-size: 2.5rem;
-      margin-bottom: 12px;
-    }
-
-    .confirm-box p {
-      color: var(--ad-muted);
-      font-size: 0.9rem;
-      line-height: 1.6;
-    }
-
+    .confirm-box { text-align:center;padding:8px 0; }
+    .confirm-box .cb-icon { font-size:2.5rem;margin-bottom:12px; }
+    .confirm-box p { color:var(--ad-muted);font-size:0.9rem;line-height:1.6; }
     .btn-confirm-delete {
-      padding: 10px 28px;
-      border-radius: 7px;
-      background: var(--ad-red);
-      border: none;
-      color: #fff;
-      font-family: 'Nunito', sans-serif;
-      font-size: 0.88rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s;
-      margin-top: 16px;
+      padding:10px 28px;border-radius:7px;
+      background:var(--ad-red);border:none;color:#fff;
+      font-family:'Nunito',sans-serif;font-size:0.88rem;font-weight:700;
+      cursor:pointer;transition:all 0.2s;margin-top:16px;
     }
-
-    .btn-confirm-delete:hover {
-      background: #C81E1E;
-    }
+    .btn-confirm-delete:hover{background:#C81E1E;}
 
     /* ══ CUSTOMERS ══ */
     .customer-avatar {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      font-size: 0.85rem;
-      color: #fff;
-      flex-shrink: 0;
-      background: linear-gradient(135deg, var(--ad-orange), #C45A18);
+      width:34px;height:34px;border-radius:50%;
+      display:inline-flex;align-items:center;justify-content:center;
+      font-weight:800;font-size:0.85rem;color:#fff;flex-shrink:0;
+      background:linear-gradient(135deg,var(--ad-orange),#C45A18);
     }
 
     /* ══ SEARCH BAR ══ */
     .admin-search {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--ad-surface);
-      border: 1px solid var(--ad-border);
-      border-radius: 8px;
-      padding: 8px 14px;
-      transition: border-color 0.2s;
+      display:flex;align-items:center;gap:8px;
+      background:var(--ad-surface);border:1px solid var(--ad-border);
+      border-radius:8px;padding:8px 14px;transition:border-color 0.2s;
     }
-
-    .admin-search:focus-within {
-      border-color: var(--ad-orange);
-    }
-
+    .admin-search:focus-within{border-color:var(--ad-orange);}
     .admin-search input {
-      border: none;
-      background: transparent;
-      outline: none;
-      color: var(--ad-text);
-      font-family: 'Nunito', sans-serif;
-      font-size: 0.87rem;
-      width: 200px;
+      border:none;background:transparent;outline:none;
+      color:var(--ad-text);font-family:'Nunito',sans-serif;font-size:0.87rem;
+      width:200px;
     }
-
-    .admin-search input::placeholder {
-      color: var(--ad-muted);
-    }
+    .admin-search input::placeholder{color:var(--ad-muted);}
 
     /* Mobile toggle */
-    .mob-toggle {
-      display: none;
-      background: none;
-      border: none;
-      color: var(--ad-text);
-      font-size: 1.3rem;
-      cursor: pointer;
-      padding: 4px;
+    .mob-toggle{display:none;background:none;border:none;color:var(--ad-text);font-size:1.3rem;cursor:pointer;padding:4px;}
+
+    @media(max-width:900px){
+      .admin-layout{grid-template-columns:1fr;}
+      .admin-sidebar{display:none;position:fixed;z-index:200;width:240px;height:100vh;}
+      .admin-sidebar.open{display:flex;}
+      .mob-toggle{display:block;}
+      .stats-grid{grid-template-columns:1fr 1fr;}
+      .combos-admin-grid{grid-template-columns:1fr;}
+      .admin-content{padding:16px;}
+      .mf-row{grid-template-columns:1fr;}
     }
-
-    @media(max-width:900px) {
-      .admin-layout {
-        grid-template-columns: 1fr;
-      }
-
-      .admin-sidebar {
-        display: none;
-        position: fixed;
-        z-index: 200;
-        width: 240px;
-        height: 100vh;
-      }
-
-      .admin-sidebar.open {
-        display: flex;
-      }
-
-      .mob-toggle {
-        display: block;
-      }
-
-      .stats-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .combos-admin-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .admin-content {
-        padding: 16px;
-      }
-
-      .mf-row {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media(max-width:500px) {
-      .stats-grid {
-        grid-template-columns: 1fr;
-      }
+    @media(max-width:500px){
+      .stats-grid{grid-template-columns:1fr;}
     }
   </style>
 </head>
-
 <body>
-  <div class="admin-layout">
+<div class="admin-layout">
 
-    <!-- ══ SIDEBAR ══ -->
-    <aside class="admin-sidebar" id="adminSidebar">
-      <div class="admin-brand">
-        <a href="index.html" class="logo">Menu<span>Craft</span></a>
-        <span class="admin-tag">⚡ Admin Panel</span>
-      </div>
+  <!-- ══ SIDEBAR ══ -->
+  <aside class="admin-sidebar" id="adminSidebar">
+    <div class="admin-brand">
+      <a href="/" class="logo">Menu<span>Craft</span></a>
+      <span class="admin-tag">⚡ Admin Panel</span>
+    </div>
 
-      <nav class="admin-nav">
-        <div class="nav-section">Main</div>
-        <a class="nav-item active" id="nav-overview" onclick="showPanel('overview')">
-          <span class="ni">📊</span> Overview
-        </a>
+    <nav class="admin-nav">
+      <div class="nav-section">Main</div>
+      <a class="nav-item active" id="nav-overview" onclick="showPanel('overview')">
+        <span class="ni">📊</span> Overview
+      </a>
 
-        <div class="nav-section">Manage</div>
-        <a class="nav-item" id="nav-combos" onclick="showPanel('combos')">
-          <span class="ni">🍱</span> Combo Packages
-        </a>
-        <a class="nav-item" id="nav-orders" onclick="showPanel('orders')">
-          <span class="ni">📋</span> Orders
-          <span class="nbadge" id="pendingBadge">2</span>
-        </a>
-        <a class="nav-item" id="nav-dishes" onclick="showPanel('dishes')">
-          <span class="ni">🥘</span> Dishes
-        </a>
-        <a class="nav-item" id="nav-customers" onclick="showPanel('customers')">
-          <span class="ni">👥</span> Customers
-        </a>
+      <div class="nav-section">Manage</div>
+      <a class="nav-item" id="nav-combos" onclick="showPanel('combos')">
+        <span class="ni">🍱</span> Combo Packages
+      </a>
+      <a class="nav-item" id="nav-orders" onclick="showPanel('orders')">
+        <span class="ni">📋</span> Orders
+        <span class="nbadge" id="pendingBadge">2</span>
+      </a>
+      <a class="nav-item" id="nav-dishes" onclick="showPanel('dishes')">
+        <span class="ni">🥘</span> Dishes
+      </a>
+      <a class="nav-item" id="nav-customers" onclick="showPanel('customers')">
+        <span class="ni">👥</span> Customers
+      </a>
 
-        <div class="nav-section">Site</div>
-        <a class="nav-item" href="index.html" target="_blank">
-          <span class="ni">🌐</span> View Website ↗
-        </a>
-      </nav>
+      <div class="nav-section">Site</div>
+      <a class="nav-item" href="/" target="_blank">
+        <span class="ni">🌐</span> View Website ↗
+      </a>
+    </nav>
 
-      <div class="admin-footer">
-        <div class="admin-user">
-          <div class="au-avatar">A</div>
-          <div>
-            <div class="au-name">Admin</div>
-            <div class="au-role">admin@menucraft.in</div>
-          </div>
+    <div class="admin-footer">
+      <div class="admin-user">
+        <div class="au-avatar">A</div>
+        <div>
+          <div class="au-name">Admin</div>
+          <div class="au-role">admin@menucraft.in</div>
         </div>
-      </div>
-    </aside>
-
-    <!-- ══ MAIN ══ -->
-    <div class="admin-main">
-
-      <!-- Top bar -->
-      <div class="admin-topbar">
-        <div style="display:flex;align-items:center;gap:12px;">
-          <button class="mob-toggle"
-            onclick="document.getElementById('adminSidebar').classList.toggle('open')">☰</button>
-          <span class="topbar-title" id="topbarTitle">Overview</span>
-        </div>
-        <div class="topbar-right">
-          <div class="admin-search">
-            <span style="color:var(--ad-muted);">🔍</span>
-            <input type="text" placeholder="Search orders, customers..." oninput="globalSearch(this.value)" />
-          </div>
-          <button class="btn-admin-primary" onclick="showPanel('combos');openComboModal()">
-            ＋ Add Combo
-          </button>
-        </div>
-      </div>
-
-      <div class="admin-content">
-
-        <!-- ═══════════════════════════
-           PANEL 1 — OVERVIEW
-      ═══════════════════════════ -->
-        <div class="admin-panel active" id="panel-overview">
-
-          <div class="stats-grid">
-            <div class="stat-card orange">
-              <div class="sc-icon">📋</div>
-              <div class="sc-val">12</div>
-              <div class="sc-lbl">Total Orders</div>
-              <div class="sc-trend up">↑ 3 this week</div>
-            </div>
-            <div class="stat-card green">
-              <div class="sc-icon">💰</div>
-              <div class="sc-val">₹8.4L</div>
-              <div class="sc-lbl">Total Revenue</div>
-              <div class="sc-trend up">↑ ₹1.2L this month</div>
-            </div>
-            <div class="stat-card blue">
-              <div class="sc-icon">👥</div>
-              <div class="sc-val">38</div>
-              <div class="sc-lbl">Total Customers</div>
-              <div class="sc-trend up">↑ 5 new this month</div>
-            </div>
-            <div class="stat-card red">
-              <div class="sc-icon">⏳</div>
-              <div class="sc-val">2</div>
-              <div class="sc-lbl">Pending Orders</div>
-              <div class="sc-trend warn">⚠ Action needed</div>
-            </div>
-          </div>
-
-          <!-- Recent orders quick view -->
-          <div class="sec-head">
-            <h3>Recent Orders</h3>
-            <button class="btn-admin-primary" style="padding:7px 16px;font-size:0.8rem;"
-              onclick="showPanel('orders')">View All →</button>
-          </div>
-          <div class="ad-table-wrap">
-            <table class="ad-table">
-              <thead>
-                <tr>
-                  <th>Ref</th>
-                  <th>Customer</th>
-                  <th>Package</th>
-                  <th>Date</th>
-                  <th>Total</th>
-                  <th>Status</th>
-                  <th>Update</th>
-                </tr>
-              </thead>
-              <tbody id="overviewOrdersTbody"></tbody>
-            </table>
-          </div>
-
-          <!-- Combos summary -->
-          <div class="sec-head" style="margin-top:8px;">
-            <h3>Active Combo Packages</h3>
-            <button class="btn-admin-primary" style="padding:7px 16px;font-size:0.8rem;"
-              onclick="showPanel('combos')">Manage →</button>
-          </div>
-          <div class="ad-table-wrap">
-            <table class="ad-table">
-              <thead>
-                <tr>
-                  <th>Package Name</th>
-                  <th>Category</th>
-                  <th>Price/Head</th>
-                  <th>Dishes</th>
-                  <th>Popular</th>
-                </tr>
-              </thead>
-              <tbody id="overviewCombosTbody"></tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- ═══════════════════════════
-           PANEL 2 — COMBO PACKAGES
-      ═══════════════════════════ -->
-        <div class="admin-panel" id="panel-combos">
-          <div class="sec-head" style="margin-bottom:20px;">
-            <h3>Combo Packages <span style="font-size:0.8rem;color:var(--ad-muted);font-family:'Nunito',sans-serif;"
-                id="comboCount"></span></h3>
-            <button class="btn-admin-primary" onclick="openComboModal()">＋ Add New Combo</button>
-          </div>
-          <div class="combos-admin-grid" id="combosAdminGrid"></div>
-        </div>
-
-        <!-- ═══════════════════════════
-           PANEL 3 — ORDERS
-      ═══════════════════════════ -->
-        <div class="admin-panel" id="panel-orders">
-          <div class="sec-head" style="margin-bottom:16px;">
-            <h3>All Orders</h3>
-            <div style="display:flex;gap:8px;flex-wrap:wrap;">
-              <button class="btn-cancel active-filter" style="color:var(--ad-orange);border-color:rgba(232,113,42,0.3);"
-                onclick="filterOrders('all',this)">All</button>
-              <button class="btn-cancel" onclick="filterOrders('pending',this)">🟡 Pending</button>
-              <button class="btn-cancel" onclick="filterOrders('confirmed',this)">🔵 Confirmed</button>
-              <button class="btn-cancel" onclick="filterOrders('preparation',this)">🟠 Preparing</button>
-              <button class="btn-cancel" onclick="filterOrders('delivered',this)">🟢 Delivered</button>
-            </div>
-          </div>
-          <div class="ad-table-wrap">
-            <table class="ad-table">
-              <thead>
-                <tr>
-                  <th>Ref</th>
-                  <th>Customer</th>
-                  <th>Package</th>
-                  <th>Event Date</th>
-                  <th>Guests</th>
-                  <th>Total</th>
-                  <th>Status</th>
-                  <th>Update Status</th>
-                </tr>
-              </thead>
-              <tbody id="allOrdersTbody"></tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- ═══════════════════════════
-           PANEL 4 — DISHES
-      ═══════════════════════════ -->
-        <div class="admin-panel" id="panel-dishes">
-          <div class="sec-head" style="margin-bottom:16px;">
-            <h3>Individual Dishes <span style="font-size:0.8rem;color:var(--ad-muted);font-family:'Nunito',sans-serif;"
-                id="dishesCount"></span></h3>
-            <button class="btn-admin-primary" onclick="openDishModal()">＋ Add New Dish</button>
-          </div>
-
-          <!-- Category filter tabs -->
-          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;">
-            <button class="btn-cancel" style="color:var(--ad-orange);border-color:rgba(232,113,42,0.3);"
-              onclick="filterDishes('all',this)">All</button>
-            <button class="btn-cancel" onclick="filterDishes('starter',this)">🥗 Starter</button>
-            <button class="btn-cancel" onclick="filterDishes('main',this)">🍛 Main Course</button>
-            <button class="btn-cancel" onclick="filterDishes('dessert',this)">🍰 Dessert</button>
-            <button class="btn-cancel" onclick="filterDishes('drink',this)">🥤 Drinks</button>
-            <button class="btn-cancel" onclick="filterDishes('bread',this)">🫓 Breads</button>
-            <button class="btn-cancel" onclick="filterDishes('rice',this)">🍚 Rice</button>
-            <button class="btn-cancel" onclick="filterDishes('special',this)">⭐ Special</button>
-          </div>
-
-          <!-- Dishes grid -->
-          <div id="dishesAdminGrid"
-            style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;"></div>
-        </div>
-
-        <!-- ═══════════════════════════
-           PANEL 5 — CUSTOMERS
-      ═══════════════════════════ -->
-        <div class="admin-panel" id="panel-customers">
-          <div class="sec-head" style="margin-bottom:16px;">
-            <h3>All Customers</h3>
-            <div class="admin-search">
-              <span style="color:var(--ad-muted);">🔍</span>
-              <input type="text" placeholder="Search customers..." oninput="searchCustomers(this.value)" />
-            </div>
-          </div>
-          <div class="ad-table-wrap">
-            <table class="ad-table">
-              <thead>
-                <tr>
-                  <th>Customer</th>
-                  <th>Email</th>
-                  <th>Phone</th>
-                  <th>Bookings</th>
-                  <th>Total Spent</th>
-                  <th>Joined</th>
-                </tr>
-              </thead>
-              <tbody id="customersTbody"></tbody>
-            </table>
-          </div>
-        </div>
-
-      </div><!-- end admin-content -->
-    </div><!-- end admin-main -->
-  </div><!-- end admin-layout -->
-
-
-  <!-- ══ ADD / EDIT COMBO MODAL ══ -->
-  <div class="modal-overlay" id="comboModal" onclick="closeModal('comboModal',event)">
-    <div class="modal-box wide">
-      <div class="modal-head">
-        <h4 id="comboModalTitle">➕ Add New Combo Package</h4>
-        <button class="modal-close" onclick="document.getElementById('comboModal').classList.remove('show')">✕</button>
-      </div>
-      <div class="modal-body">
-        <input type="hidden" id="editingComboId" value="" />
-
-        <div class="mf-row">
-          <div class="mf-group">
-            <label class="mf-label">Package Name *</label>
-            <input class="mf-input" id="cm-name" placeholder="e.g. Simple South Indian Dinner" />
-          </div>
-          <div class="mf-group">
-            <label class="mf-label">Tagline</label>
-            <input class="mf-input" id="cm-tagline" placeholder="Short description" />
-          </div>
-        </div>
-
-        <div class="mf-row">
-          <div class="mf-group">
-            <label class="mf-label">Category *</label>
-            <select class="mf-select" id="cm-category">
-              <option value="south dinner">South Indian — Dinner</option>
-              <option value="south lunch">South Indian — Lunch</option>
-              <option value="south dinner wedding">South Indian — Wedding</option>
-              <option value="north lunch">North Indian — Lunch</option>
-              <option value="north dinner">North Indian — Dinner</option>
-              <option value="wedding dinner">Wedding Banquet</option>
-              <option value="snack">Snack Package</option>
-              <option value="north south lunch">Corporate Lunch</option>
-            </select>
-          </div>
-          <div class="mf-group">
-            <label class="mf-label">Theme Colour</label>
-            <select class="mf-select" id="cm-theme">
-              <option value="theme-south">🟤 South Indian (Brown)</option>
-              <option value="theme-north">🟣 North Indian (Purple)</option>
-              <option value="theme-wedding">🟡 Wedding (Gold)</option>
-              <option value="theme-snack">🟢 Snack (Green)</option>
-              <option value="theme-dinner">🔵 Corporate (Blue)</option>
-              <option value="theme-lunch">🔴 Lunch (Red)</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="mf-row">
-          <div class="mf-group">
-            <label class="mf-label">Price per Head (₹) *</label>
-            <input class="mf-input" id="cm-price" type="number" placeholder="350" min="1" />
-          </div>
-          <div class="mf-group">
-            <label class="mf-label">Price Label</label>
-            <select class="mf-select" id="cm-pricesub">
-              <option value="per head">per head</option>
-              <option value="per box">per box</option>
-              <option value="per plate">per plate</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="mf-row">
-          <div class="mf-group">
-            <label class="mf-label">Emoji Icon</label>
-            <input class="mf-input" id="cm-emoji" placeholder="🍌" maxlength="4" />
-          </div>
-          <div class="mf-group">
-            <label class="mf-label">Serves Note</label>
-            <input class="mf-input" id="cm-serves" placeholder="e.g. Best for 100+ guests" />
-          </div>
-        </div>
-
-        <div class="mf-group">
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-            <div style="display:flex;align-items:center;gap:10px;">
-              <label class="mf-label" style="margin:0;">Dishes Included *</label>
-              <span class="dishes-count-badge" id="dishCountBadge">0 dishes</span>
-            </div>
-            <button class="btn-add-dish" type="button" onclick="addDishInput()">＋ Add Dish</button>
-          </div>
-          <div style="display:grid;grid-template-columns:56px 1fr 30px;gap:10px;padding:0 4px;margin-bottom:6px;">
-            <div
-              style="font-size:0.63rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--ad-muted);text-align:center;">
-              Photo</div>
-            <div
-              style="font-size:0.63rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--ad-muted);">
-              Dish Name &amp; Price/head</div>
-            <div></div>
-          </div>
-          <div class="dishes-input-list" id="dishesInputList"></div>
-          <p class="mf-hint" style="margin-top:8px;">Click the photo box to upload an image. Tap ✕ to remove a dish.</p>
-        </div>
-
-        <div class="mf-group" style="display:flex;align-items:center;gap:10px;">
-          <input type="checkbox" id="cm-popular" style="width:18px;height:18px;accent-color:var(--ad-orange);" />
-          <label for="cm-popular" style="font-size:0.85rem;color:var(--ad-muted);cursor:pointer;font-weight:600;">Mark
-            as Popular / Featured</label>
-        </div>
-        <div class="mf-group" id="popularLabelGroup" style="display:none;">
-          <label class="mf-label">Popular Badge Label</label>
-          <input class="mf-input" id="cm-popularlabel" placeholder="e.g. ⭐ Most Popular" />
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn-cancel"
-          onclick="document.getElementById('comboModal').classList.remove('show')">Cancel</button>
-        <button class="btn-save" onclick="saveCombo()">💾 Save Package</button>
       </div>
     </div>
-  </div>
+  </aside>
 
-  <!-- ══ ADD / EDIT DISH MODAL ══ -->
-  <div class="modal-overlay" id="dishModal" onclick="closeModal('dishModal',event)">
-    <div class="modal-box">
-      <div class="modal-head">
-        <h4 id="dishModalTitle">➕ Add New Dish</h4>
-        <button class="modal-close" onclick="document.getElementById('dishModal').classList.remove('show')">✕</button>
+  <!-- ══ MAIN ══ -->
+  <div class="admin-main">
+
+    <!-- Top bar -->
+    <div class="admin-topbar">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button class="mob-toggle" onclick="document.getElementById('adminSidebar').classList.toggle('open')">☰</button>
+        <span class="topbar-title" id="topbarTitle">Overview</span>
       </div>
-      <div class="modal-body">
-        <input type="hidden" id="editingDishId" value="" />
+      <div class="topbar-right">
+        <div class="admin-search">
+          <span style="color:var(--ad-muted);">🔍</span>
+          <input type="text" placeholder="Search orders, customers..." oninput="globalSearch(this.value)" />
+        </div>
+        <button class="btn-admin-primary" onclick="showPanel('combos');openComboModal()">
+          ＋ Add Combo
+        </button>
+      </div>
+    </div>
 
-        <!-- Image upload -->
-        <div class="mf-group"
-          style="display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:20px;">
-          <div id="dishImgPreview" onclick="document.getElementById('dishImgFile').click()" style="width:100%;height:140px;border-radius:12px;background:rgba(255,255,255,0.05);
+    <div class="admin-content">
+
+      <!-- ═══════════════════════════
+           PANEL 1 — OVERVIEW
+      ═══════════════════════════ -->
+      <div class="admin-panel active" id="panel-overview">
+
+        <div class="stats-grid">
+          <div class="stat-card orange">
+            <div class="sc-icon">📋</div>
+            <div class="sc-val">12</div>
+            <div class="sc-lbl">Total Orders</div>
+            <div class="sc-trend up">↑ 3 this week</div>
+          </div>
+          <div class="stat-card green">
+            <div class="sc-icon">💰</div>
+            <div class="sc-val">₹8.4L</div>
+            <div class="sc-lbl">Total Revenue</div>
+            <div class="sc-trend up">↑ ₹1.2L this month</div>
+          </div>
+          <div class="stat-card blue">
+            <div class="sc-icon">👥</div>
+            <div class="sc-val">38</div>
+            <div class="sc-lbl">Total Customers</div>
+            <div class="sc-trend up">↑ 5 new this month</div>
+          </div>
+          <div class="stat-card red">
+            <div class="sc-icon">⏳</div>
+            <div class="sc-val">2</div>
+            <div class="sc-lbl">Pending Orders</div>
+            <div class="sc-trend warn">⚠ Action needed</div>
+          </div>
+        </div>
+
+        <!-- Recent orders quick view -->
+        <div class="sec-head">
+          <h3>Recent Orders</h3>
+          <button class="btn-admin-primary" style="padding:7px 16px;font-size:0.8rem;" onclick="showPanel('orders')">View All →</button>
+        </div>
+        <div class="ad-table-wrap">
+          <table class="ad-table">
+            <thead>
+              <tr>
+                <th>Ref</th><th>Customer</th><th>Package</th><th>Date</th><th>Total</th><th>Status</th><th>Update</th>
+              </tr>
+            </thead>
+            <tbody id="overviewOrdersTbody"></tbody>
+          </table>
+        </div>
+
+        <!-- Combos summary -->
+        <div class="sec-head" style="margin-top:8px;">
+          <h3>Active Combo Packages</h3>
+          <button class="btn-admin-primary" style="padding:7px 16px;font-size:0.8rem;" onclick="showPanel('combos')">Manage →</button>
+        </div>
+        <div class="ad-table-wrap">
+          <table class="ad-table">
+            <thead>
+              <tr><th>Package Name</th><th>Category</th><th>Price/Head</th><th>Dishes</th><th>Popular</th></tr>
+            </thead>
+            <tbody id="overviewCombosTbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════
+           PANEL 2 — COMBO PACKAGES
+      ═══════════════════════════ -->
+      <div class="admin-panel" id="panel-combos">
+        <div class="sec-head" style="margin-bottom:20px;">
+          <h3>Combo Packages <span style="font-size:0.8rem;color:var(--ad-muted);font-family:'Nunito',sans-serif;" id="comboCount"></span></h3>
+          <button class="btn-admin-primary" onclick="openComboModal()">＋ Add New Combo</button>
+        </div>
+        <div class="combos-admin-grid" id="combosAdminGrid"></div>
+      </div>
+
+      <!-- ═══════════════════════════
+           PANEL 3 — ORDERS
+      ═══════════════════════════ -->
+      <div class="admin-panel" id="panel-orders">
+        <div class="sec-head" style="margin-bottom:16px;">
+          <h3>All Orders</h3>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button class="btn-cancel active-filter" style="color:var(--ad-orange);border-color:rgba(232,113,42,0.3);" onclick="filterOrders('all',this)">All</button>
+            <button class="btn-cancel" onclick="filterOrders('pending',this)">🟡 Pending</button>
+            <button class="btn-cancel" onclick="filterOrders('confirmed',this)">🔵 Confirmed</button>
+            <button class="btn-cancel" onclick="filterOrders('preparation',this)">🟠 Preparing</button>
+            <button class="btn-cancel" onclick="filterOrders('delivered',this)">🟢 Delivered</button>
+          </div>
+        </div>
+        <div class="ad-table-wrap">
+          <table class="ad-table">
+            <thead>
+              <tr>
+                <th>Ref</th><th>Customer</th><th>Package</th><th>Event Date</th>
+                <th>Guests</th><th>Total</th><th>Status</th><th>Update Status</th>
+              </tr>
+            </thead>
+            <tbody id="allOrdersTbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════
+           PANEL 4 — DISHES
+      ═══════════════════════════ -->
+      <div class="admin-panel" id="panel-dishes">
+        <div class="sec-head" style="margin-bottom:16px;">
+          <h3>Individual Dishes <span style="font-size:0.8rem;color:var(--ad-muted);font-family:'Nunito',sans-serif;" id="dishesCount"></span></h3>
+          <button class="btn-admin-primary" onclick="openDishModal()">＋ Add New Dish</button>
+        </div>
+
+        <!-- Category filter tabs -->
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;">
+          <button class="btn-cancel" style="color:var(--ad-orange);border-color:rgba(232,113,42,0.3);" onclick="filterDishes('all',this)">All</button>
+          <button class="btn-cancel" onclick="filterDishes('starter',this)">🥗 Starter</button>
+          <button class="btn-cancel" onclick="filterDishes('main',this)">🍛 Main Course</button>
+          <button class="btn-cancel" onclick="filterDishes('dessert',this)">🍰 Dessert</button>
+          <button class="btn-cancel" onclick="filterDishes('drink',this)">🥤 Drinks</button>
+          <button class="btn-cancel" onclick="filterDishes('bread',this)">🫓 Breads</button>
+          <button class="btn-cancel" onclick="filterDishes('rice',this)">🍚 Rice</button>
+          <button class="btn-cancel" onclick="filterDishes('special',this)">⭐ Special</button>
+        </div>
+
+        <!-- Dishes grid -->
+        <div id="dishesAdminGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;"></div>
+      </div>
+
+      <!-- ═══════════════════════════
+           PANEL 5 — CUSTOMERS
+      ═══════════════════════════ -->
+      <div class="admin-panel" id="panel-customers">
+        <div class="sec-head" style="margin-bottom:16px;">
+          <h3>All Customers</h3>
+          <div class="admin-search">
+            <span style="color:var(--ad-muted);">🔍</span>
+            <input type="text" placeholder="Search customers..." oninput="searchCustomers(this.value)" />
+          </div>
+        </div>
+        <div class="ad-table-wrap">
+          <table class="ad-table">
+            <thead>
+              <tr><th>Customer</th><th>Email</th><th>Phone</th><th>Bookings</th><th>Total Spent</th><th>Joined</th></tr>
+            </thead>
+            <tbody id="customersTbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </div><!-- end admin-content -->
+  </div><!-- end admin-main -->
+</div><!-- end admin-layout -->
+
+
+<!-- ══ ADD / EDIT COMBO MODAL ══ -->
+<div class="modal-overlay" id="comboModal" onclick="closeModal('comboModal',event)">
+  <div class="modal-box wide">
+    <div class="modal-head">
+      <h4 id="comboModalTitle">➕ Add New Combo Package</h4>
+      <button class="modal-close" onclick="document.getElementById('comboModal').classList.remove('show')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="editingComboId" value="" />
+
+      <div class="mf-row">
+        <div class="mf-group">
+          <label class="mf-label">Package Name *</label>
+          <input class="mf-input" id="cm-name" placeholder="e.g. Simple South Indian Dinner" />
+        </div>
+        <div class="mf-group">
+          <label class="mf-label">Tagline</label>
+          <input class="mf-input" id="cm-tagline" placeholder="Short description" />
+        </div>
+      </div>
+
+      <div class="mf-row">
+        <div class="mf-group">
+          <label class="mf-label">Category *</label>
+          <select class="mf-select" id="cm-category">
+            <option value="south dinner">South Indian — Dinner</option>
+            <option value="south lunch">South Indian — Lunch</option>
+            <option value="south dinner wedding">South Indian — Wedding</option>
+            <option value="north lunch">North Indian — Lunch</option>
+            <option value="north dinner">North Indian — Dinner</option>
+            <option value="wedding dinner">Wedding Banquet</option>
+            <option value="snack">Snack Package</option>
+            <option value="north south lunch">Corporate Lunch</option>
+          </select>
+        </div>
+        <div class="mf-group">
+          <label class="mf-label">Theme Colour</label>
+          <select class="mf-select" id="cm-theme">
+            <option value="theme-south">🟤 South Indian (Brown)</option>
+            <option value="theme-north">🟣 North Indian (Purple)</option>
+            <option value="theme-wedding">🟡 Wedding (Gold)</option>
+            <option value="theme-snack">🟢 Snack (Green)</option>
+            <option value="theme-dinner">🔵 Corporate (Blue)</option>
+            <option value="theme-lunch">🔴 Lunch (Red)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mf-row">
+        <div class="mf-group">
+          <label class="mf-label">Price per Head (₹) *</label>
+          <input class="mf-input" id="cm-price" type="number" placeholder="350" min="1" />
+        </div>
+        <div class="mf-group">
+          <label class="mf-label">Price Label</label>
+          <select class="mf-select" id="cm-pricesub">
+            <option value="per head">per head</option>
+            <option value="per box">per box</option>
+            <option value="per plate">per plate</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mf-row">
+        <div class="mf-group">
+          <label class="mf-label">Emoji Icon</label>
+          <input class="mf-input" id="cm-emoji" placeholder="🍌" maxlength="4" />
+        </div>
+        <div class="mf-group">
+          <label class="mf-label">Serves Note</label>
+          <input class="mf-input" id="cm-serves" placeholder="e.g. Best for 100+ guests" />
+        </div>
+      </div>
+
+      <div class="mf-group">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <label class="mf-label" style="margin:0;">Dishes Included *</label>
+            <span class="dishes-count-badge" id="dishCountBadge">0 dishes</span>
+          </div>
+          <button class="btn-add-dish" type="button" onclick="addDishInput()">＋ Add Dish</button>
+        </div>
+        <div style="display:grid;grid-template-columns:56px 1fr 30px;gap:10px;padding:0 4px;margin-bottom:6px;">
+          <div style="font-size:0.63rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--ad-muted);text-align:center;">Photo</div>
+          <div style="font-size:0.63rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--ad-muted);">Dish Name &amp; Price/head</div>
+          <div></div>
+        </div>
+        <div class="dishes-input-list" id="dishesInputList"></div>
+        <p class="mf-hint" style="margin-top:8px;">Click the photo box to upload an image. Tap ✕ to remove a dish.</p>
+      </div>
+
+      <div class="mf-group" style="display:flex;align-items:center;gap:10px;">
+        <input type="checkbox" id="cm-popular" style="width:18px;height:18px;accent-color:var(--ad-orange);" />
+        <label for="cm-popular" style="font-size:0.85rem;color:var(--ad-muted);cursor:pointer;font-weight:600;">Mark as Popular / Featured</label>
+      </div>
+      <div class="mf-group" id="popularLabelGroup" style="display:none;">
+        <label class="mf-label">Popular Badge Label</label>
+        <input class="mf-input" id="cm-popularlabel" placeholder="e.g. ⭐ Most Popular" />
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="document.getElementById('comboModal').classList.remove('show')">Cancel</button>
+      <button class="btn-save" onclick="saveCombo()">💾 Save Package</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ADD / EDIT DISH MODAL ══ -->
+<div class="modal-overlay" id="dishModal" onclick="closeModal('dishModal',event)">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h4 id="dishModalTitle">➕ Add New Dish</h4>
+      <button class="modal-close" onclick="document.getElementById('dishModal').classList.remove('show')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="editingDishId" value="" />
+
+      <!-- Image upload -->
+      <div class="mf-group" style="display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:20px;">
+        <div id="dishImgPreview"
+          onclick="document.getElementById('dishImgFile').click()"
+          style="width:100%;height:140px;border-radius:12px;background:rgba(255,255,255,0.05);
                  border:2px dashed rgba(255,255,255,0.18);display:flex;align-items:center;
                  justify-content:center;cursor:pointer;overflow:hidden;transition:border-color 0.2s;
                  font-size:3rem;flex-direction:column;gap:8px;position:relative;"
-            onmouseover="this.style.borderColor='var(--ad-orange)'"
-            onmouseout="this.style.borderColor='rgba(255,255,255,0.18)'">
-            <span id="dishImgEmoji">📷</span>
-            <span style="font-size:0.75rem;color:var(--ad-muted);font-family:'Nunito',sans-serif;font-weight:600;">Click
-              to upload image</span>
-          </div>
-          <input type="file" id="dishImgFile" accept="image/*" style="display:none;"
-            onchange="previewDishModalImg(this)" />
-          <p style="font-size:0.72rem;color:var(--ad-muted);text-align:center;">Recommended: square image, min 200×200px
-          </p>
+          onmouseover="this.style.borderColor='var(--ad-orange)'"
+          onmouseout="this.style.borderColor='rgba(255,255,255,0.18)'">
+          <span id="dishImgEmoji">📷</span>
+          <span style="font-size:0.75rem;color:var(--ad-muted);font-family:'Nunito',sans-serif;font-weight:600;">Click to upload image</span>
         </div>
-
-        <div class="mf-row">
-          <div class="mf-group" style="grid-column:span 2;">
-            <label class="mf-label">Dish Name *</label>
-            <input class="mf-input" id="dm-name" placeholder="e.g. Parota, Roti, Paneer Butter Masala" />
-          </div>
-        </div>
-
-        <div class="mf-row">
-          <div class="mf-group">
-            <label class="mf-label">Category *</label>
-            <select class="mf-select" id="dm-category">
-              <option value="starter">🥗 Starter</option>
-              <option value="main">🍛 Main Course</option>
-              <option value="bread">🫓 Breads</option>
-              <option value="rice">🍚 Rice</option>
-              <option value="dessert">🍰 Dessert</option>
-              <option value="drink">🥤 Drinks</option>
-              <option value="special">⭐ Special</option>
-            </select>
-          </div>
-          <div class="mf-group">
-            <label class="mf-label">Price per Head (₹) *</label>
-            <input class="mf-input" id="dm-price" type="number" placeholder="e.g. 120" min="1" />
-          </div>
-        </div>
-
-        <div class="mf-row">
-          <div class="mf-group">
-            <label class="mf-label">Emoji Icon</label>
-            <input class="mf-input" id="dm-emoji" placeholder="🍛" maxlength="4" />
-            <p class="mf-hint">Used as fallback if no image uploaded</p>
-          </div>
-          <div class="mf-group">
-            <label class="mf-label">Description (optional)</label>
-            <input class="mf-input" id="dm-desc" placeholder="Short description" />
-          </div>
-        </div>
-
-        <div class="mf-group" style="display:flex;align-items:center;gap:10px;">
-          <input type="checkbox" id="dm-featured" style="width:18px;height:18px;accent-color:var(--ad-orange);" />
-          <label for="dm-featured" style="font-size:0.85rem;color:var(--ad-muted);cursor:pointer;font-weight:600;">Mark
-            as Chef's Special / Featured</label>
-        </div>
+        <input type="file" id="dishImgFile" accept="image/*" style="display:none;" onchange="previewDishModalImg(this)" />
+        <p style="font-size:0.72rem;color:var(--ad-muted);text-align:center;">Recommended: square image, min 200×200px</p>
       </div>
-      <div class="modal-footer">
-        <button class="btn-cancel"
-          onclick="document.getElementById('dishModal').classList.remove('show')">Cancel</button>
-        <button class="btn-save" onclick="saveDish()">💾 Save Dish</button>
-      </div>
-    </div>
-  </div>
 
-  <!-- ══ ADD / EDIT DISH MODAL ══ -->
-  <div class="modal-overlay" id="dishModal" onclick="closeModal('dishModal',event)">
-    <div class="modal-box">
-      <div class="modal-head">
-        <h4 id="dishModalTitle">➕ Add New Dish</h4>
-        <button class="modal-close" onclick="document.getElementById('dishModal').classList.remove('show')">✕</button>
-      </div>
-      <div class="modal-body">
-        <input type="hidden" id="editingDishId" value="" />
-
-        <div class="mf-group">
-          <label class="mf-label">Dish Photo</label>
-          <div id="dishImgPreview" onclick="document.getElementById('dishImgFile').click()" style="width:100%;height:130px;border-radius:12px;background:rgba(255,255,255,0.05);
-                 border:2px dashed rgba(255,255,255,0.18);display:flex;align-items:center;
-                 justify-content:center;cursor:pointer;overflow:hidden;transition:border-color 0.2s;
-                 flex-direction:column;gap:6px;position:relative;"
-            onmouseover="this.style.borderColor='var(--ad-orange)'"
-            onmouseout="this.style.borderColor='rgba(255,255,255,0.18)'">
-            <span style="font-size:2.5rem;" id="dishImgIcon">📷</span>
-            <span style="font-size:0.75rem;color:var(--ad-muted);font-family:Nunito,sans-serif;font-weight:600;">Click
-              to upload image</span>
-          </div>
-          <input type="file" id="dishImgFile" accept="image/*" style="display:none;"
-            onchange="previewDishModalImg(this)" />
-          <p class="mf-hint" style="margin-top:5px;">Recommended: square image, min 200×200px</p>
-        </div>
-
-        <div class="mf-group">
+      <div class="mf-row">
+        <div class="mf-group" style="grid-column:span 2;">
           <label class="mf-label">Dish Name *</label>
           <input class="mf-input" id="dm-name" placeholder="e.g. Parota, Roti, Paneer Butter Masala" />
         </div>
+      </div>
 
-        <div class="mf-row">
-          <div class="mf-group">
-            <label class="mf-label">Category *</label>
-            <select class="mf-select" id="dm-category">
-              <option value="starter">🥗 Starter</option>
-              <option value="main">🍛 Main Course</option>
-              <option value="bread">🫓 Breads</option>
-              <option value="rice">🍚 Rice</option>
-              <option value="dessert">🍰 Dessert</option>
-              <option value="drink">🥤 Drinks</option>
-              <option value="special">⭐ Special</option>
-            </select>
-          </div>
-          <div class="mf-group">
-            <label class="mf-label">Price per Head (₹) *</label>
-            <input class="mf-input" id="dm-price" type="number" placeholder="120" min="1" />
-          </div>
+      <div class="mf-row">
+        <div class="mf-group">
+          <label class="mf-label">Category *</label>
+          <select class="mf-select" id="dm-category">
+            <option value="starter">🥗 Starter</option>
+            <option value="main">🍛 Main Course</option>
+            <option value="bread">🫓 Breads</option>
+            <option value="rice">🍚 Rice</option>
+            <option value="dessert">🍰 Dessert</option>
+            <option value="drink">🥤 Drinks</option>
+            <option value="special">⭐ Special</option>
+          </select>
         </div>
-
-        <div class="mf-row">
-          <div class="mf-group">
-            <label class="mf-label">Emoji (fallback icon)</label>
-            <input class="mf-input" id="dm-emoji" placeholder="🍛" maxlength="4" />
-          </div>
-          <div class="mf-group">
-            <label class="mf-label">Description (optional)</label>
-            <input class="mf-input" id="dm-desc" placeholder="Short description" />
-          </div>
-        </div>
-
-        <div class="mf-group" style="display:flex;align-items:center;gap:10px;">
-          <input type="checkbox" id="dm-featured" style="width:18px;height:18px;accent-color:var(--ad-orange);" />
-          <label for="dm-featured" style="font-size:0.85rem;color:var(--ad-muted);cursor:pointer;font-weight:600;">Mark
-            as Chef's Special / Featured</label>
+        <div class="mf-group">
+          <label class="mf-label">Price per Head (₹) *</label>
+          <input class="mf-input" id="dm-price" type="number" placeholder="e.g. 120" min="1" />
         </div>
       </div>
-      <div class="modal-footer">
-        <button class="btn-cancel"
-          onclick="document.getElementById('dishModal').classList.remove('show')">Cancel</button>
-        <button class="btn-save" onclick="saveDish()">💾 Save Dish</button>
+
+      <div class="mf-row">
+        <div class="mf-group">
+          <label class="mf-label">Emoji Icon</label>
+          <input class="mf-input" id="dm-emoji" placeholder="🍛" maxlength="4" />
+          <p class="mf-hint">Used as fallback if no image uploaded</p>
+        </div>
+        <div class="mf-group">
+          <label class="mf-label">Description (optional)</label>
+          <input class="mf-input" id="dm-desc" placeholder="Short description" />
+        </div>
+      </div>
+
+      <div class="mf-group" style="display:flex;align-items:center;gap:10px;">
+        <input type="checkbox" id="dm-featured" style="width:18px;height:18px;accent-color:var(--ad-orange);" />
+        <label for="dm-featured" style="font-size:0.85rem;color:var(--ad-muted);cursor:pointer;font-weight:600;">Mark as Chef's Special / Featured</label>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="document.getElementById('dishModal').classList.remove('show')">Cancel</button>
+      <button class="btn-save" onclick="saveDish()">💾 Save Dish</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ADD / EDIT DISH MODAL ══ -->
+<div class="modal-overlay" id="dishModal" onclick="closeModal('dishModal',event)">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h4 id="dishModalTitle">➕ Add New Dish</h4>
+      <button class="modal-close" onclick="document.getElementById('dishModal').classList.remove('show')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="editingDishId" value="" />
+
+      <div class="mf-group">
+        <label class="mf-label">Dish Photo</label>
+        <div id="dishImgPreview"
+          onclick="document.getElementById('dishImgFile').click()"
+          style="width:100%;height:130px;border-radius:12px;background:rgba(255,255,255,0.05);
+                 border:2px dashed rgba(255,255,255,0.18);display:flex;align-items:center;
+                 justify-content:center;cursor:pointer;overflow:hidden;transition:border-color 0.2s;
+                 flex-direction:column;gap:6px;position:relative;"
+          onmouseover="this.style.borderColor='var(--ad-orange)'"
+          onmouseout="this.style.borderColor='rgba(255,255,255,0.18)'">
+          <span style="font-size:2.5rem;" id="dishImgIcon">📷</span>
+          <span style="font-size:0.75rem;color:var(--ad-muted);font-family:Nunito,sans-serif;font-weight:600;">Click to upload image</span>
+        </div>
+        <input type="file" id="dishImgFile" accept="image/*" style="display:none;" onchange="previewDishModalImg(this)" />
+        <p class="mf-hint" style="margin-top:5px;">Recommended: square image, min 200×200px</p>
+      </div>
+
+      <div class="mf-group">
+        <label class="mf-label">Dish Name *</label>
+        <input class="mf-input" id="dm-name" placeholder="e.g. Parota, Roti, Paneer Butter Masala" />
+      </div>
+
+      <div class="mf-row">
+        <div class="mf-group">
+          <label class="mf-label">Category *</label>
+          <select class="mf-select" id="dm-category">
+            <option value="starter">🥗 Starter</option>
+            <option value="main">🍛 Main Course</option>
+            <option value="bread">🫓 Breads</option>
+            <option value="rice">🍚 Rice</option>
+            <option value="dessert">🍰 Dessert</option>
+            <option value="drink">🥤 Drinks</option>
+            <option value="special">⭐ Special</option>
+          </select>
+        </div>
+        <div class="mf-group">
+          <label class="mf-label">Price per Head (₹) *</label>
+          <input class="mf-input" id="dm-price" type="number" placeholder="120" min="1" />
+        </div>
+      </div>
+
+      <div class="mf-row">
+        <div class="mf-group">
+          <label class="mf-label">Emoji (fallback icon)</label>
+          <input class="mf-input" id="dm-emoji" placeholder="🍛" maxlength="4" />
+        </div>
+        <div class="mf-group">
+          <label class="mf-label">Description (optional)</label>
+          <input class="mf-input" id="dm-desc" placeholder="Short description" />
+        </div>
+      </div>
+
+      <div class="mf-group" style="display:flex;align-items:center;gap:10px;">
+        <input type="checkbox" id="dm-featured" style="width:18px;height:18px;accent-color:var(--ad-orange);" />
+        <label for="dm-featured" style="font-size:0.85rem;color:var(--ad-muted);cursor:pointer;font-weight:600;">Mark as Chef's Special / Featured</label>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="document.getElementById('dishModal').classList.remove('show')">Cancel</button>
+      <button class="btn-save" onclick="saveDish()">💾 Save Dish</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ DELETE CONFIRM MODAL ══ -->
+<div class="modal-overlay" id="deleteModal" onclick="closeModal('deleteModal',event)">
+  <div class="modal-box" style="max-width:400px;">
+    <div class="modal-head">
+      <h4>Delete Package</h4>
+      <button class="modal-close" onclick="document.getElementById('deleteModal').classList.remove('show')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="confirm-box">
+        <div class="cb-icon">🗑️</div>
+        <h4 style="color:#fff;margin-bottom:8px;" id="deleteComboName">—</h4>
+        <p>Are you sure you want to delete this combo package? This action cannot be undone and it will be removed from the menu page.</p>
+        <button class="btn-confirm-delete" onclick="confirmDelete()">Yes, Delete It</button>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- ══ DELETE CONFIRM MODAL ══ -->
-  <div class="modal-overlay" id="deleteModal" onclick="closeModal('deleteModal',event)">
-    <div class="modal-box" style="max-width:400px;">
-      <div class="modal-head">
-        <h4>Delete Package</h4>
-        <button class="modal-close" onclick="document.getElementById('deleteModal').classList.remove('show')">✕</button>
-      </div>
-      <div class="modal-body">
-        <div class="confirm-box">
-          <div class="cb-icon">🗑️</div>
-          <h4 style="color:#fff;margin-bottom:8px;" id="deleteComboName">—</h4>
-          <p>Are you sure you want to delete this combo package? This action cannot be undone and it will be removed
-            from the menu page.</p>
-          <button class="btn-confirm-delete" onclick="confirmDelete()">Yes, Delete It</button>
-        </div>
-      </div>
-    </div>
-  </div>
+<!-- Toast wrap -->
+<div style="position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:8px;align-items:flex-end;" id="toastWrap"></div>
 
-  <!-- Toast wrap -->
-  <div
-    style="position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:8px;align-items:flex-end;"
-    id="toastWrap"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// ══════════════════════════════════════
+// DATA  — In production, all fetched/
+//         pushed via Flask API endpoints
+// GET  /api/admin/combos
+// POST /api/admin/combos
+// PUT  /api/admin/combos/:id
+// DEL  /api/admin/combos/:id
+// GET  /api/admin/orders
+// PUT  /api/admin/orders/:id/status
+// ══════════════════════════════════════
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    // ══════════════════════════════════════
-    // DATA  — In production, all fetched/
-    //         pushed via Flask API endpoints
-    // GET  /api/admin/combos
-    // POST /api/admin/combos
-    // PUT  /api/admin/combos/:id
-    // DEL  /api/admin/combos/:id
-    // GET  /api/admin/orders
-    // PUT  /api/admin/orders/:id/status
-    // ══════════════════════════════════════
+let COMBOS = [
+  { id:1, name:'Simple South Indian Dinner', tagline:'Classic homestyle South Indian meal', category:'south dinner', price:350, priceSub:'per head', theme:'theme-south', emoji:'🍌', serves:'Suitable for all sizes', isPopular:false, popularLabel:'', dishes:['Steamed Rice','Sambar','Rasam','Kootu','Papad','Pickle','Salad','Sweet Pongal','Buttermilk'] },
+  { id:2, name:'Grand South Indian Feast',   tagline:'Full traditional spread for weddings',  category:'south dinner wedding', price:650, priceSub:'per head', theme:'theme-wedding', emoji:'🎊', serves:'Best for 100+ guests', isPopular:true, popularLabel:'⭐ Most Popular', dishes:['Welcome Drink','Vadai','Steamed Rice','Sambar','Rasam','Avial','Kootu','Poriyal','Appalam','Pickle','Payasam','Buttermilk'] },
+  { id:3, name:'North Indian Lunch Thali',   tagline:'Rich, flavourful North Indian spread',  category:'north lunch', price:480, priceSub:'per head', theme:'theme-north', emoji:'🫓', serves:'Great for corporate & birthday', isPopular:false, popularLabel:'', dishes:['Dal Makhani','Paneer Butter Masala','Jeera Rice','Naan / Roti','Raita','Salad','Pickle','Gulab Jamun'] },
+  { id:4, name:'Evening Snack Package',      tagline:'Perfect for meetings & get-togethers',  category:'snack', price:180, priceSub:'per head', theme:'theme-snack', emoji:'☕', serves:'Ideal for 20–200 guests', isPopular:false, popularLabel:'', dishes:['Masala Chai','Filter Coffee','Samosa','Bread Pakora','Chutney','Biscuits','Fruit Platter'] },
+  { id:5, name:'Premium Wedding Banquet',    tagline:'Extravagant multi-course feast',         category:'wedding dinner', price:950, priceSub:'per head', theme:'theme-wedding', emoji:'💍', serves:'Best for 200+ guests', isPopular:true, popularLabel:'👑 Premium', dishes:['Welcome Mocktails','3 Starters','Soup','Paneer Dish','Dal','2 Sabzi','Biryani / Pulao','Naan & Rice','Raita','Papad & Pickle','2 Desserts','Eggless Cake','Buttermilk'] },
+  { id:6, name:'Corporate Lunch Box',        tagline:'Neat, hygienic for office events',       category:'north south lunch', price:220, priceSub:'per box', theme:'theme-dinner', emoji:'🏢', serves:'Minimum 30 boxes', isPopular:false, popularLabel:'', dishes:['Rice','Dal Tadka','1 Sabzi','Chapati (3)','Salad','Pickle','Sweet'] },
+];
 
-    let COMBOS = [
-      { id: 1, name: 'Simple South Indian Dinner', tagline: 'Classic homestyle South Indian meal', category: 'south dinner', price: 350, priceSub: 'per head', theme: 'theme-south', emoji: '🍌', serves: 'Suitable for all sizes', isPopular: false, popularLabel: '', dishes: ['Steamed Rice', 'Sambar', 'Rasam', 'Kootu', 'Papad', 'Pickle', 'Salad', 'Sweet Pongal', 'Buttermilk'] },
-      { id: 2, name: 'Grand South Indian Feast', tagline: 'Full traditional spread for weddings', category: 'south dinner wedding', price: 650, priceSub: 'per head', theme: 'theme-wedding', emoji: '🎊', serves: 'Best for 100+ guests', isPopular: true, popularLabel: '⭐ Most Popular', dishes: ['Welcome Drink', 'Vadai', 'Steamed Rice', 'Sambar', 'Rasam', 'Avial', 'Kootu', 'Poriyal', 'Appalam', 'Pickle', 'Payasam', 'Buttermilk'] },
-      { id: 3, name: 'North Indian Lunch Thali', tagline: 'Rich, flavourful North Indian spread', category: 'north lunch', price: 480, priceSub: 'per head', theme: 'theme-north', emoji: '🫓', serves: 'Great for corporate & birthday', isPopular: false, popularLabel: '', dishes: ['Dal Makhani', 'Paneer Butter Masala', 'Jeera Rice', 'Naan / Roti', 'Raita', 'Salad', 'Pickle', 'Gulab Jamun'] },
-      { id: 4, name: 'Evening Snack Package', tagline: 'Perfect for meetings & get-togethers', category: 'snack', price: 180, priceSub: 'per head', theme: 'theme-snack', emoji: '☕', serves: 'Ideal for 20–200 guests', isPopular: false, popularLabel: '', dishes: ['Masala Chai', 'Filter Coffee', 'Samosa', 'Bread Pakora', 'Chutney', 'Biscuits', 'Fruit Platter'] },
-      { id: 5, name: 'Premium Wedding Banquet', tagline: 'Extravagant multi-course feast', category: 'wedding dinner', price: 950, priceSub: 'per head', theme: 'theme-wedding', emoji: '💍', serves: 'Best for 200+ guests', isPopular: true, popularLabel: '👑 Premium', dishes: ['Welcome Mocktails', '3 Starters', 'Soup', 'Paneer Dish', 'Dal', '2 Sabzi', 'Biryani / Pulao', 'Naan & Rice', 'Raita', 'Papad & Pickle', '2 Desserts', 'Eggless Cake', 'Buttermilk'] },
-      { id: 6, name: 'Corporate Lunch Box', tagline: 'Neat, hygienic for office events', category: 'north south lunch', price: 220, priceSub: 'per box', theme: 'theme-dinner', emoji: '🏢', serves: 'Minimum 30 boxes', isPopular: false, popularLabel: '', dishes: ['Rice', 'Dal Tadka', '1 Sabzi', 'Chapati (3)', 'Salad', 'Pickle', 'Sweet'] },
-    ];
+let ORDERS = [
+  { id:1, ref:'MC-847291', customer:'Ravi Kumar',   email:'ravi@example.com',   phone:'9876543210', package:'Grand South Indian Feast',   event:'Wedding',   date:'2026-03-25', guests:200, total:'₹1,30,000', status:'confirmed' },
+  { id:2, ref:'MC-523841', customer:'Priya Sharma', email:'priya@example.com',  phone:'9123456789', package:'North Indian Lunch Thali',    event:'Corporate', date:'2026-03-18', guests:80,  total:'₹38,400',   status:'pending' },
+  { id:3, ref:'MC-301928', customer:'Suresh Nair',  email:'suresh@example.com', phone:'9988776655', package:'Evening Snack Package',       event:'Birthday',  date:'2026-03-15', guests:50,  total:'₹9,000',    status:'pending' },
+  { id:4, ref:'MC-112233', customer:'Meena Reddy',  email:'meena@example.com',  phone:'9871234567', package:'Premium Wedding Banquet',     event:'Wedding',   date:'2026-02-28', guests:300, total:'₹2,85,000', status:'delivered' },
+  { id:5, ref:'MC-445566', customer:'Karthik B',    email:'karthik@example.com',phone:'9900001111', package:'Corporate Lunch Box',         event:'Corporate', date:'2026-02-14', guests:60,  total:'₹13,200',   status:'delivered' },
+];
 
-    let ORDERS = [
-      { id: 1, ref: 'MC-847291', customer: 'Ravi Kumar', email: 'ravi@example.com', phone: '9876543210', package: 'Grand South Indian Feast', event: 'Wedding', date: '2026-03-25', guests: 200, total: '₹1,30,000', status: 'confirmed' },
-      { id: 2, ref: 'MC-523841', customer: 'Priya Sharma', email: 'priya@example.com', phone: '9123456789', package: 'North Indian Lunch Thali', event: 'Corporate', date: '2026-03-18', guests: 80, total: '₹38,400', status: 'pending' },
-      { id: 3, ref: 'MC-301928', customer: 'Suresh Nair', email: 'suresh@example.com', phone: '9988776655', package: 'Evening Snack Package', event: 'Birthday', date: '2026-03-15', guests: 50, total: '₹9,000', status: 'pending' },
-      { id: 4, ref: 'MC-112233', customer: 'Meena Reddy', email: 'meena@example.com', phone: '9871234567', package: 'Premium Wedding Banquet', event: 'Wedding', date: '2026-02-28', guests: 300, total: '₹2,85,000', status: 'delivered' },
-      { id: 5, ref: 'MC-445566', customer: 'Karthik B', email: 'karthik@example.com', phone: '9900001111', package: 'Corporate Lunch Box', event: 'Corporate', date: '2026-02-14', guests: 60, total: '₹13,200', status: 'delivered' },
-    ];
+// ══════════════════════════════════════
+// INDIVIDUAL DISHES DATA
+// In production: GET /api/dishes
+// Admin CRUD: POST/PUT/DELETE /api/admin/dishes/:id
+// These feed into custom-menu.html Step 3
+// ══════════════════════════════════════
+let DISHES = [
+  { id:101, name:'Garden Fresh Salad',       category:'starter', price:120, emoji:'🥗', desc:'Fresh seasonal vegetables',        img:'', featured:false },
+  { id:102, name:'Crispy Veg Platter',        category:'starter', price:180, emoji:'🧆', desc:'Assorted fried starters',          img:'', featured:false },
+  { id:103, name:'Paneer Tikka Skewers',      category:'starter', price:200, emoji:'🥙', desc:'Grilled paneer with spices',       img:'', featured:true  },
+  { id:104, name:'Sweet Corn Soup',           category:'starter', price:90,  emoji:'🍲', desc:'Creamy sweet corn soup',           img:'', featured:false },
+  { id:105, name:'Paneer Butter Masala',      category:'main',    price:200, emoji:'🍛', desc:'Rich paneer in tomato gravy',      img:'', featured:true  },
+  { id:106, name:'Dal Makhani',               category:'main',    price:160, emoji:'🫕', desc:'Slow-cooked black lentils',        img:'', featured:false },
+  { id:107, name:'Mixed Veg Curry',           category:'main',    price:150, emoji:'🥘', desc:'Seasonal vegetables in curry',     img:'', featured:false },
+  { id:108, name:'Veg Dum Biryani',           category:'rice',    price:180, emoji:'🌾', desc:'Fragrant basmati with vegetables', img:'', featured:true  },
+  { id:109, name:'Steamed Rice',              category:'rice',    price:60,  emoji:'🍚', desc:'Plain steamed basmati rice',       img:'', featured:false },
+  { id:110, name:'Jeera Rice',                category:'rice',    price:80,  emoji:'🍚', desc:'Cumin flavoured rice',             img:'', featured:false },
+  { id:111, name:'Parota',                    category:'bread',   price:40,  emoji:'🫓', desc:'Flaky layered flatbread',          img:'', featured:false },
+  { id:112, name:'Roti / Chapati',            category:'bread',   price:30,  emoji:'🫓', desc:'Soft whole wheat flatbread',       img:'', featured:false },
+  { id:113, name:'Naan',                      category:'bread',   price:50,  emoji:'🫓', desc:'Soft leavened tandoor bread',      img:'', featured:false },
+  { id:114, name:'Puri',                      category:'bread',   price:35,  emoji:'🫓', desc:'Deep fried wheat puri',            img:'', featured:false },
+  { id:115, name:'Gulab Jamun',               category:'dessert', price:80,  emoji:'🍮', desc:'Soft milk solids in sugar syrup',  img:'', featured:false },
+  { id:116, name:'Eggless Cake Slice',        category:'dessert', price:180, emoji:'🎂', desc:'Moist eggless celebration cake',   img:'', featured:true  },
+  { id:117, name:'Kulfi Falooda',             category:'dessert', price:110, emoji:'🍨', desc:'Traditional Indian ice cream',     img:'', featured:false },
+  { id:118, name:'Payasam',                   category:'dessert', price:70,  emoji:'🍯', desc:'South Indian sweet kheer',         img:'', featured:false },
+  { id:119, name:'Welcome Mocktail',          category:'drink',   price:90,  emoji:'🥤', desc:'Refreshing fruit mocktail',        img:'', featured:false },
+  { id:120, name:'Masala Chai',               category:'drink',   price:30,  emoji:'☕', desc:'Spiced Indian tea',                img:'', featured:false },
+  { id:121, name:'Buttermilk',                category:'drink',   price:40,  emoji:'🥛', desc:'Chilled seasoned buttermilk',      img:'', featured:false },
+  { id:122, name:'South Indian Thali',        category:'special', price:300, emoji:'🍱', desc:'Complete traditional thali',       img:'', featured:true  },
+  { id:123, name:'Live Pasta Station',        category:'special', price:240, emoji:'👨‍🍳', desc:'Freshly tossed pasta live station',img:'', featured:false },
+];
+let nextDishId = 124;
 
-    // ══════════════════════════════════════
-    // INDIVIDUAL DISHES DATA
-    // In production: GET /api/dishes
-    // Admin CRUD: POST/PUT/DELETE /api/admin/dishes/:id
-    // These feed into custom-menu.html Step 3
-    // ══════════════════════════════════════
-    let DISHES = [
-      { id: 101, name: 'Garden Fresh Salad', category: 'starter', price: 120, emoji: '🥗', desc: 'Fresh seasonal vegetables', img: '', featured: false },
-      { id: 102, name: 'Crispy Veg Platter', category: 'starter', price: 180, emoji: '🧆', desc: 'Assorted fried starters', img: '', featured: false },
-      { id: 103, name: 'Paneer Tikka Skewers', category: 'starter', price: 200, emoji: '🥙', desc: 'Grilled paneer with spices', img: '', featured: true },
-      { id: 104, name: 'Sweet Corn Soup', category: 'starter', price: 90, emoji: '🍲', desc: 'Creamy sweet corn soup', img: '', featured: false },
-      { id: 105, name: 'Paneer Butter Masala', category: 'main', price: 200, emoji: '🍛', desc: 'Rich paneer in tomato gravy', img: '', featured: true },
-      { id: 106, name: 'Dal Makhani', category: 'main', price: 160, emoji: '🫕', desc: 'Slow-cooked black lentils', img: '', featured: false },
-      { id: 107, name: 'Mixed Veg Curry', category: 'main', price: 150, emoji: '🥘', desc: 'Seasonal vegetables in curry', img: '', featured: false },
-      { id: 108, name: 'Veg Dum Biryani', category: 'rice', price: 180, emoji: '🌾', desc: 'Fragrant basmati with vegetables', img: '', featured: true },
-      { id: 109, name: 'Steamed Rice', category: 'rice', price: 60, emoji: '🍚', desc: 'Plain steamed basmati rice', img: '', featured: false },
-      { id: 110, name: 'Jeera Rice', category: 'rice', price: 80, emoji: '🍚', desc: 'Cumin flavoured rice', img: '', featured: false },
-      { id: 111, name: 'Parota', category: 'bread', price: 40, emoji: '🫓', desc: 'Flaky layered flatbread', img: '', featured: false },
-      { id: 112, name: 'Roti / Chapati', category: 'bread', price: 30, emoji: '🫓', desc: 'Soft whole wheat flatbread', img: '', featured: false },
-      { id: 113, name: 'Naan', category: 'bread', price: 50, emoji: '🫓', desc: 'Soft leavened tandoor bread', img: '', featured: false },
-      { id: 114, name: 'Puri', category: 'bread', price: 35, emoji: '🫓', desc: 'Deep fried wheat puri', img: '', featured: false },
-      { id: 115, name: 'Gulab Jamun', category: 'dessert', price: 80, emoji: '🍮', desc: 'Soft milk solids in sugar syrup', img: '', featured: false },
-      { id: 116, name: 'Eggless Cake Slice', category: 'dessert', price: 180, emoji: '🎂', desc: 'Moist eggless celebration cake', img: '', featured: true },
-      { id: 117, name: 'Kulfi Falooda', category: 'dessert', price: 110, emoji: '🍨', desc: 'Traditional Indian ice cream', img: '', featured: false },
-      { id: 118, name: 'Payasam', category: 'dessert', price: 70, emoji: '🍯', desc: 'South Indian sweet kheer', img: '', featured: false },
-      { id: 119, name: 'Welcome Mocktail', category: 'drink', price: 90, emoji: '🥤', desc: 'Refreshing fruit mocktail', img: '', featured: false },
-      { id: 120, name: 'Masala Chai', category: 'drink', price: 30, emoji: '☕', desc: 'Spiced Indian tea', img: '', featured: false },
-      { id: 121, name: 'Buttermilk', category: 'drink', price: 40, emoji: '🥛', desc: 'Chilled seasoned buttermilk', img: '', featured: false },
-      { id: 122, name: 'South Indian Thali', category: 'special', price: 300, emoji: '🍱', desc: 'Complete traditional thali', img: '', featured: true },
-      { id: 123, name: 'Live Pasta Station', category: 'special', price: 240, emoji: '👨‍🍳', desc: 'Freshly tossed pasta live station', img: '', featured: false },
-    ];
-    let nextDishId = 124;
+const CATMETA = {
+  starter:  { label:'🥗 Starter',      color:'rgba(232,113,42,0.15)',  border:'rgba(232,113,42,0.3)'  },
+  main:     { label:'🍛 Main Course',   color:'rgba(239,68,68,0.12)',   border:'rgba(239,68,68,0.28)'  },
+  bread:    { label:'🫓 Breads',        color:'rgba(245,158,11,0.12)',  border:'rgba(245,158,11,0.3)'  },
+  rice:     { label:'🍚 Rice',          color:'rgba(16,185,129,0.12)',  border:'rgba(16,185,129,0.3)'  },
+  dessert:  { label:'🍰 Dessert',       color:'rgba(147,51,234,0.12)',  border:'rgba(147,51,234,0.28)' },
+  drink:    { label:'🥤 Drinks',        color:'rgba(59,130,246,0.12)',  border:'rgba(59,130,246,0.28)' },
+  special:  { label:'⭐ Special',       color:'rgba(212,175,55,0.15)',  border:'rgba(212,175,55,0.3)'  },
+};
 
-    const CATMETA = {
-      starter: { label: '🥗 Starter', color: 'rgba(232,113,42,0.15)', border: 'rgba(232,113,42,0.3)' },
-      main: { label: '🍛 Main Course', color: 'rgba(239,68,68,0.12)', border: 'rgba(239,68,68,0.28)' },
-      bread: { label: '🫓 Breads', color: 'rgba(245,158,11,0.12)', border: 'rgba(245,158,11,0.3)' },
-      rice: { label: '🍚 Rice', color: 'rgba(16,185,129,0.12)', border: 'rgba(16,185,129,0.3)' },
-      dessert: { label: '🍰 Dessert', color: 'rgba(147,51,234,0.12)', border: 'rgba(147,51,234,0.28)' },
-      drink: { label: '🥤 Drinks', color: 'rgba(59,130,246,0.12)', border: 'rgba(59,130,246,0.28)' },
-      special: { label: '⭐ Special', color: 'rgba(212,175,55,0.15)', border: 'rgba(212,175,55,0.3)' },
-    };
+const CUSTOMERS = [
+  { name:'Ravi Kumar',   email:'ravi@example.com',    phone:'9876543210', bookings:3, spent:'₹1,77,400', joined:'Jan 2026' },
+  { name:'Priya Sharma', email:'priya@example.com',   phone:'9123456789', bookings:1, spent:'₹38,400',   joined:'Feb 2026' },
+  { name:'Suresh Nair',  email:'suresh@example.com',  phone:'9988776655', bookings:1, spent:'₹9,000',    joined:'Mar 2026' },
+  { name:'Meena Reddy',  email:'meena@example.com',   phone:'9871234567', bookings:2, spent:'₹3,20,000', joined:'Nov 2025' },
+  { name:'Karthik B',    email:'karthik@example.com', phone:'9900001111', bookings:2, spent:'₹35,700',   joined:'Dec 2025' },
+];
 
-    const CUSTOMERS = [
-      { name: 'Ravi Kumar', email: 'ravi@example.com', phone: '9876543210', bookings: 3, spent: '₹1,77,400', joined: 'Jan 2026' },
-      { name: 'Priya Sharma', email: 'priya@example.com', phone: '9123456789', bookings: 1, spent: '₹38,400', joined: 'Feb 2026' },
-      { name: 'Suresh Nair', email: 'suresh@example.com', phone: '9988776655', bookings: 1, spent: '₹9,000', joined: 'Mar 2026' },
-      { name: 'Meena Reddy', email: 'meena@example.com', phone: '9871234567', bookings: 2, spent: '₹3,20,000', joined: 'Nov 2025' },
-      { name: 'Karthik B', email: 'karthik@example.com', phone: '9900001111', bookings: 2, spent: '₹35,700', joined: 'Dec 2025' },
-    ];
+let nextId = 7;
+let deletingId = null;
 
-    let nextId = 7;
-    let deletingId = null;
+// ══════════════════════════════════════
+// INIT
+// ══════════════════════════════════════
+const API_BASE = 'http://localhost:5000';
 
-    // ══════════════════════════════════════
-    // INIT
-    // ══════════════════════════════════════
-    window.addEventListener('DOMContentLoaded', () => {
-      renderOverviewOrders();
-      renderOverviewCombos();
-      renderCombosGrid();
-      renderAllOrders(ORDERS);
-      renderDishesGrid();
-      renderCustomers(CUSTOMERS);
-      updatePendingBadge();
-    });
+window.addEventListener('DOMContentLoaded', () => {
+  loadAllData();
+});
 
-    // ══════════════════════════════════════
-    // PANEL SWITCHER
-    // ══════════════════════════════════════
-    const TITLES = { overview: 'Overview', combos: 'Combo Packages', orders: 'Orders', dishes: 'Dishes', customers: 'Customers' };
-    function showPanel(name) {
-      document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active'));
-      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-      document.getElementById('panel-' + name).classList.add('active');
-      document.getElementById('nav-' + name)?.classList.add('active');
-      document.getElementById('topbarTitle').textContent = TITLES[name] || name;
-      document.getElementById('adminSidebar').classList.remove('open');
-    }
+async function loadAllData() {
+  await Promise.all([fetchOrders(), fetchCombos(), fetchDishes(), fetchCustomers()]);
+}
 
-    // ══════════════════════════════════════
-    // OVERVIEW RENDERS
-    // ══════════════════════════════════════
-    function renderOverviewOrders() {
-      document.getElementById('overviewOrdersTbody').innerHTML = ORDERS.slice(0, 5).map(o => `
+async function fetchOrders() {
+  try {
+    const res = await fetch(API_BASE + '/api/admin/orders');
+    ORDERS = await res.json();
+  } catch(e) { console.warn('Orders fetch failed:', e); }
+  renderOverviewOrders(); renderAllOrders(ORDERS); updatePendingBadge();
+}
+async function fetchCombos() {
+  try {
+    const res = await fetch(API_BASE + '/api/admin/combos');
+    COMBOS = await res.json();
+    // reassign IDs map for edit/delete
+    nextId = Math.max(...COMBOS.map(c=>c.id), nextId) + 1;
+  } catch(e) { console.warn('Combos fetch failed:', e); }
+  renderCombosGrid(); renderOverviewCombos();
+}
+async function fetchDishes() {
+  try {
+    const res = await fetch(API_BASE + '/api/admin/dishes');
+    DISHES = await res.json();
+    nextDishId = Math.max(...DISHES.map(d=>d.id), nextDishId) + 1;
+  } catch(e) { console.warn('Dishes fetch failed:', e); }
+  renderDishesGrid();
+}
+async function fetchCustomers() {
+  try {
+    const res  = await fetch(API_BASE + '/api/admin/customers');
+    const data = await res.json();
+    renderCustomers(data);
+  } catch(e) { renderCustomers(CUSTOMERS); }
+}
+
+// ══════════════════════════════════════
+// PANEL SWITCHER
+// ══════════════════════════════════════
+const TITLES = { overview:'Overview', combos:'Combo Packages', orders:'Orders', dishes:'Dishes', customers:'Customers' };
+function showPanel(name) {
+  document.querySelectorAll('.admin-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('panel-'+name).classList.add('active');
+  document.getElementById('nav-'+name)?.classList.add('active');
+  document.getElementById('topbarTitle').textContent = TITLES[name]||name;
+  document.getElementById('adminSidebar').classList.remove('open');
+}
+
+// ══════════════════════════════════════
+// OVERVIEW RENDERS
+// ══════════════════════════════════════
+function renderOverviewOrders() {
+  document.getElementById('overviewOrdersTbody').innerHTML = ORDERS.slice(0,5).map(o=>`
     <tr>
       <td><span class="td-ref">${o.ref}</span></td>
       <td><div class="td-name">${o.customer}</div><div class="td-sub">${o.email}</div></td>
@@ -1815,41 +1115,41 @@
       <td><span class="s-badge ${o.status}"><span class="dot"></span>${cap(o.status)}</span></td>
       <td>${statusSelectHtml(o)}</td>
     </tr>`).join('');
-    }
+}
 
-    function renderOverviewCombos() {
-      document.getElementById('overviewCombosTbody').innerHTML = COMBOS.map(c => `
+function renderOverviewCombos() {
+  document.getElementById('overviewCombosTbody').innerHTML = COMBOS.map(c=>`
     <tr>
       <td><div class="td-name">${c.emoji} ${c.name}</div></td>
       <td style="color:var(--ad-muted);font-size:0.82rem;text-transform:capitalize;">${c.category}</td>
       <td style="font-weight:700;color:var(--ad-orange);">₹${c.price} <span style="font-weight:400;color:var(--ad-muted);font-size:0.75rem;">${c.priceSub}</span></td>
       <td style="color:var(--ad-muted);">${c.dishes.length} dishes</td>
-      <td>${c.isPopular ? `<span class="popular-chip">${c.popularLabel}</span>` : '—'}</td>
+      <td>${c.isPopular?`<span class="popular-chip">${c.popularLabel}</span>`:'—'}</td>
     </tr>`).join('');
-    }
+}
 
-    // ══════════════════════════════════════
-    // COMBOS GRID
-    // ══════════════════════════════════════
-    function renderCombosGrid() {
-      document.getElementById('comboCount').textContent = `(${COMBOS.length} packages)`;
-      document.getElementById('combosAdminGrid').innerHTML = COMBOS.map(c => `
+// ══════════════════════════════════════
+// COMBOS GRID
+// ══════════════════════════════════════
+function renderCombosGrid() {
+  document.getElementById('comboCount').textContent = `(${COMBOS.length} packages)`;
+  document.getElementById('combosAdminGrid').innerHTML = COMBOS.map(c=>`
     <div class="combo-admin-card">
       <div class="cac-head">
         <div>
           <div class="cac-name">${c.emoji} ${c.name}</div>
-          <div class="cac-cat">${c.category.replace(/-/g, ' ')}</div>
+          <div class="cac-cat">${c.category.replace(/-/g,' ')}</div>
         </div>
         <div style="text-align:right;">
           <div class="cac-price">₹${c.price}</div>
           <div style="font-size:0.68rem;color:var(--ad-muted);">${c.priceSub}</div>
         </div>
       </div>
-      ${c.isPopular ? `<span class="popular-chip">${c.popularLabel}</span><br/><br/>` : ''}
+      ${c.isPopular?`<span class="popular-chip">${c.popularLabel}</span><br/><br/>`:''}
       <div style="font-size:0.7rem;color:var(--ad-muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;">Dishes (${c.dishes.length})</div>
-      <div class="cac-dishes">${c.dishes.map(d => {
+      <div class="cac-dishes">${c.dishes.map(d=>{
         const name = typeof d === 'string' ? d : d.name;
-        const img = typeof d === 'object' ? d.img : '';
+        const img  = typeof d === 'object' ? d.img : '';
         return img
           ? `<span class="dish-chip" style="display:inline-flex;align-items:center;gap:5px;padding:2px 8px 2px 4px;">
                <img src="${img}" style="width:18px;height:18px;border-radius:3px;object-fit:cover;" /> ${name}
@@ -1861,25 +1161,25 @@
         <button class="btn-delete-combo" onclick="openDeleteCombo(${c.id})">🗑️ Delete</button>
       </div>
     </div>`).join('');
-    }
+}
 
-    // ══════════════════════════════════════
-    // ORDERS TABLE
-    // ══════════════════════════════════════
-    function statusSelectHtml(o) {
-      const opts = ['pending', 'confirmed', 'preparation', 'delivered'];
-      return `<select class="status-select ${o.status}" onchange="updateOrderStatus(${o.id},this)">
-    ${opts.map(s => `<option value="${s}" ${s === o.status ? 'selected' : ''}>${cap(s)}</option>`).join('')}
+// ══════════════════════════════════════
+// ORDERS TABLE
+// ══════════════════════════════════════
+function statusSelectHtml(o) {
+  const opts = ['pending','confirmed','preparation','delivered'];
+  return `<select class="status-select ${o.status}" onchange="updateOrderStatus(${o.id},this)">
+    ${opts.map(s=>`<option value="${s}" ${s===o.status?'selected':''}>${cap(s)}</option>`).join('')}
   </select>`;
-    }
+}
 
-    function renderAllOrders(list) {
-      const tbody = document.getElementById('allOrdersTbody');
-      if (!list.length) {
-        tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:40px;color:var(--ad-muted);">No orders found.</td></tr>`;
-        return;
-      }
-      tbody.innerHTML = list.map(o => `
+function renderAllOrders(list) {
+  const tbody = document.getElementById('allOrdersTbody');
+  if(!list.length){
+    tbody.innerHTML=`<tr><td colspan="8" style="text-align:center;padding:40px;color:var(--ad-muted);">No orders found.</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = list.map(o=>`
     <tr id="order-row-${o.id}">
       <td><span class="td-ref">${o.ref}</span></td>
       <td><div class="td-name">${o.customer}</div><div class="td-sub">${o.phone}</div></td>
@@ -1890,39 +1190,39 @@
       <td><span class="s-badge ${o.status}" id="sbadge-${o.id}"><span class="dot"></span>${cap(o.status)}</span></td>
       <td>${statusSelectHtml(o)}</td>
     </tr>`).join('');
-    }
+}
 
-    function filterOrders(filter, btn) {
-      const list = filter === 'all' ? ORDERS : ORDERS.filter(o => o.status === filter);
-      renderAllOrders(list);
-    }
+function filterOrders(filter, btn) {
+  const list = filter==='all' ? ORDERS : ORDERS.filter(o=>o.status===filter);
+  renderAllOrders(list);
+}
 
-    function updateOrderStatus(id, sel) {
-      const newStatus = sel.value;
-      const order = ORDERS.find(o => o.id === id);
-      if (!order) return;
-      order.status = newStatus;
-      sel.className = `status-select ${newStatus}`;
-      // Update badge in same row
-      const badge = document.getElementById(`sbadge-${id}`);
-      if (badge) { badge.className = `s-badge ${newStatus}`; badge.innerHTML = `<span class="dot"></span>${cap(newStatus)}`; }
-      updatePendingBadge();
-      renderOverviewOrders();
-      showToast(`Order ${order.ref} updated to "${cap(newStatus)}"`, 'success');
-      // Flask: PUT /api/admin/orders/${id}/status { status: newStatus }
-    }
+function updateOrderStatus(id, sel) {
+  const newStatus = sel.value;
+  const order = ORDERS.find(o=>o.id===id);
+  if(!order) return;
+  order.status = newStatus;
+  sel.className = `status-select ${newStatus}`;
+  // Update badge in same row
+  const badge = document.getElementById(`sbadge-${id}`);
+  if(badge){ badge.className=`s-badge ${newStatus}`; badge.innerHTML=`<span class="dot"></span>${cap(newStatus)}`; }
+  updatePendingBadge();
+  renderOverviewOrders();
+  showToast(`Order ${order.ref} updated to "${cap(newStatus)}"`, 'success');
+  // Flask: PUT /api/admin/orders/${id}/status { status: newStatus }
+}
 
-    function updatePendingBadge() {
-      const n = ORDERS.filter(o => o.status === 'pending').length;
-      document.getElementById('pendingBadge').textContent = n;
-      document.getElementById('pendingBadge').style.display = n ? '' : 'none';
-    }
+function updatePendingBadge() {
+  const n = ORDERS.filter(o=>o.status==='pending').length;
+  document.getElementById('pendingBadge').textContent = n;
+  document.getElementById('pendingBadge').style.display = n?'':'none';
+}
 
-    // ══════════════════════════════════════
-    // CUSTOMERS TABLE
-    // ══════════════════════════════════════
-    function renderCustomers(list) {
-      document.getElementById('customersTbody').innerHTML = list.map(c => `
+// ══════════════════════════════════════
+// CUSTOMERS TABLE
+// ══════════════════════════════════════
+function renderCustomers(list) {
+  document.getElementById('customersTbody').innerHTML = list.map(c=>`
     <tr>
       <td>
         <div style="display:flex;align-items:center;gap:10px;">
@@ -1936,130 +1236,136 @@
       <td style="font-weight:700;color:var(--ad-orange);">${c.spent}</td>
       <td style="color:var(--ad-muted);font-size:0.82rem;">${c.joined}</td>
     </tr>`).join('');
-    }
-    function searchCustomers(val) {
-      const t = val.toLowerCase();
-      renderCustomers(t ? CUSTOMERS.filter(c => c.name.toLowerCase().includes(t) || c.email.toLowerCase().includes(t)) : CUSTOMERS);
-    }
+}
+function searchCustomers(val) {
+  const t = val.toLowerCase();
+  renderCustomers(t ? CUSTOMERS.filter(c=>c.name.toLowerCase().includes(t)||c.email.toLowerCase().includes(t)) : CUSTOMERS);
+}
 
-    // ══════════════════════════════════════
-    // COMBO MODAL — ADD
-    // ══════════════════════════════════════
-    function openComboModal() {
-      document.getElementById('comboModalTitle').textContent = '➕ Add New Combo Package';
-      document.getElementById('editingComboId').value = '';
-      document.getElementById('cm-name').value = '';
-      document.getElementById('cm-tagline').value = '';
-      document.getElementById('cm-category').value = 'south dinner';
-      document.getElementById('cm-theme').value = 'theme-south';
-      document.getElementById('cm-price').value = '';
-      document.getElementById('cm-pricesub').value = 'per head';
-      document.getElementById('cm-emoji').value = '🍽️';
-      document.getElementById('cm-serves').value = '';
-      document.getElementById('cm-popular').checked = false;
-      document.getElementById('popularLabelGroup').style.display = 'none';
-      document.getElementById('cm-popularlabel').value = '';
-      buildDishInputs(['']);
-      document.getElementById('comboModal').classList.add('show');
+// ══════════════════════════════════════
+// COMBO MODAL — ADD
+// ══════════════════════════════════════
+function openComboModal() {
+  document.getElementById('comboModalTitle').textContent = '➕ Add New Combo Package';
+  document.getElementById('editingComboId').value = '';
+  document.getElementById('cm-name').value = '';
+  document.getElementById('cm-tagline').value = '';
+  document.getElementById('cm-category').value = 'south dinner';
+  document.getElementById('cm-theme').value = 'theme-south';
+  document.getElementById('cm-price').value = '';
+  document.getElementById('cm-pricesub').value = 'per head';
+  document.getElementById('cm-emoji').value = '🍽️';
+  document.getElementById('cm-serves').value = '';
+  document.getElementById('cm-popular').checked = false;
+  document.getElementById('popularLabelGroup').style.display = 'none';
+  document.getElementById('cm-popularlabel').value = '';
+  buildDishInputs(['']);
+  document.getElementById('comboModal').classList.add('show');
 
-      document.getElementById('cm-popular').onchange = function () {
-        document.getElementById('popularLabelGroup').style.display = this.checked ? 'block' : 'none';
-      };
-    }
+  document.getElementById('cm-popular').onchange = function() {
+    document.getElementById('popularLabelGroup').style.display = this.checked ? 'block' : 'none';
+  };
+}
 
-    // ── EDIT ──
-    function openEditCombo(id) {
-      const c = COMBOS.find(x => x.id === id); if (!c) return;
-      document.getElementById('comboModalTitle').textContent = '✏️ Edit Combo Package';
-      document.getElementById('editingComboId').value = id;
-      document.getElementById('cm-name').value = c.name;
-      document.getElementById('cm-tagline').value = c.tagline;
-      document.getElementById('cm-category').value = c.category;
-      document.getElementById('cm-theme').value = c.theme;
-      document.getElementById('cm-price').value = c.price;
-      document.getElementById('cm-pricesub').value = c.priceSub;
-      document.getElementById('cm-emoji').value = c.emoji;
-      document.getElementById('cm-serves').value = c.serves;
-      document.getElementById('cm-popular').checked = c.isPopular;
-      document.getElementById('popularLabelGroup').style.display = c.isPopular ? 'block' : 'none';
-      document.getElementById('cm-popularlabel').value = c.popularLabel;
-      buildDishInputs(c.dishes.length ? c.dishes : ['']);
-      document.getElementById('comboModal').classList.add('show');
+// ── EDIT ──
+function openEditCombo(id) {
+  const c = COMBOS.find(x=>x.id===id); if(!c) return;
+  document.getElementById('comboModalTitle').textContent = '✏️ Edit Combo Package';
+  document.getElementById('editingComboId').value = id;
+  document.getElementById('cm-name').value = c.name;
+  document.getElementById('cm-tagline').value = c.tagline;
+  document.getElementById('cm-category').value = c.category;
+  document.getElementById('cm-theme').value = c.theme;
+  document.getElementById('cm-price').value = c.price;
+  document.getElementById('cm-pricesub').value = c.priceSub;
+  document.getElementById('cm-emoji').value = c.emoji;
+  document.getElementById('cm-serves').value = c.serves;
+  document.getElementById('cm-popular').checked = c.isPopular;
+  document.getElementById('popularLabelGroup').style.display = c.isPopular ? 'block' : 'none';
+  document.getElementById('cm-popularlabel').value = c.popularLabel;
+  buildDishInputs(c.dishes.length ? c.dishes : ['']);
+  document.getElementById('comboModal').classList.add('show');
 
-      document.getElementById('cm-popular').onchange = function () {
-        document.getElementById('popularLabelGroup').style.display = this.checked ? 'block' : 'none';
-      };
-    }
+  document.getElementById('cm-popular').onchange = function() {
+    document.getElementById('popularLabelGroup').style.display = this.checked ? 'block' : 'none';
+  };
+}
 
-    // ── SAVE (ADD or EDIT) ──
-    function saveCombo() {
-      const name = document.getElementById('cm-name').value.trim();
-      const price = parseFloat(document.getElementById('cm-price').value);
-      if (!name) { showToast('Package name is required.', 'error'); return; }
-      if (!price || price < 1) { showToast('Please enter a valid price.', 'error'); return; }
+// ── SAVE (ADD or EDIT) ──
+function saveCombo() {
+  const name = document.getElementById('cm-name').value.trim();
+  const price = parseFloat(document.getElementById('cm-price').value);
+  if(!name){ showToast('Package name is required.','error'); return; }
+  if(!price||price<1){ showToast('Please enter a valid price.','error'); return; }
 
-      const dishes = getDishesFromForm();
-      if (!dishes.length) { showToast('Add at least one dish with a name.', 'error'); return; }
+  const dishes = getDishesFromForm();
+  if(!dishes.length){ showToast('Add at least one dish with a name.','error'); return; }
 
-      const editId = document.getElementById('editingComboId').value;
-      const data = {
-        name,
-        tagline: document.getElementById('cm-tagline').value.trim(),
-        category: document.getElementById('cm-category').value,
-        theme: document.getElementById('cm-theme').value,
-        price,
-        priceSub: document.getElementById('cm-pricesub').value,
-        emoji: document.getElementById('cm-emoji').value || '🍽️',
-        serves: document.getElementById('cm-serves').value.trim(),
-        isPopular: document.getElementById('cm-popular').checked,
-        popularLabel: document.getElementById('cm-popularlabel').value.trim(),
-        dishes
-      };
+  const editId = document.getElementById('editingComboId').value;
+  const data = {
+    name,
+    tagline:      document.getElementById('cm-tagline').value.trim(),
+    category:     document.getElementById('cm-category').value,
+    theme:        document.getElementById('cm-theme').value,
+    price,
+    priceSub:     document.getElementById('cm-pricesub').value,
+    emoji:        document.getElementById('cm-emoji').value || '🍽️',
+    serves:       document.getElementById('cm-serves').value.trim(),
+    isPopular:    document.getElementById('cm-popular').checked,
+    popularLabel: document.getElementById('cm-popularlabel').value.trim(),
+    dishes
+  };
 
-      if (editId) {
-        // EDIT
-        const idx = COMBOS.findIndex(c => c.id === parseInt(editId));
-        if (idx > -1) COMBOS[idx] = { ...COMBOS[idx], ...data };
-        showToast(`"${name}" updated successfully!`, 'success');
-        // Flask: PUT /api/admin/combos/${editId} { ...data }
-      } else {
-        // ADD
-        data.id = nextId++;
-        COMBOS.push(data);
-        showToast(`"${name}" added to menu!`, 'success');
-        // Flask: POST /api/admin/combos { ...data }
-      }
+  if(editId) {
+    // EDIT
+    const idx = COMBOS.findIndex(c=>c.id===parseInt(editId));
+    if(idx>-1) COMBOS[idx] = { ...COMBOS[idx], ...data };
+    showToast(`"${name}" updated successfully!`, 'success');
+    fetch(API_BASE+'/api/admin/combos/'+editId, {
+      method:'PUT', headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(data)
+    });
+  } else {
+    // ADD
+    data.id = nextId++;
+    COMBOS.push(data);
+    showToast(`"${name}" added to menu!`, 'success');
+    fetch(API_BASE+'/api/admin/combos', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(data)
+    }).then(r=>r.json()).then(j=>{ if(j.id) data.id=j.id; });
+  }
 
-      document.getElementById('comboModal').classList.remove('show');
-      renderCombosGrid();
-      renderOverviewCombos();
-    }
+  document.getElementById('comboModal').classList.remove('show');
+  renderCombosGrid();
+  renderOverviewCombos();
+}
 
-    // ── DISH INPUT BUILDER ──
-    function buildDishInputs(dishes) {
-      const list = document.getElementById('dishesInputList');
-      list.innerHTML = '';
-      if (!dishes || dishes.length === 0) {
-        addDishInput({ name: '', price: '', img: '' });
-      } else {
-        dishes.forEach(d => {
-          if (typeof d === 'string') addDishInput({ name: d, price: '', img: '' });
-          else addDishInput(d);
-        });
-      }
-      updateDishCount();
-    }
+// ── DISH INPUT BUILDER ──
+function buildDishInputs(dishes) {
+  const list = document.getElementById('dishesInputList');
+  list.innerHTML = '';
+  if (!dishes || dishes.length === 0) {
+    addDishInput({ name: '', price: '', img: '' });
+  } else {
+    dishes.forEach(d => {
+      if (typeof d === 'string') addDishInput({ name: d, price: '', img: '' });
+      else addDishInput(d);
+    });
+  }
+  updateDishCount();
+}
 
-    function addDishInput(dish = { name: '', price: '', img: '' }) {
-      const list = document.getElementById('dishesInputList');
-      const uid = 'dish_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6);
-      const row = document.createElement('div');
-      row.className = 'dish-input-row';
-      row.dataset.uid = uid;
-      row.dataset.img = dish.img || '';
+function addDishInput(dish = { name: '', price: '', img: '' }) {
+  const list = document.getElementById('dishesInputList');
+  const uid  = 'dish_' + Date.now() + '_' + Math.random().toString(36).slice(2,6);
+  const row  = document.createElement('div');
+  row.className = 'dish-input-row';
+  row.dataset.uid = uid;
+  row.dataset.img = dish.img || '';
 
-      // NOTE: file input is INSIDE dish-img-wrap so it doesn't break the 3-col grid
-      row.innerHTML = `
+  // NOTE: file input is INSIDE dish-img-wrap so it doesn't break the 3-col grid
+  row.innerHTML = `
     <!-- Image upload — click anywhere on this box -->
     <div class="dish-img-wrap" onclick="this.querySelector('.dish-img-file').click()" title="Click to upload image">
       ${dish.img ? `<img src="${dish.img}" alt="dish" />` : '<span class="img-placeholder">📷</span>'}
@@ -2071,252 +1377,259 @@
     <div class="dish-fields">
       <input type="text" class="dish-name-input"
         placeholder="Dish name — e.g. Steamed Rice"
-        value="${(dish.name || '').replace(/"/g, '&quot;')}"
+        value="${(dish.name||'').replace(/"/g,'&quot;')}"
         oninput="updateDishCount()" />
       <input type="text" class="dish-price-input"
         placeholder="Price/head — e.g. ₹50  (optional)"
-        value="${(dish.price || '').replace(/"/g, '&quot;')}" />
+        value="${(dish.price||'').replace(/"/g,'&quot;')}" />
     </div>
 
     <!-- Remove -->
     <button class="btn-rm-dish" type="button"
       onclick="removeDishRow(this)" title="Remove dish">✕</button>
   `;
-      list.appendChild(row);
-      updateDishCount();
-      if (!dish.name) setTimeout(() => row.querySelector('.dish-name-input').focus(), 50);
-    }
+  list.appendChild(row);
+  updateDishCount();
+  if (!dish.name) setTimeout(() => row.querySelector('.dish-name-input').focus(), 50);
+}
 
-    function removeDishRow(btn) {
-      const row = btn.closest('.dish-input-row');
-      const list = document.getElementById('dishesInputList');
-      // Don't remove the last row — just clear it instead
-      if (list.querySelectorAll('.dish-input-row').length === 1) {
-        row.querySelector('.dish-name-input').value = '';
-        row.querySelector('.dish-price-input').value = '';
-        const imgWrap = row.querySelector('.dish-img-wrap');
-        imgWrap.innerHTML = '<span class="img-placeholder">📷</span>';
-        row.dataset.img = '';
-      } else {
-        row.remove();
-      }
-      updateDishCount();
-    }
+function removeDishRow(btn) {
+  const row  = btn.closest('.dish-input-row');
+  const list = document.getElementById('dishesInputList');
+  // Don't remove the last row — just clear it instead
+  if (list.querySelectorAll('.dish-input-row').length === 1) {
+    row.querySelector('.dish-name-input').value = '';
+    row.querySelector('.dish-price-input').value = '';
+    const imgWrap = row.querySelector('.dish-img-wrap');
+    imgWrap.innerHTML = '<span class="img-placeholder">📷</span>';
+    row.dataset.img = '';
+  } else {
+    row.remove();
+  }
+  updateDishCount();
+}
 
-    function previewDishImg(input, uid) {
-      if (!input.files || !input.files[0]) return;
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const row = input.closest('.dish-input-row');
-        const imgWrap = row.querySelector('.dish-img-wrap');
-        row.dataset.img = e.target.result;           // store base64 on the row
-        // swap placeholder for real image
-        imgWrap.querySelector('.img-placeholder')?.remove();
-        imgWrap.querySelector('img')?.remove();
-        const img = document.createElement('img');
-        img.src = e.target.result;
-        img.alt = 'dish';
-        imgWrap.insertBefore(img, input);            // insert before the file input
-      };
-      reader.readAsDataURL(input.files[0]);
-    }
+function previewDishImg(input, uid) {
+  if (!input.files || !input.files[0]) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const row     = input.closest('.dish-input-row');
+    const imgWrap = row.querySelector('.dish-img-wrap');
+    row.dataset.img = e.target.result;           // store base64 on the row
+    // swap placeholder for real image
+    imgWrap.querySelector('.img-placeholder')?.remove();
+    imgWrap.querySelector('img')?.remove();
+    const img = document.createElement('img');
+    img.src = e.target.result;
+    img.alt = 'dish';
+    imgWrap.insertBefore(img, input);            // insert before the file input
+  };
+  reader.readAsDataURL(input.files[0]);
+}
 
-    function updateDishCount() {
-      const names = [...document.querySelectorAll('.dish-name-input')].filter(i => i.value.trim());
-      const badge = document.getElementById('dishCountBadge');
-      if (badge) badge.textContent = `${names.length} dish${names.length !== 1 ? 'es' : ''}`;
-    }
+function updateDishCount() {
+  const names  = [...document.querySelectorAll('.dish-name-input')].filter(i => i.value.trim());
+  const badge  = document.getElementById('dishCountBadge');
+  if (badge) badge.textContent = `${names.length} dish${names.length !== 1 ? 'es' : ''}`;
+}
 
-    function getDishesFromForm() {
-      // Returns array of { name, price, img } objects
-      return [...document.querySelectorAll('.dish-input-row')]
-        .map(row => ({
-          name: row.querySelector('.dish-name-input')?.value.trim() || '',
-          price: row.querySelector('.dish-price-input')?.value.trim() || '',
-          img: row.dataset.img || ''
-        }))
-        .filter(d => d.name); // only include dishes with a name
-    }
+function getDishesFromForm() {
+  // Returns array of { name, price, img } objects
+  return [...document.querySelectorAll('.dish-input-row')]
+    .map(row => ({
+      name:  row.querySelector('.dish-name-input')?.value.trim() || '',
+      price: row.querySelector('.dish-price-input')?.value.trim() || '',
+      img:   row.dataset.img || ''
+    }))
+    .filter(d => d.name); // only include dishes with a name
+}
 
-    // ══════════════════════════════════════
-    // DELETE COMBO
-    // ══════════════════════════════════════
-    function openDeleteCombo(id) {
-      deletingId = id;
-      const c = COMBOS.find(x => x.id === id);
-      document.getElementById('deleteComboName').textContent = c?.name || '—';
-      document.getElementById('deleteModal').classList.add('show');
-    }
-    function confirmDelete() {
-      if (!deletingId) return;
-      const c = COMBOS.find(x => x.id === deletingId);
-      COMBOS = COMBOS.filter(x => x.id !== deletingId);
-      document.getElementById('deleteModal').classList.remove('show');
-      renderCombosGrid();
-      renderOverviewCombos();
-      showToast(`"${c?.name}" has been deleted.`, 'success');
-      deletingId = null;
-      // Flask: DELETE /api/admin/combos/${id}
-    }
+// ══════════════════════════════════════
+// DELETE COMBO
+// ══════════════════════════════════════
+function openDeleteCombo(id) {
+  deletingId = id;
+  const c = COMBOS.find(x=>x.id===id);
+  document.getElementById('deleteComboName').textContent = c?.name || '—';
+  document.getElementById('deleteModal').classList.add('show');
+}
+function confirmDelete() {
+  if(!deletingId) return;
+  const c = COMBOS.find(x=>x.id===deletingId);
+  COMBOS = COMBOS.filter(x=>x.id!==deletingId);
+  document.getElementById('deleteModal').classList.remove('show');
+  renderCombosGrid();
+  renderOverviewCombos();
+  showToast(`"${c?.name}" has been deleted.`, 'success');
+  deletingId = null;
+  // Flask: DELETE /api/admin/combos/${id}
+}
 
-    // ══════════════════════════════════════
-    // GLOBAL SEARCH
-    // ══════════════════════════════════════
-    function globalSearch(val) {
-      if (!val.trim()) return;
-      const t = val.toLowerCase();
-      const matchedOrders = ORDERS.filter(o =>
-        o.ref.toLowerCase().includes(t) ||
-        o.customer.toLowerCase().includes(t) ||
-        o.package.toLowerCase().includes(t)
-      );
-      if (matchedOrders.length) {
-        showPanel('orders');
-        renderAllOrders(matchedOrders);
-      }
-    }
+// ══════════════════════════════════════
+// GLOBAL SEARCH
+// ══════════════════════════════════════
+function globalSearch(val) {
+  if(!val.trim()) return;
+  const t = val.toLowerCase();
+  const matchedOrders = ORDERS.filter(o=>
+    o.ref.toLowerCase().includes(t)||
+    o.customer.toLowerCase().includes(t)||
+    o.package.toLowerCase().includes(t)
+  );
+  if(matchedOrders.length) {
+    showPanel('orders');
+    renderAllOrders(matchedOrders);
+  }
+}
 
-    // ══════════════════════════════════════
-    // UTILS
-    // ══════════════════════════════════════
-    function closeModal(id, e) {
-      if (e.target.classList.contains('modal-overlay')) document.getElementById(id).classList.remove('show');
-    }
-    function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
-    function fmtDate(d) { return new Date(d).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }); }
-    function showToast(msg, type = 'success') {
-      const colors = { success: '#22C55E', error: '#EF4444', info: '#3B82F6' };
-      const icons = { success: '✅', error: '❌', info: 'ℹ️' };
-      const wrap = document.getElementById('toastWrap');
-      const t = document.createElement('div');
-      t.style.cssText = `background:var(--ad-card);border-radius:10px;padding:12px 18px;border:1px solid var(--ad-border);border-left:4px solid ${colors[type]};display:flex;align-items:center;gap:10px;min-width:260px;font-size:0.85rem;font-weight:600;color:var(--ad-text);font-family:'Nunito',sans-serif;box-shadow:0 8px 32px rgba(0,0,0,0.4);`;
-      t.innerHTML = `<span>${icons[type]}</span>${msg}`;
-      wrap.appendChild(t);
-      setTimeout(() => t.remove(), 3500);
-    }
+// ══════════════════════════════════════
+// UTILS
+// ══════════════════════════════════════
+function closeModal(id, e) {
+  if(e.target.classList.contains('modal-overlay')) document.getElementById(id).classList.remove('show');
+}
+function cap(s) { return s.charAt(0).toUpperCase()+s.slice(1); }
+function fmtDate(d) { return new Date(d).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}); }
+function showToast(msg, type='success') {
+  const colors = {success:'#22C55E',error:'#EF4444',info:'#3B82F6'};
+  const icons  = {success:'✅',error:'❌',info:'ℹ️'};
+  const wrap = document.getElementById('toastWrap');
+  const t = document.createElement('div');
+  t.style.cssText=`background:var(--ad-card);border-radius:10px;padding:12px 18px;border:1px solid var(--ad-border);border-left:4px solid ${colors[type]};display:flex;align-items:center;gap:10px;min-width:260px;font-size:0.85rem;font-weight:600;color:var(--ad-text);font-family:'Nunito',sans-serif;box-shadow:0 8px 32px rgba(0,0,0,0.4);`;
+  t.innerHTML=`<span>${icons[type]}</span>${msg}`;
+  wrap.appendChild(t);
+  setTimeout(()=>t.remove(),3500);
+}
 
-    // ══════════════════════════════════════
-    // DISHES — RENDER
-    // ══════════════════════════════════════
-    function renderDishesGrid(list) {
-      list = list || DISHES;
-      const grid = document.getElementById('dishesAdminGrid');
-      const count = document.getElementById('dishesCount');
-      if (count) count.textContent = '(' + list.length + ' dishes)';
-      if (!list.length) {
-        grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:48px;color:var(--ad-muted);">No dishes found.</div>';
-        return;
-      }
-      grid.innerHTML = list.map(d => {
-        const cat = CATMETA[d.category] || CATMETA.special;
-        return '<div style="background:var(--ad-card);border-radius:12px;overflow:hidden;border:1px solid var(--ad-border);transition:border-color 0.2s;" onmouseover="this.style.borderColor=\'rgba(232,113,42,0.35)\'" onmouseout="this.style.borderColor=\'var(--ad-border)\'">'
-          + '<div style="height:110px;background:' + cat.color + ';display:flex;align-items:center;justify-content:center;font-size:3rem;position:relative;overflow:hidden;">'
-          + (d.img ? '<img src="' + d.img + '" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" />' : '<span style="position:relative;z-index:1;">' + (d.emoji || '🍽️') + '</span>')
-          + (d.featured ? '<span style="position:absolute;top:8px;left:8px;background:rgba(212,175,55,0.92);color:#1A0F05;font-size:0.62rem;font-weight:900;padding:2px 8px;border-radius:4px;">⭐ SPECIAL</span>' : '')
-          + '</div>'
-          + '<div style="padding:14px 16px;">'
-          + '<div style="font-family:Playfair Display,serif;font-size:0.97rem;font-weight:700;color:#fff;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + d.name + '</div>'
-          + '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">'
-          + '<span style="display:inline-block;padding:2px 9px;border-radius:4px;font-size:0.65rem;font-weight:700;background:' + cat.color + ';border:1px solid ' + cat.border + ';color:var(--ad-text);">' + cat.label + '</span>'
-          + '<span style="font-family:Playfair Display,serif;font-size:1rem;font-weight:700;color:var(--ad-orange);">₹' + d.price + '<span style="font-size:0.65rem;color:var(--ad-muted);font-family:Nunito,sans-serif;font-weight:400;">/head</span></span>'
-          + '</div>'
-          + (d.desc ? '<div style="font-size:0.75rem;color:var(--ad-muted);margin-bottom:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + d.desc + '</div>' : '')
-          + '<div style="display:flex;gap:8px;">'
-          + '<button style="flex:1;padding:7px;border-radius:7px;border:1px solid rgba(59,130,246,0.3);background:rgba(59,130,246,0.08);color:var(--ad-blue);font-family:Nunito,sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer;" onclick="openEditDish(' + d.id + ')">✏️ Edit</button>'
-          + '<button style="flex:1;padding:7px;border-radius:7px;border:1px solid rgba(239,68,68,0.25);background:rgba(239,68,68,0.07);color:var(--ad-red);font-family:Nunito,sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer;" onclick="deleteDish(' + d.id + ')">🗑️ Delete</button>'
-          + '</div></div></div>';
-      }).join('');
+  // ══════════════════════════════════════
+  // DISHES — RENDER
+  // ══════════════════════════════════════
+  function renderDishesGrid(list) {
+    list = list || DISHES;
+    const grid  = document.getElementById('dishesAdminGrid');
+    const count = document.getElementById('dishesCount');
+    if (count) count.textContent = '(' + list.length + ' dishes)';
+    if (!list.length) {
+      grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:48px;color:var(--ad-muted);">No dishes found.</div>';
+      return;
     }
+    grid.innerHTML = list.map(d => {
+      const cat = CATMETA[d.category] || CATMETA.special;
+      return '<div style="background:var(--ad-card);border-radius:12px;overflow:hidden;border:1px solid var(--ad-border);transition:border-color 0.2s;" onmouseover="this.style.borderColor=\'rgba(232,113,42,0.35)\'" onmouseout="this.style.borderColor=\'var(--ad-border)\'">'
+        + '<div style="height:110px;background:' + cat.color + ';display:flex;align-items:center;justify-content:center;font-size:3rem;position:relative;overflow:hidden;">'
+        + (d.img ? '<img src="' + d.img + '" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" />' : '<span style="position:relative;z-index:1;">' + (d.emoji||'🍽️') + '</span>')
+        + (d.featured ? '<span style="position:absolute;top:8px;left:8px;background:rgba(212,175,55,0.92);color:#1A0F05;font-size:0.62rem;font-weight:900;padding:2px 8px;border-radius:4px;">⭐ SPECIAL</span>' : '')
+        + '</div>'
+        + '<div style="padding:14px 16px;">'
+        + '<div style="font-family:Playfair Display,serif;font-size:0.97rem;font-weight:700;color:#fff;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + d.name + '</div>'
+        + '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">'
+        + '<span style="display:inline-block;padding:2px 9px;border-radius:4px;font-size:0.65rem;font-weight:700;background:' + cat.color + ';border:1px solid ' + cat.border + ';color:var(--ad-text);">' + cat.label + '</span>'
+        + '<span style="font-family:Playfair Display,serif;font-size:1rem;font-weight:700;color:var(--ad-orange);">₹' + d.price + '<span style="font-size:0.65rem;color:var(--ad-muted);font-family:Nunito,sans-serif;font-weight:400;">/head</span></span>'
+        + '</div>'
+        + (d.desc ? '<div style="font-size:0.75rem;color:var(--ad-muted);margin-bottom:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + d.desc + '</div>' : '')
+        + '<div style="display:flex;gap:8px;">'
+        + '<button style="flex:1;padding:7px;border-radius:7px;border:1px solid rgba(59,130,246,0.3);background:rgba(59,130,246,0.08);color:var(--ad-blue);font-family:Nunito,sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer;" onclick="openEditDish(' + d.id + ')">✏️ Edit</button>'
+        + '<button style="flex:1;padding:7px;border-radius:7px;border:1px solid rgba(239,68,68,0.25);background:rgba(239,68,68,0.07);color:var(--ad-red);font-family:Nunito,sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer;" onclick="deleteDish(' + d.id + ')">🗑️ Delete</button>'
+        + '</div></div></div>';
+    }).join('');
+  }
 
-    function filterDishes(cat, btn) {
-      document.querySelectorAll('#panel-dishes .btn-cancel').forEach(function (b) {
-        b.style.color = ''; b.style.borderColor = '';
-      });
-      btn.style.color = 'var(--ad-orange)';
-      btn.style.borderColor = 'rgba(232,113,42,0.3)';
-      renderDishesGrid(cat === 'all' ? DISHES : DISHES.filter(function (d) { return d.category === cat; }));
+  function filterDishes(cat, btn) {
+    document.querySelectorAll('#panel-dishes .btn-cancel').forEach(function(b) {
+      b.style.color = ''; b.style.borderColor = '';
+    });
+    btn.style.color = 'var(--ad-orange)';
+    btn.style.borderColor = 'rgba(232,113,42,0.3)';
+    renderDishesGrid(cat === 'all' ? DISHES : DISHES.filter(function(d){ return d.category === cat; }));
+  }
+
+  // ── Dish Modal ──
+  var _dishImgData = '';
+
+  function openDishModal(dish) {
+    _dishImgData = dish ? (dish.img || '') : '';
+    document.getElementById('dishModalTitle').textContent  = dish ? '✏️ Edit Dish' : '➕ Add New Dish';
+    document.getElementById('editingDishId').value         = dish ? dish.id : '';
+    document.getElementById('dm-name').value               = dish ? dish.name     : '';
+    document.getElementById('dm-category').value           = dish ? dish.category : 'starter';
+    document.getElementById('dm-price').value              = dish ? dish.price    : '';
+    document.getElementById('dm-emoji').value              = dish ? dish.emoji    : '';
+    document.getElementById('dm-desc').value               = dish ? dish.desc     : '';
+    document.getElementById('dm-featured').checked         = dish ? dish.featured : false;
+    document.getElementById('dishImgFile').value           = '';
+    var preview = document.getElementById('dishImgPreview');
+    if (_dishImgData) {
+      preview.innerHTML = '<img src="' + _dishImgData + '" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;border-radius:10px;" />';
+    } else {
+      preview.innerHTML = '<span style="font-size:2.5rem;">📷</span><span style="font-size:0.75rem;color:var(--ad-muted);font-family:Nunito,sans-serif;font-weight:600;">Click to upload image</span>';
     }
+    document.getElementById('dishModal').classList.add('show');
+  }
 
-    // ── Dish Modal ──
-    var _dishImgData = '';
+  function openEditDish(id) {
+    var dish = DISHES.find(function(d){ return d.id === id; });
+    if (dish) openDishModal(dish);
+  }
 
-    function openDishModal(dish) {
-      _dishImgData = dish ? (dish.img || '') : '';
-      document.getElementById('dishModalTitle').textContent = dish ? '✏️ Edit Dish' : '➕ Add New Dish';
-      document.getElementById('editingDishId').value = dish ? dish.id : '';
-      document.getElementById('dm-name').value = dish ? dish.name : '';
-      document.getElementById('dm-category').value = dish ? dish.category : 'starter';
-      document.getElementById('dm-price').value = dish ? dish.price : '';
-      document.getElementById('dm-emoji').value = dish ? dish.emoji : '';
-      document.getElementById('dm-desc').value = dish ? dish.desc : '';
-      document.getElementById('dm-featured').checked = dish ? dish.featured : false;
-      document.getElementById('dishImgFile').value = '';
+  function previewDishModalImg(input) {
+    if (!input.files || !input.files[0]) return;
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      _dishImgData = e.target.result;
       var preview = document.getElementById('dishImgPreview');
-      if (_dishImgData) {
-        preview.innerHTML = '<img src="' + _dishImgData + '" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;border-radius:10px;" />';
-      } else {
-        preview.innerHTML = '<span style="font-size:2.5rem;">📷</span><span style="font-size:0.75rem;color:var(--ad-muted);font-family:Nunito,sans-serif;font-weight:600;">Click to upload image</span>';
-      }
-      document.getElementById('dishModal').classList.add('show');
-    }
+      preview.innerHTML = '<img src="' + _dishImgData + '" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;border-radius:10px;" />';
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
 
-    function openEditDish(id) {
-      var dish = DISHES.find(function (d) { return d.id === id; });
-      if (dish) openDishModal(dish);
+  function saveDish() {
+    var name  = document.getElementById('dm-name').value.trim();
+    var price = parseFloat(document.getElementById('dm-price').value);
+    if (!name)          { showToast('Dish name is required.', 'error'); return; }
+    if (!price || price < 1) { showToast('Enter a valid price.', 'error'); return; }
+    var editId = document.getElementById('editingDishId').value;
+    var data = {
+      name: name,
+      category: document.getElementById('dm-category').value,
+      price: price,
+      emoji:    document.getElementById('dm-emoji').value.trim() || '🍽️',
+      desc:     document.getElementById('dm-desc').value.trim(),
+      featured: document.getElementById('dm-featured').checked,
+      img:      _dishImgData,
+    };
+    if (editId) {
+      var idx = DISHES.findIndex(function(d){ return d.id === parseInt(editId); });
+      if (idx > -1) DISHES[idx] = Object.assign({}, DISHES[idx], data);
+      showToast('"' + name + '" updated!', 'success');
+      fetch(API_BASE + '/api/admin/dishes/'+editId, {
+        method:'PUT', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({name:data.name,category:data.category,price:data.price,
+          emoji:data.emoji,desc:data.desc,img:data.img,featured:data.featured})
+      });
+    } else {
+      data.id = nextDishId++;
+      DISHES.push(data);
+      showToast('"' + name + '" added!', 'success');
+      fetch(API_BASE + '/api/admin/dishes', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({name:data.name,category:data.category,price:data.price,
+        emoji:data.emoji,desc:data.desc,img:data.img,featured:data.featured})
+    }).then(r=>r.json()).then(j=>{ if(j.id) data.id=j.id; });
     }
+    document.getElementById('dishModal').classList.remove('show');
+    renderDishesGrid();
+  }
 
-    function previewDishModalImg(input) {
-      if (!input.files || !input.files[0]) return;
-      var reader = new FileReader();
-      reader.onload = function (e) {
-        _dishImgData = e.target.result;
-        var preview = document.getElementById('dishImgPreview');
-        preview.innerHTML = '<img src="' + _dishImgData + '" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;border-radius:10px;" />';
-      };
-      reader.readAsDataURL(input.files[0]);
-    }
+  function deleteDish(id) {
+    var dish = DISHES.find(function(d){ return d.id === id; });
+    if (!dish) return;
+    if (!confirm('Delete "' + dish.name + '"? It will be removed from the Custom Menu Builder.')) return;
+    DISHES = DISHES.filter(function(d){ return d.id !== id; });
+    renderDishesGrid();
+    showToast('"' + dish.name + '" deleted.', 'success');
+    fetch(API_BASE+'/api/admin/dishes/'+id, {method:'DELETE'});
+  }
 
-    function saveDish() {
-      var name = document.getElementById('dm-name').value.trim();
-      var price = parseFloat(document.getElementById('dm-price').value);
-      if (!name) { showToast('Dish name is required.', 'error'); return; }
-      if (!price || price < 1) { showToast('Enter a valid price.', 'error'); return; }
-      var editId = document.getElementById('editingDishId').value;
-      var data = {
-        name: name,
-        category: document.getElementById('dm-category').value,
-        price: price,
-        emoji: document.getElementById('dm-emoji').value.trim() || '🍽️',
-        desc: document.getElementById('dm-desc').value.trim(),
-        featured: document.getElementById('dm-featured').checked,
-        img: _dishImgData,
-      };
-      if (editId) {
-        var idx = DISHES.findIndex(function (d) { return d.id === parseInt(editId); });
-        if (idx > -1) DISHES[idx] = Object.assign({}, DISHES[idx], data);
-        showToast('"' + name + '" updated!', 'success');
-        // Flask: PUT /api/admin/dishes/${editId}
-      } else {
-        data.id = nextDishId++;
-        DISHES.push(data);
-        showToast('"' + name + '" added!', 'success');
-        // Flask: POST /api/admin/dishes
-      }
-      document.getElementById('dishModal').classList.remove('show');
-      renderDishesGrid();
-    }
-
-    function deleteDish(id) {
-      var dish = DISHES.find(function (d) { return d.id === id; });
-      if (!dish) return;
-      if (!confirm('Delete "' + dish.name + '"? It will be removed from the Custom Menu Builder.')) return;
-      DISHES = DISHES.filter(function (d) { return d.id !== id; });
-      renderDishesGrid();
-      showToast('"' + dish.name + '" deleted.', 'success');
-      // Flask: DELETE /api/admin/dishes/${id}
-    }
-
-  </script>
+</script>
 </body>
-
 </html>

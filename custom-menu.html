@@ -530,6 +530,7 @@
       .step-item-bar .step-label-wrap { display: none; }
       .panel-card { padding: 24px 20px; }
     }
+    @keyframes spin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
   </style>
 </head>
 <body>
@@ -537,18 +538,18 @@
   <!-- ══ NAVBAR ══ -->
   <nav class="navbar scrolled" id="navbar" data-always-scrolled="true" style="position:sticky;top:0;z-index:1000;background:rgba(255,248,240,0.98);backdrop-filter:blur(16px);box-shadow:0 2px 24px rgba(26,15,5,0.1);">
     <div class="container navbar-inner">
-      <a href="index.html" class="navbar-logo" style="color:var(--dark);">Menu<span>Craft</span></a>
+      <a href="/" class="navbar-logo" style="color:var(--dark);">Menu<span>Craft</span></a>
       <ul class="navbar-links">
-        <li><a href="index.html#services">Services</a></li>
-        <li><a href="menu.html">Menu</a></li>
-        <li><a href="custom-menu.html" style="color:var(--primary);">Custom Menu</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="contact.html">Contact</a></li>
+        <li><a href="/#services">Services</a></li>
+        <li><a href="/menu">Menu</a></li>
+        <li><a href="/custom-menu" style="color:var(--primary);">Custom Menu</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/contact">Contact</a></li>
       </ul>
       <div class="navbar-actions" style="gap:10px;">
         <span class="nav-veg-tag"><span class="dot"></span> 100% Pure Veg</span>
-        <a href="auth.html" class="btn btn-outline">Login</a>
-        <a href="book.html" class="btn btn-primary">Book Now</a>
+        <a href="/auth" class="btn btn-outline">Login</a>
+        <a href="/book" class="btn btn-primary">Book Now</a>
       </div>
       <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
     </div>
@@ -558,7 +559,751 @@
   <section class="page-hero">
     <div class="container">
       <div class="breadcrumb-bar">
-        <a href="index.html">Home</a> <span>›</span>
+        <a href="/">Home</a> <span>›</span>
+        <span style="color:rgba(255,255,255,0.55);">Custom Menu Builder</span>
+      </div>
+      <div class="pure-veg-hero-badge"><span class="dot"></span> 100% Pure Vegetarian</div>
+      <h1>Build Your Custom Menu</h1>
+      <p class="mt-2">Select your event type, pick your favourite dishes, and get an instant price estimate — all in 4 easy steps.</p>
+    </div>
+  </section>
+
+  <!-- ══ STEP PROGRESS BAR ══ -->
+  <div class="step-progress">
+    <div class="step-progress-inner">
+      <div class="step-item-bar active" id="bar-1" onclick="goToStep(1)">
+        <div class="step-num"><span class="step-num-inner">1</span></div>
+        <div class="step-label-wrap">
+          <div class="step-title">Event Type</div>
+          <div class="step-sub" id="bar-sub-1">Choose occasion</div>
+        </div>
+      </div>
+      <div class="step-item-bar" id="bar-2" onclick="goToStep(2)">
+        <div class="step-num"><span class="step-num-inner">2</span></div>
+        <div class="step-label-wrap">
+          <div class="step-title">Event Details</div>
+          <div class="step-sub" id="bar-sub-2">Date & guests</div>
+        </div>
+      </div>
+      <div class="step-item-bar" id="bar-3" onclick="goToStep(3)">
+        <div class="step-num"><span class="step-num-inner">3</span></div>
+        <div class="step-label-wrap">
+          <div class="step-title">Choose Dishes</div>
+          <div class="step-sub" id="bar-sub-3">Build your menu</div>
+        </div>
+      </div>
+      <div class="step-item-bar" id="bar-4" onclick="goToStep(4)">
+        <div class="step-num"><span class="step-num-inner">4</span></div>
+        <div class="step-label-wrap">
+          <div class="step-title">Review & Book</div>
+          <div class="step-sub" id="bar-sub-4">Confirm order</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ BUILDER SECTION ══ -->
+  <section class="builder-section">
+    <div class="container">
+      <div class="builder-layout">
+
+        <!-- ── LEFT: Step Panels ── -->
+        <div class="steps-area">
+
+          <!-- ─ STEP 1: Event Type ─ -->
+          <div class="step-panel active" id="step-1">
+            <div class="panel-card">
+              <h2 class="panel-title">What's the occasion? 🎉</h2>
+              <p class="panel-subtitle">Select the type of event you're planning. This helps us suggest the best menu combinations.</p>
+              <div class="event-grid">
+                <div class="event-card" data-event="Wedding" onclick="selectEvent(this)">
+                  <div class="check">✓</div>
+                  <span class="event-emoji">💍</span>
+                  <h3>Wedding</h3>
+                  <p>Grand celebrations, elegant multi-course meals</p>
+                </div>
+                <div class="event-card" data-event="Birthday" onclick="selectEvent(this)">
+                  <div class="check">✓</div>
+                  <span class="event-emoji">🎂</span>
+                  <h3>Birthday Party</h3>
+                  <p>Fun festive spreads for all age groups</p>
+                </div>
+                <div class="event-card" data-event="Corporate" onclick="selectEvent(this)">
+                  <div class="check">✓</div>
+                  <span class="event-emoji">🏢</span>
+                  <h3>Corporate Event</h3>
+                  <p>Professional lunches, meetings & launches</p>
+                </div>
+                <div class="event-card" data-event="Custom" onclick="selectEvent(this)">
+                  <div class="check">✓</div>
+                  <span class="event-emoji">✨</span>
+                  <h3>Custom Function</h3>
+                  <p>Any other special gathering or occasion</p>
+                </div>
+              </div>
+            </div>
+            <div class="step-nav">
+              <div></div>
+              <button class="btn-next" id="next-1" onclick="nextStep(1)" disabled>Next: Event Details →</button>
+            </div>
+          </div>
+
+          <!-- ─ STEP 2: Event Details ─ -->
+          <div class="step-panel" id="step-2">
+            <div class="panel-card">
+              <h2 class="panel-title">Tell us about your event 📋</h2>
+              <p class="panel-subtitle">We need a few details to prepare the perfect catering plan for you.</p>
+              <div class="details-grid">
+
+                <div class="form-group">
+                  <label class="form-label">Event Date <span class="req">*</span></label>
+                  <input type="date" class="form-control-custom" id="eventDate" onchange="updateSidebar()" />
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Event Time <span class="req">*</span></label>
+                  <input type="time" class="form-control-custom" id="eventTime" onchange="updateSidebar()" />
+                </div>
+
+                <div class="form-group full">
+                  <label class="form-label">Venue / Address <span class="req">*</span></label>
+                  <input type="text" class="form-control-custom" id="eventVenue" placeholder="e.g. Grand Ballroom, MG Road, Bangalore" onchange="updateSidebar()" />
+                </div>
+
+                <div class="form-group full">
+                  <label class="form-label">Serving Style <span class="req">*</span></label>
+                  <div class="serving-style-grid">
+                    <div class="serving-card buffet" data-style="Buffet" onclick="selectServing(this)">
+                      <div class="serving-check">✓</div>
+                      <span class="serving-emoji">🍽️</span>
+                      <h3>Buffet Style</h3>
+                      <p>Guests serve themselves from food counters. Great for large gatherings and varied preferences.</p>
+                      <span class="serving-tag">Self-Service</span>
+                    </div>
+                    <div class="serving-card banana-leaf" data-style="Banana Leaf" onclick="selectServing(this)">
+                      <div class="serving-check">✓</div>
+                      <span class="serving-emoji">🍃</span>
+                      <h3>Banana Leaf</h3>
+                      <p>Traditional South Indian style — food served directly on fresh banana leaves at the table.</p>
+                      <span class="serving-tag">Table Service</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group full">
+                  <label class="form-label">Number of Guests <span class="req">*</span></label>
+                  <div class="guest-slider-wrap">
+                    <div class="guest-number-display"><span id="guestDisplay">50</span> <span>guests</span></div>
+                    <input type="range" id="guestSlider" min="10" max="1000" step="10" value="50" oninput="updateGuests(this.value)" />
+                    <div class="range-labels"><span>10</span><span>250</span><span>500</span><span>750</span><span>1000</span></div>
+                  </div>
+                </div>
+
+                <div class="form-group full">
+                  <label class="form-label">Special Notes</label>
+                  <textarea class="form-control-custom" id="eventNotes" rows="3" placeholder="Any allergies, dietary requirements, or special requests..."></textarea>
+                </div>
+
+              </div>
+            </div>
+            <div class="step-nav">
+              <button class="btn-prev" onclick="prevStep(2)">← Back</button>
+              <button class="btn-next" id="next-2" onclick="nextStep(2)">Next: Choose Dishes →</button>
+            </div>
+          </div>
+
+          <!-- ─ STEP 3: Choose Dishes ─ -->
+          <div class="step-panel" id="step-3">
+            <div class="panel-card">
+              <h2 class="panel-title">Build your menu 🍽️</h2>
+              <p class="panel-subtitle">Pick as many dishes as you like from each category. The price updates live as you select.</p>
+
+              <!-- Category Tabs -->
+              <div class="category-tabs-builder">
+                <button class="cat-tab active" data-cat="starter" onclick="switchCat(this)">🥗 Starters <span class="cat-count" id="cnt-starter">0</span></button>
+                <button class="cat-tab" data-cat="main"    onclick="switchCat(this)">🍛 Main Course <span class="cat-count" id="cnt-main">0</span></button>
+                <button class="cat-tab" data-cat="bread"   onclick="switchCat(this)">🫓 Breads   <span class="cat-count" id="cnt-bread">0</span></button>
+                <button class="cat-tab" data-cat="rice"    onclick="switchCat(this)">🍚 Rice     <span class="cat-count" id="cnt-rice">0</span></button>
+                <button class="cat-tab" data-cat="dessert" onclick="switchCat(this)">🍰 Desserts <span class="cat-count" id="cnt-dessert">0</span></button>
+                <button class="cat-tab" data-cat="drink"   onclick="switchCat(this)">🥤 Drinks   <span class="cat-count" id="cnt-drink">0</span></button>
+                <button class="cat-tab" data-cat="special" onclick="switchCat(this)">⭐ Special  <span class="cat-count" id="cnt-special">0</span></button>
+              </div>
+
+              <!-- Dish Grids per Category -->
+              <!-- Dishes loaded from Flask API: GET /api/dishes?category=starter
+                   Admin panel manages these — add/edit/delete instantly reflected here -->
+
+              <!-- Loading state -->
+              <div id="dishesLoading" style="text-align:center;padding:40px;">
+                <div style="font-size:2rem;animation:spin 1s linear infinite;display:inline-block;">🍽️</div>
+                <p style="color:var(--text-light);margin-top:10px;font-weight:600;">Loading dishes...</p>
+              </div>
+
+              <!-- Dish grids — one per category, shown/hidden by tab -->
+              <div class="dish-grid" id="grid-starter"  style="display:none;"></div>
+              <div class="dish-grid" id="grid-main"     style="display:none;"></div>
+              <div class="dish-grid" id="grid-bread"    style="display:none;"></div>
+              <div class="dish-grid" id="grid-rice"     style="display:none;"></div>
+              <div class="dish-grid" id="grid-dessert"  style="display:none;"></div>
+              <div class="dish-grid" id="grid-drink"    style="display:none;"></div>
+              <div class="dish-grid" id="grid-special"  style="display:none;"></div>eta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Custom Menu Builder — MenuCraft</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="static/css/style.css" />
+  <style>
+    /* ══════════════════════════════════════
+       PAGE HERO
+    ══════════════════════════════════════ */
+    .page-hero {
+      background: linear-gradient(135deg, #1A0F05 0%, #3D2B1A 60%, #5C3D20 100%);
+      padding: 130px 0 70px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(circle at 15% 50%, rgba(232,113,42,0.22) 0%, transparent 55%),
+        radial-gradient(circle at 85% 30%, rgba(212,175,55,0.13) 0%, transparent 50%);
+    }
+    .page-hero .container { position: relative; z-index: 1; }
+    .page-hero h1 { color: #fff; font-size: clamp(2rem, 5vw, 3.2rem); margin-bottom: 12px; }
+    .page-hero p  { color: rgba(255,255,255,0.62); font-size: 1rem; max-width: 480px; margin: 0 auto; }
+    .breadcrumb-bar {
+      display: flex; align-items: center; justify-content: center;
+      gap: 8px; margin-bottom: 18px;
+      font-size: 0.82rem; color: rgba(255,255,255,0.38);
+    }
+    .breadcrumb-bar a { color: var(--primary-light); }
+    .pure-veg-hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(34,197,94,0.15); border: 1.5px solid rgba(34,197,94,0.4);
+      color: #4ade80; border-radius: 50px; padding: 6px 16px;
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; margin-bottom: 18px;
+    }
+    .pure-veg-hero-badge .dot {
+      width: 9px; height: 9px; background: #22c55e; border-radius: 50%;
+      animation: pulse-g 1.8s ease-in-out infinite;
+      box-shadow: 0 0 6px rgba(34,197,94,0.8);
+    }
+    @keyframes pulse-g {
+      0%,100% { box-shadow: 0 0 5px rgba(34,197,94,0.8); }
+      50%      { box-shadow: 0 0 12px rgba(34,197,94,1); }
+    }
+
+    /* ══════════════════════════════════════
+       STEP PROGRESS BAR
+    ══════════════════════════════════════ */
+    .step-progress {
+      background: #fff;
+      border-bottom: 1px solid #EDE5DA;
+      position: sticky; top: 64px; z-index: 100;
+      box-shadow: 0 2px 16px rgba(26,15,5,0.07);
+      padding: 0;
+    }
+    .step-progress-inner {
+      display: flex;
+      align-items: stretch;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .step-item-bar {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 20px;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+    .step-item-bar:not(:last-child)::after {
+      content: '›';
+      position: absolute; right: -2px;
+      color: #DDD; font-size: 1.2rem;
+      pointer-events: none;
+    }
+    .step-item-bar.active   { border-bottom-color: var(--primary); }
+    .step-item-bar.done     { border-bottom-color: #22C55E; }
+    .step-num {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: #F0E8DE; color: var(--text-light);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.82rem; font-weight: 700; flex-shrink: 0;
+      transition: all 0.25s ease;
+    }
+    .step-item-bar.active .step-num { background: var(--primary); color: #fff; box-shadow: 0 3px 12px rgba(232,113,42,0.35); }
+    .step-item-bar.done .step-num   { background: #22C55E; color: #fff; }
+    .step-item-bar.done .step-num::before { content: '✓'; }
+    .step-item-bar.done .step-num-inner { display: none; }
+    .step-label-wrap .step-title {
+      font-size: 0.82rem; font-weight: 700;
+      color: var(--text-light); transition: color 0.25s;
+      white-space: nowrap;
+    }
+    .step-item-bar.active .step-title { color: var(--primary); }
+    .step-item-bar.done .step-title   { color: #22C55E; }
+    .step-label-wrap .step-sub {
+      font-size: 0.71rem; color: #B0A098; margin-top: 1px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 120px;
+    }
+
+    /* ══════════════════════════════════════
+       BUILDER LAYOUT
+    ══════════════════════════════════════ */
+    .builder-section { padding: 48px 0 80px; }
+    .builder-layout {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 32px;
+      align-items: start;
+    }
+
+    /* ── Step Panels ── */
+    .step-panel { display: none; }
+    .step-panel.active { display: block; animation: fadeSlideIn 0.4s ease; }
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .panel-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 36px;
+      box-shadow: 0 2px 20px rgba(26,15,5,0.07);
+      margin-bottom: 24px;
+    }
+    .panel-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--dark);
+      margin-bottom: 6px;
+    }
+    .panel-subtitle { font-size: 0.9rem; color: var(--text-light); margin-bottom: 28px; }
+
+    /* ── Step 1: Event Type ── */
+    .event-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    .event-card {
+      border: 2px solid #EDE5DA;
+      border-radius: 16px;
+      padding: 24px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .event-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(232,113,42,0.06), rgba(212,175,55,0.04));
+      opacity: 0; transition: opacity 0.25s;
+    }
+    .event-card:hover { border-color: var(--primary-light); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(232,113,42,0.12); }
+    .event-card:hover::before { opacity: 1; }
+    .event-card.selected { border-color: var(--primary); background: rgba(232,113,42,0.04); }
+    .event-card.selected::before { opacity: 1; }
+    .event-card .check {
+      position: absolute; top: 12px; right: 12px;
+      width: 22px; height: 22px; border-radius: 50%;
+      background: var(--primary); color: #fff;
+      display: none; align-items: center; justify-content: center;
+      font-size: 0.72rem; font-weight: 900;
+    }
+    .event-card.selected .check { display: flex; }
+    .event-emoji { font-size: 2.8rem; margin-bottom: 12px; display: block; }
+    .event-card h3 { font-size: 1rem; font-weight: 700; color: var(--dark); margin-bottom: 4px; }
+    .event-card p  { font-size: 0.8rem; color: var(--text-light); line-height: 1.5; }
+
+    /* ── Step 2: Event Details ── */
+    .details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .form-group { display: flex; flex-direction: column; gap: 8px; }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-label {
+      font-size: 0.82rem; font-weight: 700;
+      color: var(--text); letter-spacing: 0.3px;
+    }
+    .form-label .req { color: var(--primary); margin-left: 2px; }
+    .form-control-custom {
+      padding: 12px 16px;
+      border: 2px solid #EDE5DA;
+      border-radius: 10px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.92rem;
+      color: var(--text);
+      background: var(--cream);
+      outline: none;
+      transition: all 0.25s ease;
+      width: 100%;
+    }
+    .form-control-custom:focus { border-color: var(--primary); background: #fff; box-shadow: 0 0 0 3px rgba(232,113,42,0.1); }
+    .guest-slider-wrap { margin-top: 4px; }
+    .guest-number-display {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; font-weight: 700;
+      color: var(--primary); text-align: center;
+      margin-bottom: 8px;
+    }
+    .guest-number-display span { font-family: 'Nunito', sans-serif; font-size: 0.9rem; color: var(--text-light); font-weight: 400; }
+    input[type="range"] {
+      width: 100%; -webkit-appearance: none; appearance: none;
+      height: 6px; background: #EDE5DA; border-radius: 3px; outline: none;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none;
+      width: 22px; height: 22px; border-radius: 50%;
+      background: var(--primary); cursor: pointer;
+      box-shadow: 0 2px 8px rgba(232,113,42,0.4);
+      transition: transform 0.2s;
+    }
+    input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+    .range-labels { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-light); margin-top: 6px; }
+
+    /* ── Step 3: Dish Selection ── */
+    .category-tabs-builder {
+      display: flex; gap: 8px; flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+    .cat-tab {
+      padding: 8px 18px; border-radius: 50px;
+      font-size: 0.85rem; font-weight: 700;
+      cursor: pointer; border: 2px solid #EDE5DA;
+      background: var(--cream); color: var(--text-light);
+      transition: all 0.25s; font-family: 'Nunito', sans-serif;
+      position: relative;
+    }
+    .cat-tab:hover { border-color: var(--primary); color: var(--primary); }
+    .cat-tab.active { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: 0 4px 14px rgba(232,113,42,0.28); }
+    .cat-tab .cat-count {
+      position: absolute; top: -7px; right: -7px;
+      background: var(--dark); color: #fff;
+      width: 18px; height: 18px; border-radius: 50%;
+      font-size: 0.65rem; font-weight: 700;
+      display: none; align-items: center; justify-content: center;
+    }
+    .cat-tab .cat-count.show { display: flex; }
+
+    .dish-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+    }
+    .dish-card {
+      border: 2px solid #EDE5DA;
+      border-radius: 14px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      position: relative;
+      background: #fff;
+    }
+    .dish-card:hover { border-color: var(--primary-light); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(232,113,42,0.1); }
+    .dish-card.selected { border-color: var(--primary); background: rgba(232,113,42,0.03); }
+    .dish-card .check-overlay {
+      position: absolute; top: 10px; right: 10px;
+      width: 26px; height: 26px; border-radius: 50%;
+      background: var(--primary); color: #fff;
+      display: none; align-items: center; justify-content: center;
+      font-size: 0.8rem; font-weight: 900;
+      box-shadow: 0 3px 10px rgba(232,113,42,0.4);
+    }
+    .dish-card.selected .check-overlay { display: flex; }
+    .dish-img {
+      height: 110px; display: flex; align-items: center; justify-content: center;
+      font-size: 3rem; position: relative;
+    }
+    .dish-img.c-starter { background: linear-gradient(135deg,#fff5e8,#ffdeb8); }
+    .dish-img.c-main    { background: linear-gradient(135deg,#ffeee8,#ffc8b0); }
+    .dish-img.c-dessert { background: linear-gradient(135deg,#fce8ff,#f0b8ff); }
+    .dish-img.c-drink   { background: linear-gradient(135deg,#e8f8ff,#b8e8ff); }
+    .dish-img.c-special { background: linear-gradient(135deg,#fff8e8,#ffeab8); }
+    .dish-veg-dot {
+      position: absolute; bottom: 8px; left: 8px;
+      width: 16px; height: 16px; border-radius: 4px;
+      border: 2px solid #22C55E; background: rgba(34,197,94,0.1);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .dish-veg-dot::after { content:''; width:6px; height:6px; background:#22C55E; border-radius:50%; }
+    .dish-info { padding: 12px 14px; }
+    .dish-name { font-weight: 700; font-size: 0.88rem; color: var(--dark); margin-bottom: 4px; line-height: 1.3; }
+    .dish-price { font-size: 0.82rem; color: var(--primary); font-weight: 700; }
+    .dish-price span { font-weight: 400; color: var(--text-light); font-size: 0.75rem; }
+
+    /* ── Step 4: Review ── */
+    .review-table { width: 100%; border-collapse: collapse; }
+    .review-table th {
+      text-align: left; font-size: 0.75rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1.5px;
+      color: var(--text-light); padding: 8px 12px;
+      border-bottom: 2px solid #EDE5DA;
+    }
+    .review-table td {
+      padding: 14px 12px; font-size: 0.9rem;
+      border-bottom: 1px solid #F5EDE4; vertical-align: middle;
+    }
+    .review-table tr:last-child td { border-bottom: none; }
+    .review-emoji { font-size: 1.4rem; margin-right: 10px; }
+    .review-cat-badge {
+      display: inline-block; padding: 2px 10px;
+      background: rgba(232,113,42,0.1); color: var(--primary);
+      border-radius: 50px; font-size: 0.72rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .event-summary-box {
+      background: linear-gradient(135deg, rgba(232,113,42,0.07), rgba(212,175,55,0.04));
+      border: 1px solid rgba(232,113,42,0.18);
+      border-radius: 14px; padding: 20px 24px;
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 16px; margin-bottom: 24px;
+    }
+    .esb-item .esb-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-light); margin-bottom: 4px; }
+    .esb-item .esb-value { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--dark); }
+
+    /* ── Nav Buttons ── */
+    .step-nav {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 8px;
+    }
+    .btn-prev {
+      display: flex; align-items: center; gap: 8px;
+      padding: 12px 24px; border-radius: 50px;
+      border: 2px solid #EDE5DA; background: #fff;
+      color: var(--text); font-size: 0.9rem; font-weight: 700;
+      font-family: 'Nunito', sans-serif; cursor: pointer;
+      transition: all 0.25s;
+    }
+    .btn-prev:hover { border-color: var(--primary); color: var(--primary); }
+    .btn-next {
+      display: flex; align-items: center; gap: 8px;
+      padding: 12px 28px; border-radius: 50px;
+      background: var(--primary); color: #fff;
+      font-size: 0.9rem; font-weight: 700;
+      font-family: 'Nunito', sans-serif; cursor: pointer;
+      border: none; transition: all 0.25s;
+      box-shadow: 0 4px 18px rgba(232,113,42,0.3);
+    }
+    .btn-next:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 6px 22px rgba(232,113,42,0.4); }
+    .btn-next:disabled { background: #D0C4BB; box-shadow: none; cursor: not-allowed; transform: none; }
+
+    /* ══════════════════════════════════════
+       STICKY PRICE SUMMARY SIDEBAR
+    ══════════════════════════════════════ */
+    .price-sidebar {
+      position: sticky; top: 88px;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 4px 28px rgba(26,15,5,0.1);
+      overflow: hidden;
+    }
+    .sidebar-header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      padding: 22px 24px;
+      color: #fff;
+    }
+    .sidebar-header h3 { font-size: 1.1rem; margin-bottom: 2px; color: #fff; }
+    .sidebar-header p  { font-size: 0.8rem; color: rgba(255,255,255,0.7); }
+    .sidebar-body { padding: 20px 24px; }
+
+    .event-info-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 0; border-bottom: 1px solid #F5EDE4;
+      font-size: 0.85rem;
+    }
+    .event-info-row:last-of-type { border-bottom: none; }
+    .ei-label { color: var(--text-light); font-weight: 500; }
+    .ei-value { font-weight: 700; color: var(--dark); }
+
+    .price-divider { height: 1px; background: #EDE5DA; margin: 16px 0; }
+
+    .selected-dishes-list { margin-bottom: 16px; }
+    .selected-dish-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px 0; font-size: 0.83rem;
+      border-bottom: 1px dashed #F0E8DE;
+      animation: slideIn 0.2s ease;
+    }
+    @keyframes slideIn { from {opacity:0;transform:translateX(8px);} to {opacity:1;transform:translateX(0);} }
+    .selected-dish-row:last-child { border-bottom: none; }
+    .sdl-name { color: var(--text); font-weight: 600; display: flex; align-items: center; gap: 6px; }
+    .sdl-price { color: var(--primary); font-weight: 700; white-space: nowrap; }
+
+    .no-dishes-yet {
+      text-align: center; padding: 24px 0;
+      color: var(--text-light); font-size: 0.88rem;
+    }
+    .no-dishes-yet .nd-emoji { font-size: 2rem; margin-bottom: 8px; }
+
+    .price-total-box {
+      background: var(--cream-dark);
+      border-radius: 12px; padding: 16px 20px;
+      margin-bottom: 16px;
+    }
+    .ptb-row { display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 8px; }
+    .ptb-row .label { color: var(--text-light); }
+    .ptb-row .value { font-weight: 700; color: var(--text); }
+    .ptb-total { display: flex; justify-content: space-between; padding-top: 10px; border-top: 1px solid #DDD8D0; }
+    .ptb-total .label { font-weight: 700; color: var(--dark); font-size: 0.95rem; }
+    .ptb-total .value { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--primary); }
+
+    .proceed-btn {
+      width: 100%; padding: 14px;
+      background: var(--primary); color: #fff;
+      border: none; border-radius: 50px;
+      font-size: 0.95rem; font-weight: 700;
+      font-family: 'Nunito', sans-serif;
+      cursor: pointer; transition: all 0.25s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .proceed-btn:hover { background: var(--primary-dark); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(232,113,42,0.35); }
+    .proceed-btn:disabled { background: #D0C4BB; cursor: not-allowed; transform: none; box-shadow: none; }
+    .save-btn {
+      width: 100%; padding: 11px;
+      background: transparent; color: var(--primary);
+      border: 2px solid var(--primary); border-radius: 50px;
+      font-size: 0.88rem; font-weight: 700;
+      font-family: 'Nunito', sans-serif;
+      cursor: pointer; transition: all 0.25s; margin-top: 10px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .save-btn:hover { background: var(--primary); color: #fff; }
+
+    /* ── Serving Style Cards ── */
+    .serving-style-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 4px;
+    }
+    .serving-card {
+      border: 2px solid #EDE5DA;
+      border-radius: 16px;
+      padding: 22px 18px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+      background: #fff;
+    }
+    .serving-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      opacity: 0; transition: opacity 0.25s;
+    }
+    .serving-card.buffet::before    { background: linear-gradient(135deg, rgba(232,113,42,0.06), rgba(212,175,55,0.04)); }
+    .serving-card.banana-leaf::before { background: linear-gradient(135deg, rgba(34,197,94,0.07), rgba(22,163,74,0.04)); }
+    .serving-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(26,15,5,0.1); }
+    .serving-card.buffet:hover    { border-color: var(--primary-light); }
+    .serving-card.banana-leaf:hover { border-color: #86efac; }
+    .serving-card.selected { transform: translateY(-3px); }
+    .serving-card.buffet.selected    { border-color: var(--primary); box-shadow: 0 8px 28px rgba(232,113,42,0.18); }
+    .serving-card.banana-leaf.selected { border-color: #22C55E; box-shadow: 0 8px 28px rgba(34,197,94,0.18); }
+    .serving-card.selected::before { opacity: 1; }
+    .serving-check {
+      position: absolute; top: 12px; right: 12px;
+      width: 22px; height: 22px; border-radius: 50%;
+      display: none; align-items: center; justify-content: center;
+      font-size: 0.72rem; font-weight: 900; color: #fff;
+    }
+    .serving-card.buffet .serving-check    { background: var(--primary); }
+    .serving-card.banana-leaf .serving-check { background: #22C55E; }
+    .serving-card.selected .serving-check  { display: flex; }
+    .serving-emoji { font-size: 2.6rem; margin-bottom: 10px; display: block; }
+    .serving-card h3 { font-size: 1rem; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
+    .serving-card p  { font-size: 0.78rem; color: var(--text-light); line-height: 1.5; margin: 0; }
+    .serving-tag {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 3px 12px;
+      border-radius: 50px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .serving-card.buffet .serving-tag    { background: rgba(232,113,42,0.1); color: var(--primary); }
+    .serving-card.banana-leaf .serving-tag { background: rgba(34,197,94,0.1); color: #16a34a; }
+
+    /* Nav veg tag */
+    .nav-veg-tag {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: rgba(34,197,94,0.1); border: 1.5px solid rgba(34,197,94,0.35);
+      color: #16a34a; border-radius: 50px; padding: 4px 12px;
+      font-size: 0.73rem; font-weight: 700;
+    }
+    .nav-veg-tag .dot { width: 7px; height: 7px; background: #22c55e; border-radius: 50%; }
+
+    /* ── Success Modal ── */
+    .success-modal-overlay {
+      position: fixed; inset: 0; background: rgba(26,15,5,0.6);
+      z-index: 9999; display: none; align-items: center; justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+    .success-modal-overlay.show { display: flex; }
+    .success-modal {
+      background: #fff; border-radius: 24px;
+      padding: 48px 40px; text-align: center;
+      max-width: 460px; width: 90%;
+      animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1);
+      box-shadow: 0 24px 80px rgba(26,15,5,0.2);
+    }
+    @keyframes popIn { from {opacity:0;transform:scale(0.85);} to {opacity:1;transform:scale(1);} }
+    .success-icon { font-size: 4rem; margin-bottom: 16px; }
+    .success-modal h2 { font-size: 1.6rem; margin-bottom: 8px; color: var(--dark); }
+    .success-modal p  { color: var(--text-light); font-size: 0.95rem; margin-bottom: 28px; }
+    .success-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+    @media (max-width: 992px) {
+      .builder-layout { grid-template-columns: 1fr; }
+      .price-sidebar { position: static; }
+      .event-grid { grid-template-columns: repeat(2,1fr); }
+    }
+    @media (max-width: 600px) {
+      .event-grid { grid-template-columns: 1fr; }
+      .details-grid { grid-template-columns: 1fr; }
+      .dish-grid { grid-template-columns: repeat(2,1fr); }
+      .event-summary-box { grid-template-columns: 1fr; }
+      .step-item-bar .step-label-wrap { display: none; }
+      .panel-card { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ NAVBAR ══ -->
+  <nav class="navbar scrolled" id="navbar" data-always-scrolled="true" style="position:sticky;top:0;z-index:1000;background:rgba(255,248,240,0.98);backdrop-filter:blur(16px);box-shadow:0 2px 24px rgba(26,15,5,0.1);">
+    <div class="container navbar-inner">
+      <a href="/" class="navbar-logo" style="color:var(--dark);">Menu<span>Craft</span></a>
+      <ul class="navbar-links">
+        <li><a href="/#services">Services</a></li>
+        <li><a href="/menu">Menu</a></li>
+        <li><a href="/custom-menu" style="color:var(--primary);">Custom Menu</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+      <div class="navbar-actions" style="gap:10px;">
+        <span class="nav-veg-tag"><span class="dot"></span> 100% Pure Veg</span>
+        <a href="/auth" class="btn btn-outline">Login</a>
+        <a href="/book" class="btn btn-primary">Book Now</a>
+      </div>
+      <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+    </div>
+  </nav>
+
+  <!-- ══ PAGE HERO ══ -->
+  <section class="page-hero">
+    <div class="container">
+      <div class="breadcrumb-bar">
+        <a href="/">Home</a> <span>›</span>
         <span style="color:rgba(255,255,255,0.55);">Custom Menu Builder</span>
       </div>
       <div class="pure-veg-hero-badge"><span class="dot"></span> 100% Pure Vegetarian</div>
@@ -953,7 +1698,7 @@
       <h2>Menu Saved!</h2>
       <p>Your custom menu has been saved. Ready to book your event? Head to the booking page to confirm your catering order.</p>
       <div class="success-actions">
-        <a href="book.html" class="btn btn-primary">📅 Proceed to Booking</a>
+        <a href="/book" class="btn btn-primary">📅 Proceed to Booking</a>
         <button class="btn btn-outline" onclick="closeModal()">Keep Editing</button>
       </div>
     </div>
@@ -1052,13 +1797,69 @@
   // ══════════════════════════════════════
   // STEP 3: DISH SELECTION
   // ══════════════════════════════════════
+  // ── API base ──
+  const API_BASE = 'http://localhost:5000';
+  let ALL_DISHES = [];
+
+  // ── Load dishes from Flask on page load ──
+  async function loadDishes() {
+    try {
+      const res  = await fetch(API_BASE + '/api/dishes');
+      ALL_DISHES = await res.json();
+      renderAllDishGrids();
+      document.getElementById('dishesLoading').style.display = 'none';
+      const activeCat = document.querySelector('.cat-tab.active')?.dataset.cat || 'starter';
+      const grid = document.getElementById('grid-' + activeCat);
+      if (grid) grid.style.display = '';
+    } catch(e) {
+      document.getElementById('dishesLoading').innerHTML =
+        '<p style="color:var(--text-light);padding:20px;text-align:center;">Could not load dishes.<br/>Make sure Flask is running at localhost:5000</p>';
+    }
+  }
+
+  // ── Render all dish grids from fetched data ──
+  function renderAllDishGrids() {
+    ['starter','main','bread','rice','dessert','drink','special'].forEach(cat => {
+      const grid   = document.getElementById('grid-' + cat);
+      const dishes = ALL_DISHES.filter(d => d.category === cat);
+      const cnt    = document.getElementById('cnt-' + cat);
+      if (cnt) cnt.textContent = dishes.length;
+      if (!grid) return;
+      if (!dishes.length) {
+        grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:32px;color:var(--text-light);font-size:0.9rem;">No dishes in this category yet.</div>';
+        return;
+      }
+      const catClass = {'bread':'c-main','rice':'c-main','special':'c-special'}[cat] || ('c-'+cat);
+      grid.innerHTML = dishes.map(d => `
+        <div class="dish-card" data-id="d${d.id}" data-cat="${cat}"
+          data-name="${d.name.replace(/"/g,'&quot;')}" data-price="${d.price}" data-emoji="${d.emoji}"
+          onclick="toggleDish(this)">
+          <div class="dish-img ${catClass}">
+            ${d.image_url
+              ? `<img src="${d.image_url}" style="width:100%;height:100%;object-fit:cover;" />`
+              : d.emoji}
+            <div class="dish-veg-dot"></div>
+          </div>
+          <div class="check-overlay">✔</div>
+          <div class="dish-info">
+            <div class="dish-name">${d.name}</div>
+            ${d.description ? `<div style="font-size:0.72rem;color:var(--text-light);margin-bottom:3px;">${d.description}</div>` : ''}
+            <div class="dish-price">₹${d.price} <span>/ head</span></div>
+          </div>
+        </div>`).join('');
+    });
+  }
+
   function switchCat(tab) {
     document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
     tab.classList.add('active');
     const cat = tab.dataset.cat;
-    document.querySelectorAll('[id^="grid-"]').forEach(g => g.style.display = 'none');
-    document.getElementById('grid-' + cat).style.display = 'grid';
+    ['starter','main','bread','rice','dessert','drink','special'].forEach(c => {
+      const g = document.getElementById('grid-'+c);
+      if (g) g.style.display = c === cat ? '' : 'none';
+    });
   }
+
 
   function toggleDish(card) {
     const id    = card.dataset.id;
@@ -1210,12 +2011,13 @@
       dishes:  selectedDishes
     };
     sessionStorage.setItem('menucraft_order', JSON.stringify(menuData));
-    window.location.href = 'book.html';
+    window.location.href = '/book';
   }
 
   // Set min date to today
   const today = new Date().toISOString().split('T')[0];
   document.getElementById('eventDate').min = today;
-  </script>
+    window.addEventListener('DOMContentLoaded', loadDishes);
+</script>
 </body>
 </html>

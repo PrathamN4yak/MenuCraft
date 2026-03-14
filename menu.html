@@ -272,18 +272,18 @@
   <!-- ══ NAVBAR ══ -->
   <nav class="navbar scrolled" id="navbar" data-always-scrolled="true" style="position:sticky;top:0;z-index:1000;background:rgba(255,248,240,0.98);backdrop-filter:blur(16px);box-shadow:0 2px 24px rgba(26,15,5,0.1);">
     <div class="container navbar-inner">
-      <a href="index.html" class="navbar-logo" style="color:var(--dark);">Menu<span>Craft</span></a>
+      <a href="/" class="navbar-logo" style="color:var(--dark);">Menu<span>Craft</span></a>
       <ul class="navbar-links">
-        <li><a href="index.html#services">Services</a></li>
-        <li><a href="menu.html" style="color:var(--primary);">Menu</a></li>
-        <li><a href="custom-menu.html">Custom Menu</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="contact.html">Contact</a></li>
+        <li><a href="/#services">Services</a></li>
+        <li><a href="/menu" style="color:var(--primary);">Menu</a></li>
+        <li><a href="/custom-menu">Custom Menu</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/contact">Contact</a></li>
       </ul>
       <div class="navbar-actions" style="gap:10px;">
         <span class="nav-veg-tag"><span class="dot"></span> 100% Pure Veg</span>
-        <a href="auth.html" class="btn btn-outline">Login</a>
-        <a href="book.html" class="btn btn-primary">Book Now</a>
+        <a href="/auth" class="btn btn-outline">Login</a>
+        <a href="/book" class="btn btn-primary">Book Now</a>
       </div>
       <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
     </div>
@@ -293,7 +293,7 @@
   <section class="page-hero">
     <div class="container">
       <div class="breadcrumb-bar">
-        <a href="index.html">Home</a> <span>›</span>
+        <a href="/">Home</a> <span>›</span>
         <span style="color:rgba(255,255,255,0.55);">Our Menu</span>
       </div>
       <div class="pure-veg-hero-badge"><span class="dot"></span> 100% Pure Vegetarian</div>
@@ -329,239 +329,23 @@
            Admin Panel will add / edit / delete combos.
            DB model: ComboPackage(id, name, tagline, category, price_per_head, dishes JSON, is_popular) -->
 
-      <div class="combos-grid" id="combosGrid">
+      <!-- Loading state -->
+      <div id="menuLoading" style="text-align:center;padding:60px 24px;">
+        <div style="font-size:2.5rem;margin-bottom:14px;animation:spin 1s linear infinite;display:inline-block;">🍽️</div>
+        <p style="color:var(--text-light);font-weight:600;">Loading menu packages...</p>
+      </div>
 
-        <!-- 1. Simple South Indian Dinner -->
-        <div class="combo-card reveal" data-category="south dinner" data-name="simple south indian dinner">
-          <div class="combo-header theme-south">
-            <span class="combo-tag south">South Indian</span>
-            <div class="combo-emoji-row">🍌</div>
-            <div class="combo-name">Simple South Indian Dinner</div>
-            <div class="combo-tagline">Classic homestyle South Indian meal — comforting and complete</div>
-          </div>
-          <div class="combo-body">
-            <div class="serves-badge">👥 Suitable for all event sizes</div>
-            <div class="dishes-label">What's included</div>
-            <div class="dish-items">
-              <span class="dish-pill"><span class="pill-dot"></span>Steamed Rice</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Sambar</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Rasam</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Kootu</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Papad</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Pickle</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Salad</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Sweet Pongal</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Buttermilk</span>
-            </div>
-          </div>
-          <div class="combo-footer">
-            <div class="price-block">
-              <div class="price-label">Starting from</div>
-              <div class="price-value">₹350</div>
-              <div class="price-sub">per head</div>
-            </div>
-            <div class="combo-actions">
-              <button class="btn-details" onclick="showDetails('simple-south-dinner')">Details</button>
-              <button class="btn-book-combo" onclick="bookCombo('Simple South Indian Dinner',350)">Book This →</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- 2. Grand South Indian Feast -->
-        <div class="combo-card reveal" data-category="south dinner wedding" data-name="grand south indian feast">
-          <div class="combo-header theme-wedding" style="position:relative;">
-            <div class="popular-badge">⭐ Most Popular</div>
-            <span class="combo-tag wedding" style="margin-top:22px;display:inline-block;">Wedding Special</span>
-            <div class="combo-emoji-row">🎊</div>
-            <div class="combo-name">Grand South Indian Feast</div>
-            <div class="combo-tagline">Full traditional spread perfect for weddings & big functions</div>
-          </div>
-          <div class="combo-body">
-            <div class="serves-badge">👥 Best for 100+ guests</div>
-            <div class="dishes-label">What's included</div>
-            <div class="dish-items">
-              <span class="dish-pill"><span class="pill-dot"></span>Welcome Drink</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Vadai</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Steamed Rice</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Sambar</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Rasam</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Avial</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Kootu</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Poriyal</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Appalam</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Pickle</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Payasam</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Buttermilk</span>
-            </div>
-          </div>
-          <div class="combo-footer">
-            <div class="price-block">
-              <div class="price-label">Starting from</div>
-              <div class="price-value">₹650</div>
-              <div class="price-sub">per head</div>
-            </div>
-            <div class="combo-actions">
-              <button class="btn-details" onclick="showDetails('grand-south-feast')">Details</button>
-              <button class="btn-book-combo" onclick="bookCombo('Grand South Indian Feast',650)">Book This →</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- 3. North Indian Lunch Thali -->
-        <div class="combo-card reveal" data-category="north lunch" data-name="north indian lunch thali">
-          <div class="combo-header theme-north">
-            <span class="combo-tag north">North Indian</span>
-            <div class="combo-emoji-row">🫓</div>
-            <div class="combo-name">North Indian Lunch Thali</div>
-            <div class="combo-tagline">Rich, flavourful North Indian lunch spread</div>
-          </div>
-          <div class="combo-body">
-            <div class="serves-badge">👥 Great for corporate & birthday</div>
-            <div class="dishes-label">What's included</div>
-            <div class="dish-items">
-              <span class="dish-pill"><span class="pill-dot"></span>Dal Makhani</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Paneer Butter Masala</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Jeera Rice</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Naan / Roti</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Raita</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Salad</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Pickle</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Gulab Jamun</span>
-            </div>
-          </div>
-          <div class="combo-footer">
-            <div class="price-block">
-              <div class="price-label">Starting from</div>
-              <div class="price-value">₹480</div>
-              <div class="price-sub">per head</div>
-            </div>
-            <div class="combo-actions">
-              <button class="btn-details" onclick="showDetails('north-lunch')">Details</button>
-              <button class="btn-book-combo" onclick="bookCombo('North Indian Lunch Thali',480)">Book This →</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- 4. Evening Snack Package -->
-        <div class="combo-card reveal" data-category="snack" data-name="evening snack package">
-          <div class="combo-header theme-snack">
-            <span class="combo-tag snack">Snack Package</span>
-            <div class="combo-emoji-row">☕</div>
-            <div class="combo-name">Evening Snack Package</div>
-            <div class="combo-tagline">Perfect for corporate meetings, kitty parties & get-togethers</div>
-          </div>
-          <div class="combo-body">
-            <div class="serves-badge">👥 Ideal for 20–200 guests</div>
-            <div class="dishes-label">What's included</div>
-            <div class="dish-items">
-              <span class="dish-pill"><span class="pill-dot"></span>Masala Chai</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Filter Coffee</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Samosa</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Bread Pakora</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Chutney</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Biscuits</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Fruit Platter</span>
-            </div>
-          </div>
-          <div class="combo-footer">
-            <div class="price-block">
-              <div class="price-label">Starting from</div>
-              <div class="price-value">₹180</div>
-              <div class="price-sub">per head</div>
-            </div>
-            <div class="combo-actions">
-              <button class="btn-details" onclick="showDetails('evening-snack')">Details</button>
-              <button class="btn-book-combo" onclick="bookCombo('Evening Snack Package',180)">Book This →</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- 5. Premium Wedding Banquet -->
-        <div class="combo-card reveal" data-category="wedding dinner" data-name="premium wedding banquet">
-          <div class="combo-header theme-wedding" style="position:relative;">
-            <div class="popular-badge">👑 Premium</div>
-            <span class="combo-tag wedding" style="margin-top:22px;display:inline-block;">Wedding Banquet</span>
-            <div class="combo-emoji-row">💍</div>
-            <div class="combo-name">Premium Wedding Banquet</div>
-            <div class="combo-tagline">An extravagant multi-course celebration feast</div>
-          </div>
-          <div class="combo-body">
-            <div class="serves-badge">👥 Best for 200+ guests</div>
-            <div class="dishes-label">What's included</div>
-            <div class="dish-items">
-              <span class="dish-pill"><span class="pill-dot"></span>Welcome Mocktails</span>
-              <span class="dish-pill"><span class="pill-dot"></span>3 Starters</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Soup</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Paneer Dish</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Dal</span>
-              <span class="dish-pill"><span class="pill-dot"></span>2 Sabzi</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Biryani / Pulao</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Naan & Rice</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Raita</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Papad & Pickle</span>
-              <span class="dish-pill"><span class="pill-dot"></span>2 Desserts</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Eggless Cake</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Buttermilk</span>
-            </div>
-          </div>
-          <div class="combo-footer">
-            <div class="price-block">
-              <div class="price-label">Starting from</div>
-              <div class="price-value">₹950</div>
-              <div class="price-sub">per head</div>
-            </div>
-            <div class="combo-actions">
-              <button class="btn-details" onclick="showDetails('premium-wedding')">Details</button>
-              <button class="btn-book-combo" onclick="bookCombo('Premium Wedding Banquet',950)">Book This →</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- 6. Corporate Lunch Box -->
-        <div class="combo-card reveal" data-category="north south lunch" data-name="corporate lunch box">
-          <div class="combo-header theme-dinner">
-            <span class="combo-tag dinner">Corporate</span>
-            <div class="combo-emoji-row">🏢</div>
-            <div class="combo-name">Corporate Lunch Box</div>
-            <div class="combo-tagline">Neat, hygienic, and satisfying — perfect for office events</div>
-          </div>
-          <div class="combo-body">
-            <div class="serves-badge">👥 Minimum 30 boxes</div>
-            <div class="dishes-label">What's included</div>
-            <div class="dish-items">
-              <span class="dish-pill"><span class="pill-dot"></span>Rice</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Dal Tadka</span>
-              <span class="dish-pill"><span class="pill-dot"></span>1 Sabzi</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Chapati (3)</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Salad</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Pickle</span>
-              <span class="dish-pill"><span class="pill-dot"></span>Sweet</span>
-            </div>
-          </div>
-          <div class="combo-footer">
-            <div class="price-block">
-              <div class="price-label">Starting from</div>
-              <div class="price-value">₹220</div>
-              <div class="price-sub">per box</div>
-            </div>
-            <div class="combo-actions">
-              <button class="btn-details" onclick="showDetails('corporate-lunch')">Details</button>
-              <button class="btn-book-combo" onclick="bookCombo('Corporate Lunch Box',220)">Book This →</button>
-            </div>
-          </div>
-        </div>
-
-      </div><!-- end combos-grid -->
+      <div class="combos-grid" id="combosGrid" style="display:none;"></div>
 
       <div class="no-results" id="noResults">
         <div class="nr-emoji">🔍</div>
         <h3>No packages found</h3>
-        <p>Try a different filter. Or <a href="custom-menu.html" style="color:var(--primary);font-weight:600;">build a custom menu →</a></p>
+        <p>Try a different filter. Or <a href="/custom-menu" style="color:var(--primary);font-weight:600;">build a custom menu →</a></p>
       </div>
 
       <div style="text-align:center;margin-top:56px;" class="reveal">
         <p style="color:var(--text-light);margin-bottom:16px;">Can't find the right combo? Build your own!</p>
-        <a href="custom-menu.html" class="btn btn-primary" style="font-size:1rem;padding:14px 32px;">🧩 Build Your Custom Menu</a>
+        <a href="/custom-menu" class="btn btn-primary" style="font-size:1rem;padding:14px 32px;">🧩 Build Your Custom Menu</a>
       </div>
 
     </div>
@@ -597,51 +381,76 @@
   <script src="static/js/main.js"></script>
   <script>
   // ══════════════════════════════════════
-  // COMBO DATA — mirrors backend DB
-  // GET /api/combos fetches this from DB
-  // Admin panel CRUD controls this data
-  // DB Model: ComboPackage(id, name, tagline,
-  //   category, price_per_head, dishes JSON,
-  //   is_popular, price_sub)
+  // API_BASE — change to your server URL
+  // when Flask is running locally:
+  const API_BASE = 'http://localhost:5000';
   // ══════════════════════════════════════
-  const COMBOS = {
-    'simple-south-dinner': {
-      name:'Simple South Indian Dinner', tag:'South Indian', tagClass:'south',
-      tagline:'Classic homestyle South Indian meal — comforting and complete',
-      price:350, priceSub:'per head',
-      dishes:['Steamed Rice','Sambar','Rasam','Kootu','Papad','Pickle','Salad','Sweet Pongal','Buttermilk']
-    },
-    'grand-south-feast': {
-      name:'Grand South Indian Feast', tag:'Wedding Special', tagClass:'wedding',
-      tagline:'Full traditional spread perfect for weddings & big functions',
-      price:650, priceSub:'per head',
-      dishes:['Welcome Drink','Vadai','Steamed Rice','Sambar','Rasam','Avial','Kootu','Poriyal','Appalam','Pickle','Payasam','Buttermilk']
-    },
-    'north-lunch': {
-      name:'North Indian Lunch Thali', tag:'North Indian', tagClass:'north',
-      tagline:'Rich, flavourful North Indian lunch spread',
-      price:480, priceSub:'per head',
-      dishes:['Dal Makhani','Paneer Butter Masala','Jeera Rice','Naan / Roti','Raita','Salad','Pickle','Gulab Jamun']
-    },
-    'evening-snack': {
-      name:'Evening Snack Package', tag:'Snack Package', tagClass:'snack',
-      tagline:'Perfect for corporate meetings, kitty parties & get-togethers',
-      price:180, priceSub:'per head',
-      dishes:['Masala Chai','Filter Coffee','Samosa','Bread Pakora','Chutney','Biscuits','Fruit Platter']
-    },
-    'premium-wedding': {
-      name:'Premium Wedding Banquet', tag:'Wedding Banquet', tagClass:'wedding',
-      tagline:'An extravagant multi-course celebration feast',
-      price:950, priceSub:'per head',
-      dishes:['Welcome Mocktails','3 Starters','Soup','Paneer Dish','Dal','2 Sabzi','Biryani / Pulao','Naan & Rice','Raita','Papad & Pickle','2 Desserts','Eggless Cake','Buttermilk']
-    },
-    'corporate-lunch': {
-      name:'Corporate Lunch Box', tag:'Corporate', tagClass:'dinner',
-      tagline:'Neat, hygienic, and satisfying — perfect for office events',
-      price:220, priceSub:'per box',
-      dishes:['Rice','Dal Tadka','1 Sabzi','Chapati (3)','Salad','Pickle','Sweet']
+
+  // All combo data lives here after fetch
+  let ALL_COMBOS = [];
+
+  // ── Fetch combos from Flask on page load ──
+  async function loadCombos() {
+    try {
+      const res  = await fetch(API_BASE + '/api/combos');
+      const data = await res.json();
+      ALL_COMBOS = data;
+      renderCombos(data);
+    } catch(e) {
+      document.getElementById('menuLoading').innerHTML =
+        '<p style="color:var(--text-light);">Could not load menu. Make sure Flask is running.</p>';
     }
-  };
+  }
+
+  // ── Render combo cards dynamically ──
+  function renderCombos(combos) {
+    document.getElementById('menuLoading').style.display = 'none';
+    const grid = document.getElementById('combosGrid');
+    grid.style.display = '';
+
+    if (!combos.length) {
+      document.getElementById('noResults').classList.add('show');
+      return;
+    }
+    document.getElementById('noResults').classList.remove('show');
+
+    grid.innerHTML = combos.map(c => {
+      const dishes = Array.isArray(c.dishes) ? c.dishes : [];
+      const dishNames = dishes.map(d => typeof d === 'string' ? d : d.name).filter(Boolean);
+
+      return `
+      <div class="combo-card reveal" data-category="${c.category}" data-name="${c.name.toLowerCase()}">
+        <div class="combo-header ${c.theme}" ${c.is_popular ? 'style="position:relative;"' : ''}>
+          ${c.is_popular ? `<div class="popular-badge">${c.popular_label}</div>` : ''}
+          <span class="combo-tag ${c.category.split(' ')[0]}" ${c.is_popular ? 'style="margin-top:22px;display:inline-block;"' : ''}>${c.category.split(' ')[0].charAt(0).toUpperCase()+c.category.split(' ')[0].slice(1)}</span>
+          <div class="combo-emoji-row">${c.emoji}</div>
+          <div class="combo-name">${c.name}</div>
+          <div class="combo-tagline">${c.tagline}</div>
+        </div>
+        <div class="combo-body">
+          <div class="serves-badge">👥 ${c.serves_note || 'Suitable for all sizes'}</div>
+          <div class="dishes-label">What's included</div>
+          <div class="dish-items">
+            ${dishNames.map(d => `<span class="dish-pill"><span class="pill-dot"></span>${d}</span>`).join('')}
+          </div>
+        </div>
+        <div class="combo-footer">
+          <div class="price-block">
+            <div class="price-label">Starting from</div>
+            <div class="price-value">₹${c.price}</div>
+            <div class="price-sub">${c.price_sub}</div>
+          </div>
+          <div class="combo-actions">
+            <button class="btn-details" onclick="showDetails(${c.id})">Details</button>
+            <button class="btn-book-combo" onclick="bookCombo('${c.name.replace(/'/g,"\'")}',${c.price})">Book This →</button>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+
+    // Re-trigger scroll reveals
+    if (window.revealElements) window.revealElements();
+  }
 
   // ── Filter & Search ──
   function filterCombos(btn) {
@@ -654,29 +463,27 @@
     applyFilters(activeFilter, val);
   }
   function applyFilters(category, searchTerm) {
-    const cards = document.querySelectorAll('.combo-card');
-    const term  = searchTerm.toLowerCase().trim();
-    let visible = 0;
-    cards.forEach(card => {
-      const cats = card.dataset.category || '';
-      const name = card.dataset.name     || '';
-      const ok = (category === 'all' || cats.includes(category)) &&
-                 (!term || name.includes(term) || cats.includes(term));
-      card.style.display = ok ? '' : 'none';
-      if (ok) visible++;
+    const term = searchTerm.toLowerCase().trim();
+    const filtered = ALL_COMBOS.filter(c => {
+      const matchCat    = category === 'all' || c.category.includes(category);
+      const matchSearch = !term || c.name.toLowerCase().includes(term) || c.category.includes(term);
+      return matchCat && matchSearch;
     });
-    document.getElementById('noResults').classList.toggle('show', visible === 0);
+    renderCombos(filtered);
   }
 
   // ── Detail Modal ──
   function showDetails(id) {
-    const c = COMBOS[id]; if (!c) return;
-    document.getElementById('modalTag').innerHTML     = `<span style="display:inline-block;padding:3px 12px;background:rgba(232,113,42,0.12);color:var(--primary);border-radius:50px;font-size:0.72rem;font-weight:700;text-transform:uppercase;">${c.tag}</span>`;
-    document.getElementById('modalTitle').textContent   = c.name;
-    document.getElementById('modalTagline').textContent = c.tagline;
-    document.getElementById('modalPrice').textContent   = '₹' + c.price;
-    document.getElementById('modalPriceSub').textContent = c.priceSub;
-    document.getElementById('modalDishList').innerHTML  = c.dishes.map(d =>
+    const c = ALL_COMBOS.find(x => x.id === id);
+    if (!c) return;
+    const dishes = Array.isArray(c.dishes) ? c.dishes : [];
+    const dishNames = dishes.map(d => typeof d === 'string' ? d : d.name).filter(Boolean);
+    document.getElementById('modalTag').innerHTML      = `<span style="display:inline-block;padding:3px 12px;background:rgba(232,113,42,0.12);color:var(--primary);border-radius:50px;font-size:0.72rem;font-weight:700;text-transform:uppercase;">${c.category}</span>`;
+    document.getElementById('modalTitle').textContent    = c.name;
+    document.getElementById('modalTagline').textContent  = c.tagline;
+    document.getElementById('modalPrice').textContent    = '₹' + c.price;
+    document.getElementById('modalPriceSub').textContent = c.price_sub;
+    document.getElementById('modalDishList').innerHTML   = dishNames.map(d =>
       `<div class="modal-dish-item"><div class="veg-sq"></div><span>${d}</span></div>`).join('');
     document.getElementById('modalBookBtn').onclick = () => { closeModalBtn(); bookCombo(c.name, c.price); };
     document.getElementById('detailModal').classList.add('show');
@@ -691,8 +498,16 @@
       event:null, serving:null, date:null, time:null,
       venue:null, notes:null, guests:50, dishes:{}
     }));
-    window.location.href = 'book.html';
+    window.location.href = '/book';
   }
+
+  // ── Spin animation ──
+  const style = document.createElement('style');
+  style.textContent = '@keyframes spin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}';
+  document.head.appendChild(style);
+
+  // ── Start ──
+  window.addEventListener('DOMContentLoaded', loadCombos);
   </script>
 </body>
 </html>
