@@ -496,12 +496,17 @@
     </nav>
 
     <div class="admin-footer">
-      <div class="admin-user">
-        <div class="au-avatar">A</div>
-        <div>
-          <div class="au-name">Admin</div>
-          <div class="au-role">admin@menucraft.in</div>
+      <div class="admin-user" style="flex-direction:column;gap:8px;">
+        <div style="display:flex;align-items:center;gap:10px;width:100%;">
+          <div class="au-avatar">A</div>
+          <div>
+            <div class="au-name">Admin</div>
+            <div class="au-role">MenuCraft Admin</div>
+          </div>
         </div>
+        <button onclick="adminLogout()" style="width:100%;padding:7px;border-radius:7px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);color:#FCA5A5;font-family:Nunito,sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.background='rgba(239,68,68,0.25)'" onmouseout="this.style.background='rgba(239,68,68,0.1)'">
+          🚪 Logout
+        </button>
       </div>
     </div>
   </aside>
@@ -536,27 +541,27 @@
         <div class="stats-grid">
           <div class="stat-card orange">
             <div class="sc-icon">📋</div>
-            <div class="sc-val">12</div>
+            <div class="sc-val" id="sc-orders">—</div>
             <div class="sc-lbl">Total Orders</div>
-            <div class="sc-trend up">↑ 3 this week</div>
+            <div class="sc-trend up" id="sc-orders-trend"></div>
           </div>
           <div class="stat-card green">
             <div class="sc-icon">💰</div>
-            <div class="sc-val">₹8.4L</div>
+            <div class="sc-val" id="sc-revenue">—</div>
             <div class="sc-lbl">Total Revenue</div>
-            <div class="sc-trend up">↑ ₹1.2L this month</div>
+            <div class="sc-trend up" id="sc-revenue-trend"></div>
           </div>
           <div class="stat-card blue">
             <div class="sc-icon">👥</div>
-            <div class="sc-val">38</div>
+            <div class="sc-val" id="sc-customers">—</div>
             <div class="sc-lbl">Total Customers</div>
-            <div class="sc-trend up">↑ 5 new this month</div>
+            <div class="sc-trend up" id="sc-customers-trend"></div>
           </div>
           <div class="stat-card red">
             <div class="sc-icon">⏳</div>
-            <div class="sc-val">2</div>
+            <div class="sc-val" id="sc-pending">—</div>
             <div class="sc-lbl">Pending Orders</div>
-            <div class="sc-trend warn">⚠ Action needed</div>
+            <div class="sc-trend warn" id="sc-pending-trend"></div>
           </div>
         </div>
 
@@ -981,13 +986,7 @@ let COMBOS = [
   { id:6, name:'Corporate Lunch Box',        tagline:'Neat, hygienic for office events',       category:'north south lunch', price:220, priceSub:'per box', theme:'theme-dinner', emoji:'🏢', serves:'Minimum 30 boxes', isPopular:false, popularLabel:'', dishes:['Rice','Dal Tadka','1 Sabzi','Chapati (3)','Salad','Pickle','Sweet'] },
 ];
 
-let ORDERS = [
-  { id:1, ref:'MC-847291', customer:'Ravi Kumar',   email:'ravi@example.com',   phone:'9876543210', package:'Grand South Indian Feast',   event:'Wedding',   date:'2026-03-25', guests:200, total:'₹1,30,000', status:'confirmed' },
-  { id:2, ref:'MC-523841', customer:'Priya Sharma', email:'priya@example.com',  phone:'9123456789', package:'North Indian Lunch Thali',    event:'Corporate', date:'2026-03-18', guests:80,  total:'₹38,400',   status:'pending' },
-  { id:3, ref:'MC-301928', customer:'Suresh Nair',  email:'suresh@example.com', phone:'9988776655', package:'Evening Snack Package',       event:'Birthday',  date:'2026-03-15', guests:50,  total:'₹9,000',    status:'pending' },
-  { id:4, ref:'MC-112233', customer:'Meena Reddy',  email:'meena@example.com',  phone:'9871234567', package:'Premium Wedding Banquet',     event:'Wedding',   date:'2026-02-28', guests:300, total:'₹2,85,000', status:'delivered' },
-  { id:5, ref:'MC-445566', customer:'Karthik B',    email:'karthik@example.com',phone:'9900001111', package:'Corporate Lunch Box',         event:'Corporate', date:'2026-02-14', guests:60,  total:'₹13,200',   status:'delivered' },
-];
+let ORDERS = []; // loaded from GET /api/admin/orders
 
 // ══════════════════════════════════════
 // INDIVIDUAL DISHES DATA
@@ -1032,13 +1031,7 @@ const CATMETA = {
   special:  { label:'⭐ Special',       color:'rgba(212,175,55,0.15)',  border:'rgba(212,175,55,0.3)'  },
 };
 
-const CUSTOMERS = [
-  { name:'Ravi Kumar',   email:'ravi@example.com',    phone:'9876543210', bookings:3, spent:'₹1,77,400', joined:'Jan 2026' },
-  { name:'Priya Sharma', email:'priya@example.com',   phone:'9123456789', bookings:1, spent:'₹38,400',   joined:'Feb 2026' },
-  { name:'Suresh Nair',  email:'suresh@example.com',  phone:'9988776655', bookings:1, spent:'₹9,000',    joined:'Mar 2026' },
-  { name:'Meena Reddy',  email:'meena@example.com',   phone:'9871234567', bookings:2, spent:'₹3,20,000', joined:'Nov 2025' },
-  { name:'Karthik B',    email:'karthik@example.com', phone:'9900001111', bookings:2, spent:'₹35,700',   joined:'Dec 2025' },
-];
+const CUSTOMERS = []; // loaded from GET /api/admin/customers
 
 let nextId = 7;
 let deletingId = null;
@@ -1046,9 +1039,12 @@ let deletingId = null;
 // ══════════════════════════════════════
 // INIT
 // ══════════════════════════════════════
-const API_BASE = 'http://localhost:5000';
+const API_BASE = ''; // relative URLs work in both local and production
 
-window.addEventListener('DOMContentLoaded', () => {
+// Check admin session on load
+window.addEventListener('DOMContentLoaded', async () => {
+  const check = await fetch('/api/admin/check').then(r=>r.json()).catch(()=>({is_admin:false}));
+  if (!check.is_admin) { window.location.href = '/admin'; return; }
   loadAllData();
 });
 
@@ -1062,6 +1058,17 @@ async function fetchOrders() {
     ORDERS = await res.json();
   } catch(e) { console.warn('Orders fetch failed:', e); }
   renderOverviewOrders(); renderAllOrders(ORDERS); updatePendingBadge();
+  // Update stat cards
+  const pending   = ORDERS.filter(o => o.status === 'Pending').length;
+  const revenue   = ORDERS.reduce((s,o) => s + (o.total||0), 0);
+  const scOrders  = document.getElementById('sc-orders');
+  const scRev     = document.getElementById('sc-revenue');
+  const scPending = document.getElementById('sc-pending');
+  if (scOrders)  scOrders.textContent  = ORDERS.length;
+  if (scRev)     scRev.textContent     = revenue > 0 ? '₹' + (revenue/100000).toFixed(1) + 'L' : '₹0';
+  if (scPending) scPending.textContent = pending;
+  const pt = document.getElementById('sc-pending-trend');
+  if (pt) pt.textContent = pending > 0 ? '⚠ Action needed' : '✅ All clear';
 }
 async function fetchCombos() {
   try {
@@ -1085,6 +1092,8 @@ async function fetchCustomers() {
     const res  = await fetch(API_BASE + '/api/admin/customers');
     const data = await res.json();
     renderCustomers(data);
+    const scCust = document.getElementById('sc-customers');
+    if (scCust) scCust.textContent = data.length;
   } catch(e) { renderCustomers(CUSTOMERS); }
 }
 
@@ -1515,7 +1524,7 @@ function showToast(msg, type='success') {
     }
     grid.innerHTML = list.map(d => {
       const cat = CATMETA[d.category] || CATMETA.special;
-      return '<div style="background:var(--ad-card);border-radius:12px;overflow:hidden;border:1px solid var(--ad-border);transition:border-color 0.2s;" onmouseover="this.style.borderColor=\'rgba(232,113,42,0.35)\'" onmouseout="this.style.borderColor=\'var(--ad-border)\'">'
+      return '<div style="background:var(--ad-card);border-radius:12px;overflow:hidden;border:1px solid var(--ad-border);transition:border-color 0.2s;" onmouseover="this.style.borderColor=&quot;rgba(232,113,42,0.35)&quot;" onmouseout="this.style.borderColor=&quot;var(--ad-border)&quot;">'
         + '<div style="height:110px;background:' + cat.color + ';display:flex;align-items:center;justify-content:center;font-size:3rem;position:relative;overflow:hidden;">'
         + (d.img ? '<img src="' + d.img + '" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" />' : '<span style="position:relative;z-index:1;">' + (d.emoji||'🍽️') + '</span>')
         + (d.featured ? '<span style="position:absolute;top:8px;left:8px;background:rgba(212,175,55,0.92);color:#1A0F05;font-size:0.62rem;font-weight:900;padding:2px 8px;border-radius:4px;">⭐ SPECIAL</span>' : '')

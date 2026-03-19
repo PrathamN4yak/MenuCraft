@@ -2,8 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="description" content="Sign in or create a MenuCraft account to manage your bookings, save custom menus, and track your orders." />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta property="og:title" content="Login / Register — MenuCraft" />
+  <meta property="og:description" content="Sign in or create a MenuCraft account to manage your bookings, save custom menus, and track your orders." />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="MenuCraft" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Login / Register — MenuCraft" />
+  <meta name="twitter:description" content="Sign in or create a MenuCraft account to manage your bookings, save custom menus, and track your orders." />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login / Register — MenuCraft</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="static/css/style.css" />
   <style>
@@ -464,7 +472,7 @@
           <div class="field-group">
             <label class="field-label">First Name <span class="req">*</span></label>
             <div class="field-wrap">
-              <input type="text" class="field-input" id="reg-fname" placeholder="Ravi" />
+              <input type="text" class="field-input" id="reg-fname" placeholder="First name" />
               <span class="field-icon">👤</span>
             </div>
             <div class="field-error" id="err-reg-fname">Required.</div>
@@ -472,7 +480,7 @@
           <div class="field-group">
             <label class="field-label">Last Name <span class="req">*</span></label>
             <div class="field-wrap">
-              <input type="text" class="field-input" id="reg-lname" placeholder="Kumar" />
+              <input type="text" class="field-input" id="reg-lname" placeholder="Last name" />
               <span class="field-icon">👤</span>
             </div>
             <div class="field-error" id="err-reg-lname">Required.</div>
@@ -490,9 +498,40 @@
 
         <div class="field-group">
           <label class="field-label">Phone Number <span class="req">*</span></label>
-          <div class="field-wrap">
-            <input type="tel" class="field-input" id="reg-phone" placeholder="+91 98765 43210" />
-            <span class="field-icon">📱</span>
+          <div class="field-wrap" style="display:flex;gap:8px;">
+            <select id="reg-country-code" style="
+              width:110px;flex-shrink:0;padding:11px 10px;
+              border:2px solid #EDE5DA;border-radius:11px;
+              font-family:'Nunito',sans-serif;font-size:0.85rem;
+              color:var(--text);background:var(--cream);outline:none;
+              cursor:pointer;transition:all 0.25s;appearance:none;
+              background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2210%22 height=%226%22 viewBox=%220 0 10 6%22><path fill=%22%237A6559%22 d=%22M0 0l5 6 5-6z%22/></svg>');
+              background-repeat:no-repeat;background-position:right 10px center;padding-right:28px;">
+              <option value="+91">🇮🇳 +91</option>
+              <option value="+1">🇺🇸 +1</option>
+              <option value="+44">🇬🇧 +44</option>
+              <option value="+61">🇦🇺 +61</option>
+              <option value="+971">🇦🇪 +971</option>
+              <option value="+65">🇸🇬 +65</option>
+              <option value="+60">🇲🇾 +60</option>
+              <option value="+94">🇱🇰 +94</option>
+              <option value="+880">🇧🇩 +880</option>
+              <option value="+92">🇵🇰 +92</option>
+              <option value="+977">🇳🇵 +977</option>
+              <option value="+966">🇸🇦 +966</option>
+              <option value="+49">🇩🇪 +49</option>
+              <option value="+33">🇫🇷 +33</option>
+              <option value="+81">🇯🇵 +81</option>
+              <option value="+86">🇨🇳 +86</option>
+              <option value="+7">🇷🇺 +7</option>
+              <option value="+55">🇧🇷 +55</option>
+              <option value="+27">🇿🇦 +27</option>
+            </select>
+            <div style="flex:1;position:relative;">
+              <input type="tel" class="field-input" id="reg-phone"
+                placeholder="98765 43210" style="padding-left:40px;" />
+              <span class="field-icon">📱</span>
+            </div>
           </div>
           <div class="field-error" id="err-reg-phone">Please enter a valid phone number.</div>
         </div>
@@ -641,31 +680,27 @@
     btn.disabled = true;
     btn.innerHTML = '⏳ Logging in...';
 
-    // ── Flask API call (activate when backend is ready) ──
-    // try {
-    //   const res = await fetch('/api/login', {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({ email, password: pass,
-    //       remember: document.getElementById('rememberMe').checked })
-    //   });
-    //   const data = await res.json();
-    //   if (!data.success) {
-    //     showToast(data.message || 'Invalid email or password.', 'error');
-    //     btn.disabled = false; btn.innerHTML = '🔐 Login to MenuCraft'; return;
-    //   }
-    //   showToast('Welcome back! Redirecting...', 'success');
-    //   setTimeout(() => window.location.href = '/dashboard', 1200);
-    // } catch(e) {
-    //   showToast('Something went wrong. Please try again.', 'error');
-    //   btn.disabled = false; btn.innerHTML = '🔐 Login to MenuCraft';
-    // }
-
-    // Simulate login for now
-    await delay(1400);
-    showToast('Welcome back! Redirecting to your dashboard...', 'success');
-    btn.innerHTML = '✅ Logged In!';
-    setTimeout(() => window.location.href = '/dashboard', 1600);
+    try {
+      const res  = await fetch('/api/login', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ email, password: pass })
+      });
+      const data = await res.json();
+      if (!data.success) {
+        showToast(data.message || 'Invalid email or password.', 'error');
+        btn.disabled = false;
+        btn.innerHTML = '🔐 Login to MenuCraft';
+        return;
+      }
+      btn.innerHTML = '✅ Logged In!';
+      showToast('Welcome back ' + data.name + '! Redirecting...', 'success');
+      setTimeout(() => window.location.href = '/dashboard', 1400);
+    } catch(e) {
+      showToast('Could not connect to server. Is Flask running?', 'error');
+      btn.disabled = false;
+      btn.innerHTML = '🔐 Login to MenuCraft';
+    }
   }
 
   // ══════════════════════════════════════
@@ -676,7 +711,9 @@
     const fname  = document.getElementById('reg-fname').value.trim();
     const lname  = document.getElementById('reg-lname').value.trim();
     const email  = document.getElementById('reg-email').value.trim();
-    const phone  = document.getElementById('reg-phone').value.trim();
+    const phoneRaw  = document.getElementById('reg-phone').value.trim();
+    const countryCode = document.getElementById('reg-country-code').value;
+    const phone = countryCode + phoneRaw;
     const pass   = document.getElementById('reg-pass').value;
     const cpass  = document.getElementById('reg-cpass').value;
     const agreed = document.getElementById('agreeTerms').checked;
@@ -685,7 +722,7 @@
     if (!fname)                  { showErr('err-reg-fname','reg-fname');  ok=false; }
     if (!lname)                  { showErr('err-reg-lname','reg-lname');  ok=false; }
     if (!email||!email.includes('@')) { showErr('err-reg-email','reg-email'); ok=false; }
-    if (!phone||phone.length<8)  { showErr('err-reg-phone','reg-phone');  ok=false; }
+    if (!phoneRaw||phoneRaw.length<7){ showErr('err-reg-phone','reg-phone');  ok=false; }
     if (!pass||pass.length<8)    { showErr('err-reg-pass','reg-pass');    ok=false; }
     if (pass !== cpass)          { showErr('err-reg-cpass','reg-cpass');  ok=false; }
     if (!agreed) { showToast('Please agree to the Terms of Service to continue.', 'error'); ok=false; }
@@ -695,30 +732,32 @@
     btn.disabled = true;
     btn.innerHTML = '⏳ Creating your account...';
 
-    // ── Flask API call (activate when backend is ready) ──
-    // try {
-    //   const res = await fetch('/api/register', {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({ name: fname+' '+lname, email, phone, password: pass })
-    //   });
-    //   const data = await res.json();
-    //   if (!data.success) {
-    //     showToast(data.message || 'Registration failed.', 'error');
-    //     btn.disabled=false; btn.innerHTML='✨ Create My Account'; return;
-    //   }
-    //   showToast('Account created! Welcome to MenuCraft 🎉', 'success');
-    //   setTimeout(() => window.location.href = '/dashboard', 1600);
-    // } catch(e) {
-    //   showToast('Something went wrong. Please try again.', 'error');
-    //   btn.disabled=false; btn.innerHTML='✨ Create My Account';
-    // }
-
-    // Simulate registration for now
-    await delay(1600);
-    showToast('Account created! Welcome to MenuCraft 🎉', 'success');
-    btn.innerHTML = '✅ Account Created!';
-    setTimeout(() => window.location.href = '/dashboard', 1800);
+    try {
+      const res  = await fetch('/api/register', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({
+          name:     fname + ' ' + lname,
+          email:    email,
+          phone:    phone,
+          password: pass
+        })
+      });
+      const data = await res.json();
+      if (!data.success) {
+        showToast(data.message || 'Registration failed.', 'error');
+        btn.disabled = false;
+        btn.innerHTML = '✨ Create My Account';
+        return;
+      }
+      btn.innerHTML = '✅ Account Created!';
+      showToast('Welcome to MenuCraft ' + data.name + '! 🎉', 'success');
+      setTimeout(() => window.location.href = '/dashboard', 1600);
+    } catch(e) {
+      showToast('Could not connect to server. Is Flask running?', 'error');
+      btn.disabled = false;
+      btn.innerHTML = '✨ Create My Account';
+    }
   }
 
   // ══════════════════════════════════════
