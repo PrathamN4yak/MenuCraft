@@ -388,13 +388,13 @@
 
                 <div class="form-group">
                   <label class="form-label">Full Name <span class="req">*</span></label>
-                  <input type="text" class="form-input" id="custName" placeholder="e.g. Ravi Kumar" />
+                  <input type="text" class="form-input" id="custName" placeholder="Your full name" />
                   <span class="error-msg" id="err-name">Please enter your full name.</span>
                 </div>
 
                 <div class="form-group">
                   <label class="form-label">Phone Number <span class="req">*</span></label>
-                  <input type="tel" class="form-input" id="custPhone" placeholder="+91 98765 43210" />
+                  <input type="tel" class="form-input" id="custPhone" placeholder="Your phone number" />
                   <span class="error-msg" id="err-phone">Please enter a valid phone number.</span>
                 </div>
 
@@ -607,7 +607,30 @@
   let orderData   = null;
   let servingStyle = null;
 
-  window.addEventListener('DOMContentLoaded', () => {
+  window.addEventListener('DOMContentLoaded', async () => {
+    // 1. Auto-fill customer details if user is logged in
+    try {
+      const res  = await fetch('/api/me');
+      const user = await res.json();
+      if (user.success) {
+        // Pre-fill name, phone, email from session
+        const nameEl  = document.getElementById('custName');
+        const phoneEl = document.getElementById('custPhone');
+        const emailEl = document.getElementById('custEmail');
+        if (nameEl  && !nameEl.value)  nameEl.value  = user.name  || '';
+        if (phoneEl && !phoneEl.value) phoneEl.value = user.phone || '';
+        if (emailEl && !emailEl.value) emailEl.value = user.email || '';
+
+        // Update navbar — show dashboard link instead of login
+        const loginBtn = document.querySelector('.navbar-actions a.btn-outline');
+        if (loginBtn) {
+          loginBtn.textContent = 'Dashboard';
+          loginBtn.href = '/dashboard';
+        }
+      }
+    } catch(e) {}
+
+    // 2. Pre-fill from custom menu builder if coming from there
     const saved = sessionStorage.getItem('menucraft_order');
     if (saved) {
       try {
@@ -615,11 +638,12 @@
         prefillFromBuilder(orderData);
       } catch(e) { console.warn('Could not parse order data'); }
     }
-    // Set min date
+
+    // 3. Set min date to today
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('eventDate').min = today;
 
-    // Live sidebar sync
+    // 4. Live sidebar sync
     ['eventType','guestCount','eventDate','eventTime'].forEach(id => {
       document.getElementById(id)?.addEventListener('change', updateSidebar);
       document.getElementById(id)?.addEventListener('input',  updateSidebar);

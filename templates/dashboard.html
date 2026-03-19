@@ -181,7 +181,7 @@
     <nav class="sidebar-nav">
       <div class="nav-section-label">Main</div>
       <button class="nav-item active" onclick="switchPanel('overview',this)"><span class="nav-icon">🏠</span> Overview</button>
-      <button class="nav-item" onclick="switchPanel('orders',this)"><span class="nav-icon">📋</span> My Bookings <span class="nav-badge">3</span></button>
+      <button class="nav-item" onclick="switchPanel('orders',this)"><span class="nav-icon">📋</span> My Bookings <span class="nav-badge" id="bookingsBadge" style="display:none;">0</span></button>
       <button class="nav-item" onclick="switchPanel('saved',this)"><span class="nav-icon">💾</span> Saved Menus</button>
       <div class="nav-section-label">Account</div>
       <button class="nav-item" onclick="switchPanel('profile',this)"><span class="nav-icon">👤</span> My Profile</button>
@@ -381,6 +381,17 @@
   });
 
   function renderDashboardOrders(orders) {
+    // Update booking badge in sidebar
+    const badge = document.getElementById('bookingsBadge');
+    if (badge) {
+      if (orders.length > 0) {
+        badge.textContent = orders.length;
+        badge.style.display = '';
+      } else {
+        badge.style.display = 'none';
+      }
+    }
+
     // Update stat cards
     const total     = orders.length;
     const delivered = orders.filter(o => o.status.toLowerCase() === 'delivered').length;
