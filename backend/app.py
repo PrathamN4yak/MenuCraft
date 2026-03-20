@@ -6,7 +6,7 @@
 import os, json, random, string
 from datetime import datetime
 from functools import wraps
-from flask import Flask, render_template, request, jsonify, session
+from flask import Flask, render_template, request, jsonify, session, redirect, make_response
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -218,17 +218,23 @@ def menu():          return render_template('menu.html')
 
 @app.route('/book')
 def book_page():
-    # Server-side check — redirect to login if not logged in
     if not session.get('user_id'):
         return redirect('/auth?next=book')
-    return render_template('book.html')
+    resp = make_response(render_template('book.html'))
+    resp.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+    resp.headers['Pragma']        = 'no-cache'
+    resp.headers['Expires']       = '0'
+    return resp
 
 @app.route('/custom-menu')
 def custom_menu():
-    # Server-side check — redirect to login if not logged in
     if not session.get('user_id'):
         return redirect('/auth?next=custom-menu')
-    return render_template('custom-menu.html')
+    resp = make_response(render_template('custom-menu.html'))
+    resp.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+    resp.headers['Pragma']        = 'no-cache'
+    resp.headers['Expires']       = '0'
+    return resp
 
 @app.route('/auth')
 def auth():          return render_template('auth.html')
@@ -240,7 +246,12 @@ def about():         return render_template('about.html')
 def contact():       return render_template('contact.html')
 
 @app.route('/dashboard')
-def dashboard():     return render_template('dashboard.html')
+def dashboard():
+    resp = make_response(render_template('dashboard.html'))
+    resp.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+    resp.headers['Pragma']        = 'no-cache'
+    resp.headers['Expires']       = '0'
+    return resp
 
 @app.route('/admin')
 def admin_page():
