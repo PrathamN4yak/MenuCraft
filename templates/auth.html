@@ -808,10 +808,17 @@
   if (urlParams.get('tab') === 'register') {
     switchTab('register');
   }
-  // Store next redirect from URL param into sessionStorage
+  // Open redirect protection — only allow known safe internal paths
+  const SAFE_PATHS = ['/book', '/custom-menu', '/dashboard', '/menu', '/'];
   const nextPage = urlParams.get('next');
   if (nextPage) {
-    sessionStorage.setItem('redirect_after_login', '/' + nextPage);
+    const safePath = '/' + nextPage.replace(/[^a-z0-9\-\/]/gi, '');
+    // Only redirect to known safe pages
+    if (SAFE_PATHS.includes(safePath)) {
+      sessionStorage.setItem('redirect_after_login', safePath);
+    } else {
+      sessionStorage.setItem('redirect_after_login', '/dashboard');
+    }
   }
   </script>
 </body>

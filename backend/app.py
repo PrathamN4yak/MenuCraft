@@ -41,6 +41,7 @@ IS_PROD = os.environ.get('FLASK_ENV') == 'production'
 
 # Secret key — MUST be set in Vercel env vars in production
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-fallback-key-change-in-production')
+app.config['MAX_CONTENT_LENGTH'] = 2 * 1024 * 1024  # 2MB max request size
 
 # Database — Neon PostgreSQL in production, SQLite locally
 _db_url = os.environ.get(
@@ -227,6 +228,24 @@ def clear_attempts(ip):
     _login_attempts.pop(ip, None)
 
 
+@app.errorhandler(413)
+def too_large(e):
+    return jsonify({'success': False, 'message': 'Request too large'}), 413
+
+@app.errorhandler(429)
+def rate_limited(e):
+    return jsonify({'success': False, 'message': 'Too many requests'}), 429
+
+@app.errorhandler(500)
+def server_error(e):
+    # Never expose internal errors to client
+    return jsonify({'success': False, 'message': 'Internal server error'}), 500
+
+@app.errorhandler(404)
+def not_found(e):
+    return jsonify({'success': False, 'message': 'Not found'}), 404
+
+
 def make_ref():
     return 'MC-' + ''.join(random.choices(string.digits, k=6))
 
@@ -336,19 +355,53 @@ def api_book():
     while Order.query.filter_by(booking_ref=ref).first():
         ref = make_ref()
 
+    # Validate guest count — must be positive and reasonable
+    guest_count = int(data.get('event', {}).get('guests', 0) or 0)
+    if guest_count < 1 or guest_count > 100000:
+        return jsonify({'success': False, 'message': 'Invalid guest count'}), 400
+
+    # Validate event date — must not be in the past
+    event_date = data.get('event', {}).get('date', '')
+    if event_date:
+        try:
+            from datetime import date
+            booking_date = date.fromisoformat(event_date)
+            if booking_date < date.today():
+                return jsonify({'success': False, 'message': 'Event date cannot be in the past'}), 400
+        except ValueError:
+            return jsonify({'success': False, 'message': 'Invalid event date'}), 400
+
+    # Calculate total price SERVER-SIDE — never trust client price
+    # Look up actual dish prices from database
+    dishes_data = data.get('dishes', {})
+    calculated_total = 0.0
+    if dishes_data:
+        for dish_id_str, dish_info in dishes_data.items():
+            try:
+                dish_id = int(str(dish_id_str).replace('d', ''))
+                dish = Dish.query.get(dish_id)
+                if dish and dish.is_active:
+                    calculated_total += dish.price * guest_count
+            except (ValueError, TypeError):
+                pass
+    # If no dishes (combo booking), accept client total but cap it reasonably
+    total_price = calculated_total if calculated_total > 0 else min(
+        float(data.get('totalRaw', 0) or 0), 9999999.0
+    )
+
     order = Order(
-        customer_name  = data.get('customer', {}).get('name', ''),
-        customer_email = data.get('customer', {}).get('email', ''),
-        customer_phone = data.get('customer', {}).get('phone', ''),
-        event_type     = data.get('event', {}).get('type', ''),
-        event_date     = data.get('event', {}).get('date', ''),
-        event_time     = data.get('event', {}).get('time', ''),
-        venue          = data.get('event', {}).get('venue', ''),
-        guest_count    = int(data.get('event', {}).get('guests', 0) or 0),
-        serving_style  = data.get('event', {}).get('serving', ''),
-        special_notes  = data.get('event', {}).get('notes', ''),
-        custom_dishes  = json.dumps(data.get('dishes', {})),
-        total_price    = float(data.get('totalRaw', 0) or 0),
+        customer_name  = sanitise(data.get('customer', {}).get('name', ''), 120),
+        customer_email = sanitise(data.get('customer', {}).get('email', ''), 120).lower(),
+        customer_phone = sanitise(data.get('customer', {}).get('phone', ''), 30),
+        event_type     = sanitise(data.get('event', {}).get('type', ''), 60),
+        event_date     = event_date,
+        event_time     = sanitise(data.get('event', {}).get('time', ''), 10),
+        venue          = sanitise(data.get('event', {}).get('venue', ''), 200),
+        guest_count    = guest_count,
+        serving_style  = sanitise(data.get('event', {}).get('serving', ''), 30),
+        special_notes  = sanitise(data.get('event', {}).get('notes', ''), 500),
+        custom_dishes  = json.dumps(dishes_data),
+        total_price    = total_price,
         booking_ref    = ref,
         status         = 'Pending',
         user_id        = session.get('user_id'),
@@ -396,9 +449,9 @@ def register():
     phone = sanitise(data.get('phone'), 30)
     pwd   = data.get('password') or ''
 
-    # Basic email format check
+    # Basic email format check — length check BEFORE regex to prevent ReDoS
     import re as _re
-    if not _re.match(r'^[^@\s]+@[^@\s]+\.[^@\s]+$', email):
+    if len(email) > 120 or not _re.match(r'^[^@\s]{1,64}@[^@\s]{1,255}$', email):
         return jsonify({'success': False, 'message': 'Invalid email format'}), 400
     if not name or not email or not pwd:
         return jsonify({'success': False, 'message': 'Name, email and password are required'}), 400
@@ -496,7 +549,13 @@ def admin_login():
     if is_rate_limited(ip):
         return jsonify({'success': False, 'message': 'Too many attempts. Try again in 5 minutes.'}), 429
 
-    if data.get('username') == ADMIN_USERNAME and data.get('password') == ADMIN_PASSWORD:
+    import hmac
+    uname = data.get('username', '')
+    upass = data.get('password', '')
+    # hmac.compare_digest prevents timing attacks
+    user_ok = hmac.compare_digest(str(uname), str(ADMIN_USERNAME))
+    pass_ok = hmac.compare_digest(str(upass), str(ADMIN_PASSWORD))
+    if user_ok and pass_ok:
         clear_attempts(ip)
         session['is_admin'] = True
         return jsonify({'success': True})
