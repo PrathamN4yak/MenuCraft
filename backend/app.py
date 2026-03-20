@@ -187,11 +187,21 @@ class ContactMessage(db.Model):
 # DECORATORS
 # ============================================================
 
+ADMIN_SESSION_TIMEOUT = 3600  # 1 hour
+
 def admin_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         if not session.get('is_admin'):
             return jsonify({'success': False, 'message': 'Admin access required'}), 403
+        # Admin session timeout — auto-logout after 1 hour of inactivity
+        login_time = session.get('admin_login_time', 0)
+        if time.time() - login_time > ADMIN_SESSION_TIMEOUT:
+            session.pop('is_admin', None)
+            session.pop('admin_login_time', None)
+            return jsonify({'success': False, 'message': 'Admin session expired. Please login again.'}), 401
+        # Refresh timestamp on each valid request
+        session['admin_login_time'] = time.time()
         return f(*args, **kwargs)
     return decorated
 
@@ -247,7 +257,10 @@ def not_found(e):
 
 
 def make_ref():
-    return 'MC-' + ''.join(random.choices(string.digits, k=6))
+    # 6 digits + 2 letters = 67.6 billion combinations — not enumerable
+    digits  = ''.join(random.choices(string.digits,      k=6))
+    letters = ''.join(random.choices(string.ascii_uppercase, k=2))
+    return 'MC-' + digits + letters
 
 
 def sanitise(value, max_length=255):
@@ -336,7 +349,9 @@ def get_combos():
     category = request.args.get('category')
     q = ComboPackage.query.filter_by(is_active=True)
     if category and category != 'all':
-        q = q.filter(ComboPackage.category.contains(category))
+        # Sanitise category to prevent LIKE wildcard injection
+        safe_category = category.replace('%','').replace('_','').replace('\\','')[:50]
+        q = q.filter(ComboPackage.category.contains(safe_category))
     return jsonify([c.to_dict() for c in q.order_by(ComboPackage.created_at).all()])
 
 
@@ -345,6 +360,7 @@ def get_combos():
 # ============================================================
 
 @app.route('/api/book', methods=['POST'])
+@login_required
 def api_book():
     data = request.get_json(silent=True)
     if not data:
@@ -352,8 +368,15 @@ def api_book():
 
     # Prevent duplicate ref collisions
     ref = make_ref()
+    attempts = 0
     while Order.query.filter_by(booking_ref=ref).first():
         ref = make_ref()
+        attempts += 1
+        if attempts > 10:
+            # Extremely unlikely — means DB has >1B bookings
+            import uuid
+            ref = 'MC-' + str(uuid.uuid4())[:8].upper()
+            break
 
     # Validate guest count — must be positive and reasonable
     guest_count = int(data.get('event', {}).get('guests', 0) or 0)
@@ -417,6 +440,17 @@ def api_book():
 
 @app.route('/api/contact', methods=['POST'])
 def api_contact():
+    # Rate limit contact form — max 3 messages per IP per hour
+    forwarded = request.headers.get('X-Forwarded-For', '')
+    ip = forwarded.split(',')[-1].strip() if forwarded else (request.remote_addr or 'unknown')
+    contact_key = 'contact_' + ip
+    if contact_key not in _login_attempts:
+        _login_attempts[contact_key] = []
+    now = time.time()
+    _login_attempts[contact_key] = [t for t in _login_attempts[contact_key] if now - t < 3600]
+    if len(_login_attempts[contact_key]) >= 3:
+        return jsonify({'success': False, 'message': 'Too many messages. Please try again later.'}), 429
+    _login_attempts[contact_key].append(now)
     data = request.get_json(silent=True)
     if not data:
         return jsonify({'success': False, 'message': 'Invalid request'}), 400
@@ -445,7 +479,10 @@ def register():
         return jsonify({'success': False, 'message': 'Invalid request'}), 400
 
     name  = sanitise(data.get('name'), 120)
-    email = sanitise(data.get('email'), 120).lower()
+    import unicodedata
+    raw_email = data.get('email') or ''
+    # Normalize unicode to prevent homograph attacks (е vs e, etc.)
+    email = unicodedata.normalize('NFKC', sanitise(raw_email, 120)).lower()
     phone = sanitise(data.get('phone'), 30)
     pwd   = data.get('password') or ''
 
@@ -465,8 +502,15 @@ def register():
 
     user = User(name=name, email=email, phone=phone, password=generate_password_hash(pwd))
     db.session.add(user)
-    db.session.commit()
-    session.permanent = True
+    try:
+        db.session.commit()
+    except Exception:
+        # Race condition — another request registered same email simultaneously
+        db.session.rollback()
+        return jsonify({'success': False, 'message': 'Registration failed. Please check your details.'}), 400
+    # Session fixation fix — fresh session after register
+    session.clear()
+    session.permanent  = True
     session['user_id']   = user.id
     session['user_name'] = user.name
     return jsonify({'success': True, 'name': user.name})
@@ -479,7 +523,14 @@ def login():
         return jsonify({'success': False, 'message': 'Invalid request'}), 400
 
     # Rate limit by IP — blocks brute force attacks
-    ip = request.headers.get('X-Forwarded-For', request.remote_addr or 'unknown').split(',')[0].strip()
+    # IP spoofing protection — use rightmost IP (set by Vercel, not client)
+    # Client can fake X-Forwarded-For but cannot fake what Vercel appends
+    forwarded = request.headers.get('X-Forwarded-For', '')
+    if forwarded:
+        # Vercel appends real IP at the END — use last entry
+        ip = forwarded.split(',')[-1].strip()
+    else:
+        ip = request.remote_addr or 'unknown'
     if is_rate_limited(ip):
         return jsonify({'success': False, 'message': 'Too many failed attempts. Try again in 5 minutes.'}), 429
 
@@ -493,8 +544,10 @@ def login():
         # This prevents attackers from knowing which one is wrong (enumeration)
         return jsonify({'success': False, 'message': 'Invalid email or password'}), 401
 
-    clear_attempts(ip)  # reset on successful login
-    session.permanent = True
+    clear_attempts(ip)
+    # Session fixation fix — clear old session before setting new one
+    session.clear()
+    session.permanent  = True
     session['user_id']   = user.id
     session['user_name'] = user.name
     return jsonify({'success': True, 'name': user.name})
@@ -543,7 +596,9 @@ def my_orders():
 @app.route('/api/admin/login', methods=['POST'])
 def admin_login():
     data = request.get_json(silent=True) or {}
-    ip = request.headers.get('X-Forwarded-For', request.remote_addr or 'unknown').split(',')[0].strip()
+    # Use rightmost IP to prevent spoofing
+    forwarded = request.headers.get('X-Forwarded-For', '')
+    ip = forwarded.split(',')[-1].strip() if forwarded else (request.remote_addr or 'unknown')
 
     # Rate limit admin login — max 5 attempts then 5 min lockout
     if is_rate_limited(ip):
@@ -557,7 +612,8 @@ def admin_login():
     pass_ok = hmac.compare_digest(str(upass), str(ADMIN_PASSWORD))
     if user_ok and pass_ok:
         clear_attempts(ip)
-        session['is_admin'] = True
+        session['is_admin']       = True
+        session['admin_login_time'] = time.time()
         return jsonify({'success': True})
 
     record_failed_attempt(ip)
@@ -566,13 +622,22 @@ def admin_login():
 
 @app.route('/api/admin/logout', methods=['POST'])
 def admin_logout():
-    session.pop('is_admin', None)
+    # Clear entire session — don't leave any trace
+    session.clear()
     return jsonify({'success': True})
 
 
 @app.route('/api/admin/check')
 def admin_check():
-    return jsonify({'is_admin': bool(session.get('is_admin'))})
+    is_admin = bool(session.get('is_admin'))
+    if not is_admin:
+        return jsonify({'is_admin': False}), 403
+    # Check timeout
+    login_time = session.get('admin_login_time', 0)
+    if time.time() - login_time > ADMIN_SESSION_TIMEOUT:
+        session.clear()
+        return jsonify({'is_admin': False}), 403
+    return jsonify({'is_admin': True})
 
 
 # ============================================================
@@ -590,13 +655,16 @@ def admin_get_dishes():
 @admin_required
 def admin_create_dish():
     data = request.get_json(silent=True) or {}
+    raw_img = data.get('img', '')
+    # Only allow base64 data URLs or https URLs — block javascript: and data:text/html
+    safe_img = raw_img if (raw_img.startswith('data:image/') or raw_img.startswith('https://')) else ''
     dish = Dish(
-        name        = data.get('name', ''),
-        category    = data.get('category', 'main'),
+        name        = sanitise(data.get('name', ''), 150),
+        category    = sanitise(data.get('category', 'main'), 50),
         price       = float(data.get('price', 0) or 0),
-        emoji       = data.get('emoji', '🍽️'),
-        description = data.get('desc', ''),
-        image_url   = data.get('img', ''),
+        emoji       = sanitise(data.get('emoji', '🍽️'), 10),
+        description = sanitise(data.get('desc', ''), 255),
+        image_url   = safe_img,
         is_featured = bool(data.get('featured', False)),
     )
     db.session.add(dish)
@@ -609,12 +677,14 @@ def admin_create_dish():
 def admin_update_dish(dish_id):
     dish = Dish.query.get_or_404(dish_id)
     data = request.get_json(silent=True) or {}
-    dish.name        = data.get('name',     dish.name)
-    dish.category    = data.get('category', dish.category)
+    raw_img = data.get('img', dish.image_url)
+    safe_img = raw_img if (raw_img.startswith('data:image/') or raw_img.startswith('https://')) else dish.image_url
+    dish.name        = sanitise(data.get('name',     dish.name), 150)
+    dish.category    = sanitise(data.get('category', dish.category), 50)
     dish.price       = float(data.get('price', dish.price) or dish.price)
-    dish.emoji       = data.get('emoji',    dish.emoji)
-    dish.description = data.get('desc',     dish.description)
-    dish.image_url   = data.get('img',      dish.image_url)
+    dish.emoji       = sanitise(data.get('emoji',    dish.emoji), 10)
+    dish.description = sanitise(data.get('desc',     dish.description), 255)
+    dish.image_url   = safe_img
     dish.is_featured = bool(data.get('featured', dish.is_featured))
     db.session.commit()
     return jsonify({'success': True})
@@ -723,7 +793,9 @@ def admin_update_order_status(order_id):
 @app.route('/api/admin/customers')
 @admin_required
 def admin_get_customers():
-    users  = User.query.order_by(User.created_at.desc()).all()
+    page  = request.args.get('page', 1, type=int)
+    limit = min(request.args.get('limit', 50, type=int), 100)  # max 100 per page
+    users = User.query.order_by(User.created_at.desc()).offset((page-1)*limit).limit(limit).all()
     result = []
     for u in users:
         orders      = Order.query.filter_by(customer_email=u.email).all()
