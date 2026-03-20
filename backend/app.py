@@ -3,7 +3,8 @@
 # Production-ready for Vercel + Neon PostgreSQL
 # ============================================================
 
-import os, json, random, string
+import os, json, random, string, time
+from collections import defaultdict
 from datetime import datetime
 from functools import wraps
 from flask import Flask, render_template, request, jsonify, session, redirect, make_response
@@ -28,7 +29,12 @@ app = Flask(
     template_folder=TEMPLATE_DIR,
     static_folder=STATIC_DIR,
 )
-CORS(app, supports_credentials=True)
+# CORS — only allow requests from your own domain
+ALLOWED_ORIGINS = [
+    'https://menu-craft-tau.vercel.app',
+    'http://localhost:5000',  # local dev
+]
+CORS(app, supports_credentials=True, origins=ALLOWED_ORIGINS)
 
 # ── Config ───────────────────────────────────────────────────
 IS_PROD = os.environ.get('FLASK_ENV') == 'production'
@@ -202,6 +208,25 @@ def login_required(f):
 # HELPERS
 # ============================================================
 
+# ── Rate limiter (in-memory) ─────────────────────
+# Tracks failed login attempts per IP
+_login_attempts  = defaultdict(list)
+MAX_ATTEMPTS     = 5      # max failed attempts
+LOCKOUT_SECONDS  = 300    # 5 minute lockout
+
+def is_rate_limited(ip):
+    now  = time.time()
+    # Remove attempts older than lockout window
+    _login_attempts[ip] = [t for t in _login_attempts[ip] if now - t < LOCKOUT_SECONDS]
+    return len(_login_attempts[ip]) >= MAX_ATTEMPTS
+
+def record_failed_attempt(ip):
+    _login_attempts[ip].append(time.time())
+
+def clear_attempts(ip):
+    _login_attempts.pop(ip, None)
+
+
 def make_ref():
     return 'MC-' + ''.join(random.choices(string.digits, k=6))
 
@@ -371,12 +396,19 @@ def register():
     phone = sanitise(data.get('phone'), 30)
     pwd   = data.get('password') or ''
 
+    # Basic email format check
+    import re as _re
+    if not _re.match(r'^[^@\s]+@[^@\s]+\.[^@\s]+$', email):
+        return jsonify({'success': False, 'message': 'Invalid email format'}), 400
     if not name or not email or not pwd:
         return jsonify({'success': False, 'message': 'Name, email and password are required'}), 400
     if len(pwd) < 8:
         return jsonify({'success': False, 'message': 'Password must be at least 8 characters'}), 400
+    if len(pwd) > 128:
+        return jsonify({'success': False, 'message': 'Password too long (max 128 characters)'}), 400
+    # Check email exists but don't reveal it (prevents email enumeration)
     if User.query.filter_by(email=email).first():
-        return jsonify({'success': False, 'message': 'Email already registered'}), 400
+        return jsonify({'success': False, 'message': 'Registration failed. Please check your details.'}), 400
 
     user = User(name=name, email=email, phone=phone, password=generate_password_hash(pwd))
     db.session.add(user)
@@ -393,13 +425,22 @@ def login():
     if not data:
         return jsonify({'success': False, 'message': 'Invalid request'}), 400
 
+    # Rate limit by IP — blocks brute force attacks
+    ip = request.headers.get('X-Forwarded-For', request.remote_addr or 'unknown').split(',')[0].strip()
+    if is_rate_limited(ip):
+        return jsonify({'success': False, 'message': 'Too many failed attempts. Try again in 5 minutes.'}), 429
+
     email = (data.get('email') or '').strip().lower()
     pwd   = data.get('password') or ''
     user  = User.query.filter_by(email=email).first()
 
     if not user or not check_password_hash(user.password, pwd):
+        record_failed_attempt(ip)
+        # Return same message for wrong email OR wrong password
+        # This prevents attackers from knowing which one is wrong (enumeration)
         return jsonify({'success': False, 'message': 'Invalid email or password'}), 401
 
+    clear_attempts(ip)  # reset on successful login
     session.permanent = True
     session['user_id']   = user.id
     session['user_name'] = user.name
@@ -449,9 +490,18 @@ def my_orders():
 @app.route('/api/admin/login', methods=['POST'])
 def admin_login():
     data = request.get_json(silent=True) or {}
+    ip = request.headers.get('X-Forwarded-For', request.remote_addr or 'unknown').split(',')[0].strip()
+
+    # Rate limit admin login — max 5 attempts then 5 min lockout
+    if is_rate_limited(ip):
+        return jsonify({'success': False, 'message': 'Too many attempts. Try again in 5 minutes.'}), 429
+
     if data.get('username') == ADMIN_USERNAME and data.get('password') == ADMIN_PASSWORD:
+        clear_attempts(ip)
         session['is_admin'] = True
         return jsonify({'success': True})
+
+    record_failed_attempt(ip)
     return jsonify({'success': False, 'message': 'Invalid credentials'}), 401
 
 
@@ -777,4 +827,4 @@ def create_app():
 if __name__ == '__main__':
     create_app()
     print('MenuCraft running at http://localhost:5000')
-    app.run(debug=True, port=5000)
+    app.run(debug=not IS_PROD, port=5000)
