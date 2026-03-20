@@ -608,27 +608,33 @@
   let servingStyle = null;
 
   window.addEventListener('DOMContentLoaded', async () => {
-    // 1. Auto-fill customer details if user is logged in
+    // 1. Check login — redirect to login page if not logged in
     try {
       const res  = await fetch('/api/me');
       const user = await res.json();
-      if (user.success) {
-        // Pre-fill name, phone, email from session
-        const nameEl  = document.getElementById('custName');
-        const phoneEl = document.getElementById('custPhone');
-        const emailEl = document.getElementById('custEmail');
-        if (nameEl  && !nameEl.value)  nameEl.value  = user.name  || '';
-        if (phoneEl && !phoneEl.value) phoneEl.value = user.phone || '';
-        if (emailEl && !emailEl.value) emailEl.value = user.email || '';
-
-        // Update navbar — show dashboard link instead of login
-        const loginBtn = document.querySelector('.navbar-actions a.btn-outline');
-        if (loginBtn) {
-          loginBtn.textContent = 'Dashboard';
-          loginBtn.href = '/dashboard';
-        }
+      if (!user.success) {
+        // Not logged in — save current page and send to login
+        sessionStorage.setItem('redirect_after_login', '/book');
+        window.location.href = '/auth?next=book';
+        return;
       }
-    } catch(e) {}
+      // Logged in — pre-fill customer details
+      const nameEl  = document.getElementById('custName');
+      const phoneEl = document.getElementById('custPhone');
+      const emailEl = document.getElementById('custEmail');
+      if (nameEl  && !nameEl.value)  nameEl.value  = user.name  || '';
+      if (phoneEl && !phoneEl.value) phoneEl.value = user.phone || '';
+      if (emailEl && !emailEl.value) emailEl.value = user.email || '';
+
+      // Update navbar
+      const loginBtn = document.querySelector('.navbar-actions a.btn-outline');
+      if (loginBtn) { loginBtn.textContent = 'Dashboard'; loginBtn.href = '/dashboard'; }
+    } catch(e) {
+      // Server error — redirect to login
+      sessionStorage.setItem('redirect_after_login', '/book');
+      window.location.href = '/auth?next=book';
+      return;
+    }
 
     // 2. Pre-fill from custom menu builder if coming from there
     const saved = sessionStorage.getItem('menucraft_order');

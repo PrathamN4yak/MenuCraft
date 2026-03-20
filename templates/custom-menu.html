@@ -1315,16 +1315,24 @@
   const today = new Date().toISOString().split('T')[0];
   document.getElementById('eventDate').min = today;
     window.addEventListener('DOMContentLoaded', async () => {
-    loadDishes();
-    // Check login state and update navbar
+    // Check login — redirect if not logged in
     try {
       const res  = await fetch('/api/me');
       const user = await res.json();
-      if (user.success) {
-        const btn = document.getElementById('navLoginBtn');
-        if (btn) { btn.textContent = 'Dashboard'; btn.href = '/dashboard'; }
+      if (!user.success) {
+        sessionStorage.setItem('redirect_after_login', '/custom-menu');
+        window.location.href = '/auth?next=custom-menu';
+        return;
       }
-    } catch(e) {}
+      // Logged in — update navbar and load dishes
+      const btn = document.getElementById('navLoginBtn');
+      if (btn) { btn.textContent = 'Dashboard'; btn.href = '/dashboard'; }
+    } catch(e) {
+      sessionStorage.setItem('redirect_after_login', '/custom-menu');
+      window.location.href = '/auth?next=custom-menu';
+      return;
+    }
+    loadDishes();
   });
 </script>
 </body>

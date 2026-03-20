@@ -12,12 +12,21 @@ from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
 
 # ── App setup ────────────────────────────────────────────────
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# BASE_DIR = project root (parent of backend/)
+BASE_DIR     = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
+STATIC_DIR   = os.path.join(BASE_DIR, 'static')
+
+# Vercel sometimes runs from /var/task — fallback to cwd
+if not os.path.isdir(TEMPLATE_DIR):
+    TEMPLATE_DIR = os.path.join(os.getcwd(), 'templates')
+if not os.path.isdir(STATIC_DIR):
+    STATIC_DIR = os.path.join(os.getcwd(), 'static')
 
 app = Flask(
     __name__,
-    template_folder=os.path.join(BASE_DIR, 'templates'),
-    static_folder=os.path.join(BASE_DIR, 'static'),
+    template_folder=TEMPLATE_DIR,
+    static_folder=STATIC_DIR,
 )
 CORS(app, supports_credentials=True)
 
@@ -208,10 +217,18 @@ def home():          return render_template('index.html')
 def menu():          return render_template('menu.html')
 
 @app.route('/book')
-def book_page():     return render_template('book.html')
+def book_page():
+    # Server-side check — redirect to login if not logged in
+    if not session.get('user_id'):
+        return redirect('/auth?next=book')
+    return render_template('book.html')
 
 @app.route('/custom-menu')
-def custom_menu():   return render_template('custom-menu.html')
+def custom_menu():
+    # Server-side check — redirect to login if not logged in
+    if not session.get('user_id'):
+        return redirect('/auth?next=custom-menu')
+    return render_template('custom-menu.html')
 
 @app.route('/auth')
 def auth():          return render_template('auth.html')

@@ -695,7 +695,9 @@
       }
       btn.innerHTML = '✅ Logged In!';
       showToast('Welcome back ' + data.name + '! Redirecting...', 'success');
-      setTimeout(() => window.location.href = '/dashboard', 1400);
+      const next = sessionStorage.getItem('redirect_after_login') || '/dashboard';
+      sessionStorage.removeItem('redirect_after_login');
+      setTimeout(() => window.location.href = next, 1400);
     } catch(e) {
       showToast('Could not connect to server. Is Flask running?', 'error');
       btn.disabled = false;
@@ -752,7 +754,9 @@
       }
       btn.innerHTML = '✅ Account Created!';
       showToast('Welcome to MenuCraft ' + data.name + '! 🎉', 'success');
-      setTimeout(() => window.location.href = '/dashboard', 1600);
+      const next = sessionStorage.getItem('redirect_after_login') || '/dashboard';
+      sessionStorage.removeItem('redirect_after_login');
+      setTimeout(() => window.location.href = next, 1600);
     } catch(e) {
       showToast('Could not connect to server. Is Flask running?', 'error');
       btn.disabled = false;
@@ -799,9 +803,15 @@
   // ══════════════════════════════════════
   function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-  // Auto-switch to register tab if URL has ?register
-  if (new URLSearchParams(location.search).get('tab') === 'register') {
+  // Auto-switch to register tab if URL has ?tab=register
+  const urlParams = new URLSearchParams(location.search);
+  if (urlParams.get('tab') === 'register') {
     switchTab('register');
+  }
+  // Store next redirect from URL param into sessionStorage
+  const nextPage = urlParams.get('next');
+  if (nextPage) {
+    sessionStorage.setItem('redirect_after_login', '/' + nextPage);
   }
   </script>
 </body>
