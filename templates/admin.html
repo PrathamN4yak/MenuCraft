@@ -1039,7 +1039,14 @@ let deletingId = null;
 // ══════════════════════════════════════
 // INIT
 // ══════════════════════════════════════
-const API_BASE = ''; // relative URLs work in both local and production
+  function esc(str) {
+    if (!str) return '';
+    return String(str)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;').replace(/'/g,'&#x27;').replace(/\//g,'&#x2F;');
+  }
+
+  const API_BASE = ''; // relative URLs work in both local and production
 
 // Check admin session on load
 window.addEventListener('DOMContentLoaded', async () => {
@@ -1116,9 +1123,9 @@ function showPanel(name) {
 function renderOverviewOrders() {
   document.getElementById('overviewOrdersTbody').innerHTML = ORDERS.slice(0,5).map(o=>`
     <tr>
-      <td><span class="td-ref">${o.ref}</span></td>
-      <td><div class="td-name">${o.customer}</div><div class="td-sub">${o.email}</div></td>
-      <td style="font-size:0.85rem;">${o.package}</td>
+      <td><span class="td-ref">${esc(o.ref)}</span></td>
+      <td><div class="td-name">${esc(o.customer)}</div><div class="td-sub">${esc(o.email)}</div></td>
+      <td style="font-size:0.85rem;">${esc(o.package)}</td>
       <td style="color:var(--ad-muted);font-size:0.83rem;">${fmtDate(o.date)}</td>
       <td style="font-weight:700;color:var(--ad-orange);">${o.total}</td>
       <td><span class="s-badge ${o.status}"><span class="dot"></span>${cap(o.status)}</span></td>
@@ -1129,7 +1136,7 @@ function renderOverviewOrders() {
 function renderOverviewCombos() {
   document.getElementById('overviewCombosTbody').innerHTML = COMBOS.map(c=>`
     <tr>
-      <td><div class="td-name">${c.emoji} ${c.name}</div></td>
+      <td><div class="td-name">${c.emoji} ${esc(c.name)}</div></td>
       <td style="color:var(--ad-muted);font-size:0.82rem;text-transform:capitalize;">${c.category}</td>
       <td style="font-weight:700;color:var(--ad-orange);">₹${c.price} <span style="font-weight:400;color:var(--ad-muted);font-size:0.75rem;">${c.priceSub}</span></td>
       <td style="color:var(--ad-muted);">${c.dishes.length} dishes</td>
@@ -1146,7 +1153,7 @@ function renderCombosGrid() {
     <div class="combo-admin-card">
       <div class="cac-head">
         <div>
-          <div class="cac-name">${c.emoji} ${c.name}</div>
+          <div class="cac-name">${c.emoji} ${esc(c.name)}</div>
           <div class="cac-cat">${c.category.replace(/-/g,' ')}</div>
         </div>
         <div style="text-align:right;">
@@ -1190,9 +1197,9 @@ function renderAllOrders(list) {
   }
   tbody.innerHTML = list.map(o=>`
     <tr id="order-row-${o.id}">
-      <td><span class="td-ref">${o.ref}</span></td>
-      <td><div class="td-name">${o.customer}</div><div class="td-sub">${o.phone}</div></td>
-      <td style="font-size:0.83rem;">${o.package}</td>
+      <td><span class="td-ref">${esc(o.ref)}</span></td>
+      <td><div class="td-name">${esc(o.customer)}</div><div class="td-sub">${esc(o.phone)}</div></td>
+      <td style="font-size:0.83rem;">${esc(o.package)}</td>
       <td style="color:var(--ad-muted);font-size:0.83rem;">${fmtDate(o.date)}</td>
       <td style="font-weight:600;">${o.guests}</td>
       <td style="font-weight:700;color:var(--ad-orange);">${o.total}</td>
@@ -1236,11 +1243,11 @@ function renderCustomers(list) {
       <td>
         <div style="display:flex;align-items:center;gap:10px;">
           <div class="customer-avatar">${c.name[0]}</div>
-          <div class="td-name">${c.name}</div>
+          <div class="td-name">${esc(c.name)}</div>
         </div>
       </td>
-      <td style="color:var(--ad-muted);font-size:0.85rem;">${c.email}</td>
-      <td style="color:var(--ad-muted);font-size:0.85rem;">${c.phone}</td>
+      <td style="color:var(--ad-muted);font-size:0.85rem;">${esc(c.email)}</td>
+      <td style="color:var(--ad-muted);font-size:0.85rem;">${esc(c.phone)}</td>
       <td style="font-weight:700;text-align:center;">${c.bookings}</td>
       <td style="font-weight:700;color:var(--ad-orange);">${c.spent}</td>
       <td style="color:var(--ad-muted);font-size:0.82rem;">${c.joined}</td>

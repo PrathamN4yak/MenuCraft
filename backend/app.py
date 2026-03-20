@@ -206,6 +206,16 @@ def make_ref():
     return 'MC-' + ''.join(random.choices(string.digits, k=6))
 
 
+def sanitise(value, max_length=255):
+    """Strip dangerous characters and enforce max length on user input"""
+    if not value:
+        return ''
+    # Remove null bytes and control characters
+    cleaned = str(value).replace('', '').strip()
+    # Enforce max length
+    return cleaned[:max_length]
+
+
 # ============================================================
 # PAGE ROUTES
 # ============================================================
@@ -333,13 +343,13 @@ def api_contact():
     if not data:
         return jsonify({'success': False, 'message': 'Invalid request'}), 400
     msg = ContactMessage(
-        name       = data.get('name', ''),
-        email      = data.get('email', ''),
-        phone      = data.get('phone', ''),
-        enquiry    = data.get('enquiry', 'General'),
-        message    = data.get('message', ''),
-        event_date = data.get('event_date', ''),
-        guests     = data.get('guests', ''),
+        name       = sanitise(data.get('name', ''), 120),
+        email      = sanitise(data.get('email', ''), 120),
+        phone      = sanitise(data.get('phone', ''), 30),
+        enquiry    = sanitise(data.get('enquiry', 'General'), 60),
+        message    = sanitise(data.get('message', ''), 2000),
+        event_date = sanitise(data.get('event_date', ''), 20),
+        guests     = sanitise(data.get('guests', ''), 30),
     )
     db.session.add(msg)
     db.session.commit()
@@ -356,9 +366,9 @@ def register():
     if not data:
         return jsonify({'success': False, 'message': 'Invalid request'}), 400
 
-    name  = (data.get('name') or '').strip()
-    email = (data.get('email') or '').strip().lower()
-    phone = (data.get('phone') or '').strip()
+    name  = sanitise(data.get('name'), 120)
+    email = sanitise(data.get('email'), 120).lower()
+    phone = sanitise(data.get('phone'), 30)
     pwd   = data.get('password') or ''
 
     if not name or not email or not pwd:
