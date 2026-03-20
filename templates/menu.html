@@ -291,7 +291,7 @@
       </ul>
       <div class="navbar-actions" style="gap:10px;">
         <span class="nav-veg-tag"><span class="dot"></span> 100% Pure Veg</span>
-        <a href="/auth" class="btn btn-outline">Login</a>
+        <a href="/auth" class="btn btn-outline" id="navLoginBtn">Login</a>
         <a href="/book" class="btn btn-primary">Book Now</a>
       </div>
       <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
@@ -518,5 +518,18 @@
   // ── Start ──
   window.addEventListener('DOMContentLoaded', loadCombos);
   </script>
+<script>
+  // Update navbar if user is logged in
+  (async () => {
+    try {
+      const res  = await fetch('/api/me');
+      const user = await res.json();
+      if (user.success) {
+        const btn = document.getElementById('navLoginBtn');
+        if (btn) { btn.textContent = 'Dashboard'; btn.href = '/dashboard'; }
+      }
+    } catch(e) {}
+  })();
+</script>
 </body>
 </html>

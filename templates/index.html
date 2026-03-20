@@ -44,7 +44,7 @@
 
       <!-- Actions -->
       <div class="navbar-actions">
-        <a href="/auth" class="btn btn-outline">Login</a>
+        <a href="/auth" class="btn btn-outline" id="navLoginBtn">Login</a>
         <a href="/book" class="btn btn-primary">Book Now</a>
       </div>
 
@@ -485,5 +485,18 @@
     .navbar-links a.active::after { width: 100% !important; }
   </style>
 
+<script>
+  // Update navbar if user is logged in
+  (async () => {
+    try {
+      const res  = await fetch('/api/me');
+      const user = await res.json();
+      if (user.success) {
+        const btn = document.getElementById('navLoginBtn');
+        if (btn) { btn.textContent = 'Dashboard'; btn.href = '/dashboard'; }
+      }
+    } catch(e) {}
+  })();
+</script>
 </body>
 </html>
