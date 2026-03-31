@@ -327,17 +327,26 @@
     }
     .toast {
       background: #fff; border-radius: 14px;
-      padding: 14px 20px; box-shadow: 0 8px 32px rgba(26,15,5,0.15);
+      padding: 14px 20px; box-shadow: 0 8px 32px rgba(26,15,5,0.18);
       display: flex; align-items: center; gap: 12px;
-      min-width: 280px; border-left: 4px solid var(--primary);
+      min-width: 300px; max-width: 380px;
+      border-left: 5px solid #E8712A;
       animation: slideInToast 0.35s ease;
-      font-size: 0.88rem; font-weight: 600; color: var(--text);
+      font-size: 0.9rem; font-weight: 700; color: #3D2B1A;
+      font-family: 'Nunito', sans-serif;
     }
-    .toast.success { border-left-color: #22C55E; }
-    .toast.error   { border-left-color: #EF4444; }
+    .toast.success { border-left-color: #22C55E; background: #F0FDF4; }
+    .toast.error   { border-left-color: #EF4444; background: #FFF5F5; color: #7F1D1D; }
     @keyframes slideInToast {
       from { opacity:0; transform:translateX(20px); }
       to   { opacity:1; transform:translateX(0); }
+    }
+    @keyframes shakeBox {
+      0%,100% { transform: translateX(0); }
+      20%      { transform: translateX(-8px); }
+      40%      { transform: translateX(8px); }
+      60%      { transform: translateX(-5px); }
+      80%      { transform: translateX(5px); }
     }
 
     /* ── Veg badge on right panel ── */
@@ -447,6 +456,10 @@
           <label for="rememberMe">Remember me on this device</label>
         </div>
 
+        <!-- Inline error — shown when login fails -->
+        <div id="loginErrorBox" style="display:none;background:#FFF5F5;border:1.5px solid #EF4444;border-radius:10px;padding:12px 16px;margin-bottom:8px;color:#7F1D1D;font-size:0.87rem;font-weight:700;font-family:'Nunito',sans-serif;gap:8px;align-items:center;">
+          ❌ <span id="loginErrorMsg">Invalid email or password.</span>
+        </div>
         <button class="btn-auth" id="loginBtn" onclick="submitLogin()">
           🔐 Login to MenuCraft
         </button>
@@ -688,12 +701,30 @@
       });
       const data = await res.json();
       if (!data.success) {
-        showToast(data.message || 'Invalid email or password.', 'error');
+        const msg = data.message || 'Invalid email or password.';
+        // Show inline error box
+        const errBox = document.getElementById('loginErrorBox');
+        const errMsg = document.getElementById('loginErrorMsg');
+        if (errBox && errMsg) {
+          errMsg.textContent = msg;
+          errBox.style.display = 'flex';
+          errBox.style.gap = '8px';
+          errBox.style.alignItems = 'center';
+          // Shake animation
+          errBox.style.animation = 'none';
+          errBox.offsetHeight;
+          errBox.style.animation = 'shakeBox 0.4s ease';
+        }
+        // Also show toast
+        showToast(msg, 'error');
         btn.disabled = false;
         btn.innerHTML = '🔐 Login to MenuCraft';
         return;
       }
       btn.innerHTML = '✅ Logged In!';
+      // Hide error box on success
+      const errBox = document.getElementById('loginErrorBox');
+      if (errBox) errBox.style.display = 'none';
       showToast('Welcome back ' + data.name + '! Redirecting...', 'success');
       const next = sessionStorage.getItem('redirect_after_login') || '/dashboard';
       sessionStorage.removeItem('redirect_after_login');
